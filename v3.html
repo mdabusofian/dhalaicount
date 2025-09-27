@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ডিজিটাল ঢালাই ট্র্যাকার V4 - ফাইনাল (লাইট/ডার্ক মোড)</title>
+    <title>ডিজিটাল ঢালাই ট্র্যাকার V3 - চূড়ান্ত</title>
     <style>
-        /* Base Styling - LIGHT MODE (Default) */
+        /* Base Styling */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 20px;
             background-color: #f0f4f7; /* Light Blue Background */
             color: #333;
-            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
         }
         .container {
             max-width: 650px;
@@ -21,7 +20,6 @@
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: background-color 0.3s, box-shadow 0.3s;
         }
         h2 {
             color: #0d47a1; /* Dark Blue Header */
@@ -31,23 +29,12 @@
             padding-bottom: 10px;
         }
 
-        /* --- Mode Switch Button Style --- */
-        #modeToggle {
-            background-color: #607d8b; /* Blue Grey */
-            color: white;
-            width: 100%;
-            padding: 10px 15px;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
         /* Input/Session Styling */
         .session-info {
             background-color: #e3f2fd;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
-            transition: background-color 0.3s;
         }
         .session-info input {
             width: 100%;
@@ -56,8 +43,6 @@
             border: 1px solid #90caf9;
             border-radius: 4px;
             box-sizing: border-box;
-            color: #333;
-            background-color: #fff;
         }
         .session-info label {
             font-weight: bold;
@@ -75,7 +60,6 @@
             margin-bottom: 25px;
             padding: 20px;
             border-radius: 8px;
-            transition: background-color 0.3s;
         }
         .controls {
             background-color: #fcfcfc;
@@ -102,10 +86,24 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
-        #addSand { background-color: #64b5f6; color: white; }
-        #addConcrete { background-color: #26a69a; color: white; }
-        #nextBatch { background-color: #ffb74d; color: #333; }
-        #finalSubmit { background-color: #e53935; color: white; margin-top: 20px; }
+
+        #addSand {
+            background-color: #64b5f6; /* Lighter Blue */
+            color: white;
+        }
+        #addConcrete {
+            background-color: #26a69a; /* Teal */
+            color: white;
+        }
+        #nextBatch {
+            background-color: #ffb74d; /* Light Amber when ready */
+            color: #333;
+        }
+        #finalSubmit {
+            background-color: #e53935; /* Red for final action */
+            color: white;
+            margin-top: 20px;
+        }
         
         /* Display Counters */
         .counter-display {
@@ -116,7 +114,6 @@
             padding: 10px;
             background-color: #eceff1;
             border-radius: 6px;
-            transition: background-color 0.3s;
         }
         .counter-item {
             font-size: 24px;
@@ -135,7 +132,6 @@
             font-weight: bold;
             text-align: center;
             min-height: 40px;
-            transition: background-color 0.3s, color 0.3s;
         }
         
         /* Summary Styling */
@@ -149,69 +145,12 @@
             font-size: 18px;
             color: #d84315;
         }
-
-        /* ----------------------------------------------------------------------------------- */
-        /* --- DARK MODE STYLES --- */
-        /* ----------------------------------------------------------------------------------- */
-        [data-theme='dark'] body {
-            background-color: #121212;
-            color: #f0f0f0;
-        }
-        [data-theme='dark'] .container {
-            background: #1e1e1e;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        [data-theme='dark'] h2 {
-            color: #90caf9; /* Light Blue */
-            border-bottom-color: #424242;
-        }
-        [data-theme='dark'] #modeToggle {
-            background-color: #424242;
-        }
-
-        [data-theme='dark'] .session-info {
-            background-color: #2c2c2c;
-            border: 1px solid #424242;
-        }
-        [data-theme='dark'] .session-info input {
-            color: #f0f0f0;
-            background-color: #333;
-            border-color: #666;
-        }
-        [data-theme='dark'] .controls {
-            background-color: #242424;
-            border: 1px solid #333;
-        }
-        [data-theme='dark'] .summary {
-            background-color: #33332e;
-            border: 1px solid #4a4a3e;
-        }
-        [data-theme='dark'] .counter-display {
-            background-color: #333;
-        }
-        [data-theme='dark'] .counter-item {
-            color: #f0f0f0;
-        }
-        [data-theme='dark'] .counter-item span {
-            color: #e0f2f1; /* Light Teal */
-        }
-        [data-theme='dark'] .summary p {
-             border-left-color: #ffb74d; /* Lighter Amber */
-        }
-        [data-theme='dark'] .summary strong {
-            color: #ff9800; /* Amber */
-        }
-        [data-theme='dark'] .status-board {
-            /* Adjust status board background for better contrast in dark mode */
-            background-color: #424242 !important;
-            color: #f0f0f0 !important;
-        }
+        
     </style>
 </head>
-<body data-theme="light">
+<body>
 
 <div class="container">
-    <button id="modeToggle">🌙 ডার্ক মোড চালু করুন</button>
     <h2>🏗️ ডিজিটাল ঢালাই ট্র্যাকার</h2>
     <p style="text-align: center;">মিক্স অনুপাত: **১ বস্তা সিমেন্ট : ৩ বালতি বালি : ৫ বালতি ক্রংকিট**</p>
 
@@ -257,14 +196,15 @@
         <div class="submit-section">
             <h3>৩. চূড়ান্ত রেকর্ড</h3>
             <button id="finalSubmit">মোট কাজ শেষ ও হিসাব Google Sheet-এ জমা দিন</button>
-            <div id="submitMessage" class="status-board" style="background-color: #fbebeb; color: #e53935;">রেকর্ড জমা দেওয়ার জন্য প্রস্তুত।</div>
+            <div id="submitMessage" class="status-board" style="background-color: #fbebeb; color: #e53935;">রেকর্ড জমা দেওয়ার জন্য প্রস্তুত।</div>
         </div>
     </div>
 </div>
 
 <script>
     // ====================================================================================
-    // !!! অত্যন্ত গুরুত্বপূর্ণ: নিচের তথ্যগুলি আপনার গুগল ফর্ম থেকে পাওয়া ডেটা দিয়ে পরিবর্তন করুন !!!
+    // !!! অত্যন্ত গুরুত্বপূর্ণ: নিচের তথ্যগুলি আপনার গুগল ফর্ম থেকে পাওয়া ডেটা দিয়ে পরিবর্তন করুন !!!
+    // মনে রাখবেন, আপনাকে Google Form-এ "প্রজেক্টের নাম" এবং "তারিখ" এর জন্য অতিরিক্ত দুটি প্রশ্ন যোগ করতে হবে।
     // ====================================================================================
     const GOOGLE_FORM_URL = 'আপনার_ফর্ম_রেসপন্স_URL_এখানে_দিন'; 
     const ENTRY_ID_PROJECT = 'entry.PPPPPPPPP';  // প্রজেক্টের নামের এন্ট্রি আইডি দিন
@@ -287,13 +227,12 @@
 
 
     // --- DOM উপাদান নির্বাচন ---
-    const body = document.body;
-    const modeToggle = document.getElementById('modeToggle');
     const mainTracker = document.getElementById('mainTracker');
     const sessionSetup = document.getElementById('sessionSetup');
     const startProjectButton = document.getElementById('startProject');
     const projectNameInput = document.getElementById('projectName');
     const projectDateInput = document.getElementById('projectDate');
+    
     const sandCounter = document.getElementById('sandCounter');
     const concreteCounter = document.getElementById('concreteCounter');
     const totalCementDisplay = document.getElementById('totalCement');
@@ -306,24 +245,6 @@
     const submitMessage = document.getElementById('submitMessage');
     const addSandButton = document.getElementById('addSand');
     const addConcreteButton = document.getElementById('addConcrete');
-    
-    // --- লাইট/ডার্ক মোড ফাংশন ---
-    function setDarkMode(isDark) {
-        if (isDark) {
-            body.setAttribute('data-theme', 'dark');
-            modeToggle.textContent = '☀️ লাইট মোড চালু করুন';
-            localStorage.setItem('theme', 'dark');
-        } else {
-            body.setAttribute('data-theme', 'light');
-            modeToggle.textContent = '🌙 ডার্ক মোড চালু করুন';
-            localStorage.setItem('theme', 'light');
-        }
-    }
-
-    modeToggle.addEventListener('click', () => {
-        const currentTheme = body.getAttribute('data-theme');
-        setDarkMode(currentTheme === 'light');
-    });
     
     // --- কাজ শুরু ফাংশন ---
     startProjectButton.addEventListener('click', () => {
@@ -362,9 +283,9 @@
             nextBatchButton.disabled = false;
             nextBatchButton.style.backgroundColor = '#4CAF50'; /* Green when ready */
             nextBatchButton.textContent = `✅ ${totalCement + 1} নং বস্তা সম্পন্ন। পরবর্তী বস্তা শুরু করুন।`;
-            batchStatus.style.backgroundColor = '#c8e6c9'; /* Lighter Green */
+            batchStatus.style.backgroundColor = '#e8f5e9';
             batchStatus.style.color = '#1b5e20';
-            batchStatus.textContent = "✅ এই ব্যাচের সমস্ত উপাদান (৩ বালি, ৫ ক্রংকিট) দেওয়া হয়ে গেছে।";
+            batchStatus.textContent = "✅ এই ব্যাচের সমস্ত উপাদান (৩ বালি, ৫ ক্রংকিট) দেওয়া হয়ে গেছে।";
         } else {
             nextBatchButton.disabled = true;
             nextBatchButton.style.backgroundColor = '#ffb74d'; /* Amber when not ready */
@@ -379,7 +300,7 @@
             }
 
             if (missing.length > 0) {
-                 batchStatus.style.backgroundColor = '#fff9c4'; /* Light Yellow */
+                 batchStatus.style.backgroundColor = '#fff9c4';
                  batchStatus.style.color = '#f9a825';
                  batchStatus.textContent = `⚠️ আরও দিতে হবে: ${missing.join(' এবং ')} বালতি।`;
             } else {
@@ -420,14 +341,14 @@
         .then(() => {
             submitMessage.style.backgroundColor = '#e8f5e9';
             submitMessage.style.color = '#1b5e20';
-            submitMessage.textContent = `✅ সফল! মোট ${totalCement} বস্তার হিসাব Google Sheet-এ জমা হয়েছে।`;
+            submitMessage.textContent = `✅ সফল! মোট ${totalCement} বস্তার হিসাব Google Sheet-এ জমা হয়েছে।`;
             
             // সাবমিট করার পর রিসেট করার জন্য কনফার্মেশন
             setTimeout(() => {
-                const confirmReset = confirm("হিসাব সফলভাবে জমা হয়েছে। আপনি কি ট্র্যাকারটি নতুন কাজের জন্য রিসেট করতে চান?");
+                const confirmReset = confirm("হিসাব সফলভাবে জমা হয়েছে। আপনি কি ট্র্যাকারটি নতুন কাজের জন্য রিসেট করতে চান?");
                 if (confirmReset) {
                     resetTracker();
-                    alert("ট্র্যাকার রিসেট করা হয়েছে।");
+                    alert("ট্র্যাকার রিসেট করা হয়েছে।");
                 } else {
                     finalSubmitButton.disabled = false;
                 }
@@ -436,9 +357,9 @@
         .catch(error => {
             submitMessage.style.backgroundColor = '#ffebee';
             submitMessage.style.color = '#c62828';
-            submitMessage.textContent = '❌ ডেটা জমা দিতে ব্যর্থ হয়েছে। ইন্টারনেট সংযোগ দেখুন।';
+            submitMessage.textContent = '❌ ডেটা জমা দিতে ব্যর্থ হয়েছে। ইন্টারনেট সংযোগ দেখুন।';
             finalSubmitButton.disabled = false;
-            console.error('Google Form-এ ডেটা জমা দিতে ব্যর্থ হয়েছে:', error);
+            console.error('Google Form-এ ডেটা জমা দিতে ব্যর্থ হয়েছে:', error);
         });
     }
 
@@ -452,13 +373,13 @@
         finalSubmitButton.disabled = false;
         submitMessage.style.backgroundColor = '#fbebeb';
         submitMessage.style.color = '#e53935';
-        submitMessage.textContent = "রেকর্ড জমা দেওয়ার জন্য প্রস্তুত।";
+        submitMessage.textContent = "রেকর্ড জমা দেওয়ার জন্য প্রস্তুত।";
         
         // সেশন ইনফো রিসেট
         sessionSetup.style.display = 'block';
         mainTracker.style.display = 'none';
         projectNameInput.value = "নতুন ছাদ ঢালাই";
-        projectDateInput.valueAsDate = new Date(); // আজকের তারিখ
+        projectDateInput.value = '';
         projectDetails = { name: '', date: '' };
         
         updateDisplay();
@@ -472,7 +393,7 @@
             totalSand++;
             updateDisplay();
         } else {
-            alert('সতর্কতা: ৩ বালতি বালি দেওয়া হয়ে গেছে!');
+            alert('সতর্কতা: ৩ বালতি বালি দেওয়া হয়ে গেছে!');
         }
     });
 
@@ -482,7 +403,7 @@
             totalConcrete++;
             updateDisplay();
         } else {
-             alert('সতর্কতা: ৫ বালতি ক্রংকিট দেওয়া হয়ে গেছে!');
+             alert('সতর্কতা: ৫ বালতি ক্রংকিট দেওয়া হয়ে গেছে!');
         }
     });
 
@@ -503,25 +424,10 @@
         }
     });
 
-    // --- ইনিশিয়ালাইজেশন: থিম এবং তারিখ লোড করা ---
-    window.onload = () => {
-        // সেভ করা থিম লোড করা
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            setDarkMode(savedTheme === 'dark');
-        } else {
-            // যদি সেভ করা না থাকে, তাহলে সিস্টেম প্রেফারেন্স চেক করা
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                 setDarkMode(true);
-            } else {
-                 setDarkMode(false);
-            }
-        }
-        
-        // আজকের তারিখ ডিফল্ট হিসাবে সেট করা
-        projectDateInput.valueAsDate = new Date();
-        updateDisplay();
-    };
+    // প্রথম লোডের সময় ডিসপ্লে আপডেট করা
+    // এখানে ডিফল্ট তারিখ সেট করা
+    projectDateInput.valueAsDate = new Date();
+    updateDisplay(); 
 </script>
 
 </body>
