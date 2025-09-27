@@ -1,434 +1,506 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ডিজিটাল ঢালাই ট্র্যাকার V3 - চূড়ান্ত</title>
+    <title>Patiya Govt. College Assignment Cover Page Generator</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
-        /* Base Styling */
+        /* Global Reset and Font Setup */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f6;
             margin: 0;
             padding: 20px;
-            background-color: #f0f4f7; /* Light Blue Background */
-            color: #333;
-        }
-        .container {
-            max-width: 650px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        h2 {
-            color: #0d47a1; /* Dark Blue Header */
-            text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 3px solid #bbdefb;
-            padding-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
         }
 
-        /* Input/Session Styling */
-        .session-info {
-            background-color: #e3f2fd;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+        .app-container {
+            display: flex;
+            gap: 30px;
+            width: 90%;
+            max-width: 1400px; /* Max width for a clean layout */
         }
-        .session-info input {
+
+        /* Input Form Styling */
+        .input-form {
+            flex: 1;
+            min-width: 350px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 20px;
+        }
+
+        .input-form h2 {
+            color: #004d40; /* Dark Teal - Official Look */
+            margin-bottom: 25px;
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus {
+            border-color: #00897b; /* Teal Focus Color */
+            outline: none;
+        }
+
+        .separator {
+            margin: 25px 0 10px 0;
+            font-weight: 700;
+            color: #004d40;
+            text-align: center;
+            border-bottom: 2px solid #e0f2f1;
+            padding-bottom: 5px;
+        }
+
+        #download-btn {
             width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #90caf9;
-            border-radius: 4px;
+            padding: 15px;
+            margin-top: 30px;
+            background-color: #00897b; /* Teal Button */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        #download-btn:hover {
+            background-color: #00695c;
+            transform: translateY(-2px);
+        }
+
+
+        /* Cover Page Styling (A4 Format) */
+        .preview-area {
+            flex: 2;
+            background: #e0e0e0;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-area h3 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .cover-page {
+            /* A4 dimensions: 794px x 1123px (Standard for 96dpi) */
+            width: 794px; 
+            height: 1123px;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 30px; /* Padding for inner content */
             box-sizing: border-box;
         }
-        .session-info label {
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-        }
-        #startProject {
-            background-color: #4CAF50;
-            color: white;
-            margin-top: 15px;
+
+        .cover-content {
+            /* Main Content Border - Professional Touch */
+            border: 5px double #004d40; /* Dark Teal Double Border */
+            padding: 40px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-sizing: border-box;
         }
 
-        /* Section Styling */
-        .controls, .summary, .submit-section {
-            margin-bottom: 25px;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .controls {
-            background-color: #fcfcfc;
-            border: 1px solid #e0e0e0;
-        }
-        .summary {
-            background-color: #fff8e1; /* Yellow for summary */
-            border: 1px solid #ffe082;
-        }
-
-        /* Button Styling */
-        button {
-            padding: 12px;
-            margin: 8px 0;
-            font-size: 18px;
-            cursor: pointer;
-            border: none;
-            border-radius: 6px;
-            transition: background-color 0.3s, opacity 0.3s;
+        /* Header Section */
+        .header-section {
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ccc;
             width: 100%;
-            font-weight: bold;
-        }
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
         }
 
-        #addSand {
-            background-color: #64b5f6; /* Lighter Blue */
-            color: white;
+        .university {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #444;
+            margin-bottom: 5px;
         }
-        #addConcrete {
-            background-color: #26a69a; /* Teal */
-            color: white;
+
+        .college-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            color: #004d40; /* Main College Color */
+            margin: 5px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        #nextBatch {
-            background-color: #ffb74d; /* Light Amber when ready */
+
+        .college-address {
+            font-size: 1.1em;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .logo-placeholder {
+            width: 100px;
+            height: 100px;
+            margin: 15px auto;
+            border: 2px solid #00897b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: #f9f9f9;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            color: #00897b;
+            font-size: 0.9em;
+        }
+
+        /* Title Section */
+        .title-section {
+            margin-top: 30px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #e0f2f1; /* Light background for emphasis */
+            border-radius: 8px;
+            width: 80%;
+        }
+
+        .document-type {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
             color: #333;
+            margin: 0;
+            line-height: 1.2;
+            text-transform: capitalize;
         }
-        #finalSubmit {
-            background-color: #e53935; /* Red for final action */
-            color: white;
-            margin-top: 20px;
+
+        /* Course Info */
+        .course-info {
+            margin-bottom: 50px;
+            width: 100%;
         }
-        
-        /* Display Counters */
-        .counter-display {
+
+        .course-detail {
+            font-size: 1.3em;
+            margin: 10px 0;
+        }
+
+        /* Submission Details */
+        .submission-details {
             display: flex;
             justify-content: space-around;
-            text-align: center;
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #eceff1;
-            border-radius: 6px;
+            width: 100%;
+            margin-bottom: 50px;
+            text-align: left;
+            padding: 0 50px;
         }
-        .counter-item {
-            font-size: 24px;
-            font-weight: bold;
+
+        .submitted-to, .submitted-by {
+            width: 45%;
+            padding: 20px;
+            border: 1px dashed #aaa;
+            border-radius: 8px;
+            min-height: 200px; /* Ensure alignment */
+        }
+
+        .submitted-to {
+            border-left: 5px solid #00897b;
+        }
+
+        .submitted-by {
+            border-right: 5px solid #004d40;
+        }
+
+        .detail-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #004d40;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .detail-name {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin: 5px 0;
             color: #333;
-            flex-grow: 1;
         }
-        .counter-item span {
-            color: #0d47a1; /* Dark Blue */
+
+        .detail-designation, .department, .college-name-small {
+            margin: 2px 0;
+            font-size: 1em;
+            color: #555;
         }
-        
-        .status-board {
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 6px;
-            font-weight: bold;
-            text-align: center;
-            min-height: 40px;
+        /* Dept Name is dynamic based on course, but here we keep it fixed for simplicity */
+        .department::before {
+            content: "Department of ";
         }
-        
-        /* Summary Styling */
-        .summary p {
-            font-size: 16px;
+        .college-name-small {
+            margin-top: 10px;
+        }
+
+        .detail-info {
             margin: 8px 0;
-            padding-left: 10px;
-            border-left: 4px solid #f9a825;
+            font-size: 1.1em;
         }
-        .summary strong {
-            font-size: 18px;
-            color: #d84315;
+
+        .label {
+            font-weight: 700;
+            color: #004d40;
         }
-        
+
+        /* Footer Section */
+        .footer-section {
+            margin-top: auto; /* Push to the bottom */
+            width: 100%;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+        }
+
+        .submission-date-label {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #444;
+        }
+
+        .label-date {
+            color: #004d40;
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>🏗️ ডিজিটাল ঢালাই ট্র্যাকার</h2>
-    <p style="text-align: center;">মিক্স অনুপাত: **১ বস্তা সিমেন্ট : ৩ বালতি বালি : ৫ বালতি ক্রংকিট**</p>
-
-    <div class="session-info" id="sessionSetup">
-        <h3>প্রজেক্ট তথ্য (একবার শুরু করুন)</h3>
-        <label for="projectName">প্রজেক্ট/সাইটের নাম:</label>
-        <input type="text" id="projectName" value="নতুন ছাদ ঢালাই" required>
-        
-        <label for="projectDate">আজকের তারিখ:</label>
-        <input type="date" id="projectDate" required>
-        
-        <button id="startProject">কাজ শুরু করুন</button>
-    </div>
-
-    <div id="mainTracker" style="display: none;">
-        <div class="controls">
-            <h3>১. বর্তমান ব্যাচ (<span id="cementCountDisplay">১</span> নং বস্তা)</h3>
+    <div class="app-container">
+        <div class="input-form">
+            <h2>Assignment Details Input</h2>
             
-            <div class="counter-display">
-                <div class="counter-item">
-                    বাকি বালি: <span id="sandCounter">3</span>
-                </div>
-                <div class="counter-item">
-                    বাকি ক্রংকিট: <span id="concreteCounter">5</span>
+            <label for="assignment-title">Assignment Title</label>
+            <input type="text" id="assignment-title" placeholder="e.g., The Impact of Climate Change on Coastal Ecosystems">
+            
+            <label for="course-name">Course Name</label>
+            <input type="text" id="course-name" placeholder="e.g., Environmental Science">
+            
+            <label for="course-code">Course Code</label>
+            <input type="text" id="course-code" placeholder="e.g., 401">
+
+            <div class="separator">Submitted By (Student)</div>
+            
+            <label for="student-name">Student Name</label>
+            <input type="text" id="student-name" placeholder="e.g., Kamrul Hasan">
+
+            <label for="student-id">Student ID / Roll No.</label>
+            <input type="text" id="student-id" placeholder="e.g., 2021004333010">
+
+            <label for="student-session">Session (Academic Year)</label>
+            <input type="text" id="student-session" placeholder="e.g., 2021-2022">
+
+            <div class="separator">Submitted To (Teacher/Supervisor)</div>
+            
+            <label for="teacher-name">Teacher's Name</label>
+            <input type="text" id="teacher-name" placeholder="e.g., Prof. Dr. Mohammad Akram">
+
+            <label for="teacher-designation">Designation</label>
+            <input type="text" id="teacher-designation" placeholder="e.g., Head of the Department">
+
+            <label for="submission-date">Submission Date</label>
+            <input type="date" id="submission-date">
+
+            <button id="download-btn">Generate & Download PDF Cover Page</button>
+        </div>
+
+        <div class="preview-area">
+            <h3>Cover Page Preview (A4 Size)</h3>
+            <div id="cover-page-preview" class="cover-page">
+                <div class="cover-content">
+
+                    <div class="header-section">
+                        <p class="university">Affiliated to National University, Bangladesh</p>
+                        <h1 class="college-name">PATIYA GOVERNMENT COLLEGE</h1>
+                        <p class="college-address">Patiya, Chattogram, Bangladesh</p>
+                        <div class="logo-placeholder">
+                            <p class="logo-text">LOGO</p>
+                        </div>
+                    </div>
+
+                    <div class="title-section">
+                        <p class="document-type">AN ASSIGNMENT ON</p>
+                        <h2 id="preview-assignment-title" class="main-title">*** Assignment Title Here ***</h2>
+                    </div>
+
+                    <div class="course-info">
+                        <p class="course-detail"><span class="label">Course Name:</span> <span id="preview-course-name">*** Course Name ***</span></p>
+                        <p class="course-detail"><span class="label">Course Code:</span> <span id="preview-course-code">*** Course Code ***</span></p>
+                    </div>
+
+                    <div class="submission-details">
+                        <div class="submitted-to">
+                            <p class="detail-heading">Submitted To</p>
+                            <p id="preview-teacher-name" class="detail-name">Prof. [Teacher's Name]</p>
+                            <p id="preview-teacher-designation" class="detail-designation">[Designation]</p>
+                            <p class="department" id="preview-department">[Your Department Name]</p>
+                            <p class="college-name-small">Patiya Government College</p>
+                        </div>
+
+                        <div class="submitted-by">
+                            <p class="detail-heading">Submitted By</p>
+                            <p id="preview-student-name" class="detail-name">[Student Name]</p>
+                            <p class="detail-info"><span class="label">ID/Roll No:</span> <span id="preview-student-id">[ID/Roll No]</span></p>
+                            <p class="detail-info"><span class="label">Session:</span> <span id="preview-student-session">[Session]</span></p>
+                        </div>
+                    </div>
+
+                    <div class="footer-section">
+                        <p class="submission-date-label"><span class="label-date">Date of Submission:</span> <span id="preview-submission-date">DD/MM/YYYY</span></p>
+                    </div>
+
                 </div>
             </div>
-
-            <button id="addSand">১ বালতি বালি যোগ করুন</button>
-            <button id="addConcrete">১ বালতি ক্রংকিট যোগ করুন</button>
-            
-            <div id="batchStatus" class="status-board" style="background-color: #fff9c4; color: #f9a825;">উপাদান যোগ করা শুরু করুন।</div>
-            
-            <button id="nextBatch" disabled>পরবর্তী বস্তা (সিমেন্ট যোগ করা হয়েছে)</button>
-        </div>
-
-        <div class="summary">
-            <h3>২. প্রথম থেকে শেষ অবধি মোট হিসাব</h3>
-            <p>মোট সিমেন্ট: <strong id="totalCement">0</strong> বস্তা</p>
-            <p>মোট বালি: <strong id="totalSand">0</strong> বালতি</p>
-            <p>মোট ক্রংকিট: <strong id="totalConcrete">0</strong> বালতি</p>
-        </div>
-
-        <div class="submit-section">
-            <h3>৩. চূড়ান্ত রেকর্ড</h3>
-            <button id="finalSubmit">মোট কাজ শেষ ও হিসাব Google Sheet-এ জমা দিন</button>
-            <div id="submitMessage" class="status-board" style="background-color: #fbebeb; color: #e53935;">রেকর্ড জমা দেওয়ার জন্য প্রস্তুত।</div>
         </div>
     </div>
-</div>
 
-<script>
-    // ====================================================================================
-    // !!! অত্যন্ত গুরুত্বপূর্ণ: নিচের তথ্যগুলি আপনার গুগল ফর্ম থেকে পাওয়া ডেটা দিয়ে পরিবর্তন করুন !!!
-    // মনে রাখবেন, আপনাকে Google Form-এ "প্রজেক্টের নাম" এবং "তারিখ" এর জন্য অতিরিক্ত দুটি প্রশ্ন যোগ করতে হবে।
-    // ====================================================================================
-    const GOOGLE_FORM_URL = 'আপনার_ফর্ম_রেসপন্স_URL_এখানে_দিন'; 
-    const ENTRY_ID_PROJECT = 'entry.PPPPPPPPP';  // প্রজেক্টের নামের এন্ট্রি আইডি দিন
-    const ENTRY_ID_DATE = 'entry.DDDDDDDDD';     // তারিখের এন্ট্রি আইডি দিন
-    const ENTRY_ID_CEMENT = 'entry.XXXXXXXXX';   // সিমেন্টের এন্ট্রি আইডি দিন
-    const ENTRY_ID_SAND = 'entry.YYYYYYYYY';     // বালির এন্ট্রি আইডি দিন
-    const ENTRY_ID_CONCRETE = 'entry.ZZZZZZZZZ'; // ক্রংকিটের এন্ট্রি আইডি দিন
-    // ====================================================================================
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Get all input elements and preview elements
+            const inputs = {
+                title: document.getElementById('assignment-title'),
+                courseName: document.getElementById('course-name'),
+                courseCode: document.getElementById('course-code'),
+                sName: document.getElementById('student-name'),
+                sId: document.getElementById('student-id'),
+                sSession: document.getElementById('student-session'),
+                tName: document.getElementById('teacher-name'),
+                tDesignation: document.getElementById('teacher-designation'),
+                date: document.getElementById('submission-date')
+            };
 
-    const SAND_PER_BATCH = 3;
-    const CONCRETE_PER_BATCH = 5;
+            const previews = {
+                title: document.getElementById('preview-assignment-title'),
+                courseName: document.getElementById('preview-course-name'),
+                courseCode: document.getElementById('preview-course-code'),
+                sName: document.getElementById('preview-student-name'),
+                sId: document.getElementById('preview-student-id'),
+                sSession: document.getElementById('preview-student-session'),
+                tName: document.getElementById('preview-teacher-name'),
+                tDesignation: document.getElementById('preview-teacher-designation'),
+                date: document.getElementById('preview-submission-date')
+            };
 
-    let currentSand = 0;
-    let currentConcrete = 0;
-    let totalCement = 0;
-    let totalSand = 0;
-    let totalConcrete = 0;
-    
-    let projectDetails = { name: '', date: '' };
+            // Default Preview Text
+            const defaultText = {
+                title: '*** Assignment Title Here ***',
+                courseName: '*** Course Name ***',
+                courseCode: '*** Course Code ***',
+                sName: '[Student Name]',
+                sId: '[ID/Roll No]',
+                sSession: '[Session]',
+                tName: 'Prof. [Teacher\'s Name]',
+                tDesignation: '[Designation]',
+                date: 'DD/MM/YYYY'
+            };
 
+            // 2. Real-time Preview Update Function
+            function updatePreview() {
+                // Update Assignment Title
+                previews.title.textContent = inputs.title.value || defaultText.title;
+                
+                // Update Course Info
+                previews.courseName.textContent = inputs.courseName.value || defaultText.courseName;
+                previews.courseCode.textContent = inputs.courseCode.value || defaultText.courseCode;
 
-    // --- DOM উপাদান নির্বাচন ---
-    const mainTracker = document.getElementById('mainTracker');
-    const sessionSetup = document.getElementById('sessionSetup');
-    const startProjectButton = document.getElementById('startProject');
-    const projectNameInput = document.getElementById('projectName');
-    const projectDateInput = document.getElementById('projectDate');
-    
-    const sandCounter = document.getElementById('sandCounter');
-    const concreteCounter = document.getElementById('concreteCounter');
-    const totalCementDisplay = document.getElementById('totalCement');
-    const totalSandDisplay = document.getElementById('totalSand');
-    const totalConcreteDisplay = document.getElementById('totalConcrete');
-    const cementCountDisplay = document.getElementById('cementCountDisplay');
-    const nextBatchButton = document.getElementById('nextBatch');
-    const finalSubmitButton = document.getElementById('finalSubmit');
-    const batchStatus = document.getElementById('batchStatus');
-    const submitMessage = document.getElementById('submitMessage');
-    const addSandButton = document.getElementById('addSand');
-    const addConcreteButton = document.getElementById('addConcrete');
-    
-    // --- কাজ শুরু ফাংশন ---
-    startProjectButton.addEventListener('click', () => {
-        if (projectNameInput.value && projectDateInput.value) {
-            projectDetails.name = projectNameInput.value;
-            projectDetails.date = projectDateInput.value;
-            sessionSetup.style.display = 'none';
-            mainTracker.style.display = 'block';
-            alert(`কাজ শুরু! প্রজেক্ট: ${projectDetails.name}, তারিখ: ${projectDetails.date}`);
-            updateDisplay();
-        } else {
-            alert("প্রজেক্টের নাম এবং তারিখ অবশ্যই পূরণ করতে হবে।");
-        }
-    });
+                // Update Submitted To (Teacher) Info
+                previews.tName.textContent = inputs.tName.value || defaultText.tName;
+                previews.tDesignation.textContent = inputs.tDesignation.value || defaultText.tDesignation;
+                
+                // Update Submitted By (Student) Info
+                previews.sName.textContent = inputs.sName.value || defaultText.sName;
+                previews.sId.textContent = inputs.sId.value || defaultText.sId;
+                previews.sSession.textContent = inputs.sSession.value || defaultText.sSession;
 
-    // --- ডিসপ্লে আপডেট করার ফাংশন ---
-    function updateDisplay() {
-        // রিভার্স কাউন্টিং
-        sandCounter.textContent = SAND_PER_BATCH - currentSand;
-        concreteCounter.textContent = CONCRETE_PER_BATCH - currentConcrete;
-        
-        cementCountDisplay.textContent = totalCement + 1;
-        totalCementDisplay.textContent = totalCement;
-        totalSandDisplay.textContent = totalSand;
-        totalConcreteDisplay.textContent = totalConcrete;
-
-        const isSandComplete = currentSand >= SAND_PER_BATCH;
-        const isConcreteComplete = currentConcrete >= CONCRETE_PER_BATCH;
-
-        // বালতি বাটন লক করা
-        addSandButton.disabled = isSandComplete;
-        addConcreteButton.disabled = isConcreteComplete;
-        
-        // স্ট্যাটাস ও বাটন নিয়ন্ত্রণ
-        if (isSandComplete && isConcreteComplete) {
-            nextBatchButton.disabled = false;
-            nextBatchButton.style.backgroundColor = '#4CAF50'; /* Green when ready */
-            nextBatchButton.textContent = `✅ ${totalCement + 1} নং বস্তা সম্পন্ন। পরবর্তী বস্তা শুরু করুন।`;
-            batchStatus.style.backgroundColor = '#e8f5e9';
-            batchStatus.style.color = '#1b5e20';
-            batchStatus.textContent = "✅ এই ব্যাচের সমস্ত উপাদান (৩ বালি, ৫ ক্রংকিট) দেওয়া হয়ে গেছে।";
-        } else {
-            nextBatchButton.disabled = true;
-            nextBatchButton.style.backgroundColor = '#ffb74d'; /* Amber when not ready */
-            nextBatchButton.textContent = `পরবর্তী বস্তা (সিমেন্ট যোগ করা হয়েছে)`;
-            
-            let missing = [];
-            if (!isSandComplete) {
-                missing.push(`বালি (${SAND_PER_BATCH - currentSand})`);
-            }
-            if (!isConcreteComplete) {
-                missing.push(`ক্রংকিট (${CONCRETE_PER_BATCH - currentConcrete})`);
-            }
-
-            if (missing.length > 0) {
-                 batchStatus.style.backgroundColor = '#fff9c4';
-                 batchStatus.style.color = '#f9a825';
-                 batchStatus.textContent = `⚠️ আরও দিতে হবে: ${missing.join(' এবং ')} বালতি।`;
-            } else {
-                 batchStatus.textContent = "উপাদান যোগ করা শুরু করুন।";
-            }
-        }
-    }
-
-    // --- গুগল ফর্মে ডেটা সাবমিট করার ফাংশন ---
-    function submitToGoogleForm() {
-        if (!projectDetails.name || !projectDetails.date) {
-            alert("ত্রুটি: কাজ শুরুর আগে প্রজেক্টের তথ্য পূরণ করতে হবে!");
-            return;
-        }
-
-        submitMessage.style.backgroundColor = '#e3f2fd';
-        submitMessage.style.color = '#1565c0';
-        submitMessage.textContent = "🔄 ডেটা Google Sheet-এ জমা হচ্ছে, অপেক্ষা করুন...";
-        finalSubmitButton.disabled = true;
-
-        const data = {
-            [ENTRY_ID_PROJECT]: projectDetails.name,
-            [ENTRY_ID_DATE]: projectDetails.date,
-            [ENTRY_ID_CEMENT]: totalCement,
-            [ENTRY_ID_SAND]: totalSand,
-            [ENTRY_ID_CONCRETE]: totalConcrete,
-        };
-
-        const formBody = Object.keys(data).map(key => {
-            return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
-        }).join('&');
-
-        fetch(GOOGLE_FORM_URL, {
-            method: 'POST',
-            body: formBody,
-            mode: 'no-cors' 
-        })
-        .then(() => {
-            submitMessage.style.backgroundColor = '#e8f5e9';
-            submitMessage.style.color = '#1b5e20';
-            submitMessage.textContent = `✅ সফল! মোট ${totalCement} বস্তার হিসাব Google Sheet-এ জমা হয়েছে।`;
-            
-            // সাবমিট করার পর রিসেট করার জন্য কনফার্মেশন
-            setTimeout(() => {
-                const confirmReset = confirm("হিসাব সফলভাবে জমা হয়েছে। আপনি কি ট্র্যাকারটি নতুন কাজের জন্য রিসেট করতে চান?");
-                if (confirmReset) {
-                    resetTracker();
-                    alert("ট্র্যাকার রিসেট করা হয়েছে।");
-                } else {
-                    finalSubmitButton.disabled = false;
+                // Update Submission Date
+                let submissionDate = defaultText.date;
+                if (inputs.date.value) {
+                    const dateObj = new Date(inputs.date.value);
+                    submissionDate = dateObj.toLocaleDateString('en-GB', {
+                        day: '2-digit', month: 'long', year: 'numeric'
+                    });
                 }
-            }, 1000);
-        })
-        .catch(error => {
-            submitMessage.style.backgroundColor = '#ffebee';
-            submitMessage.style.color = '#c62828';
-            submitMessage.textContent = '❌ ডেটা জমা দিতে ব্যর্থ হয়েছে। ইন্টারনেট সংযোগ দেখুন।';
-            finalSubmitButton.disabled = false;
-            console.error('Google Form-এ ডেটা জমা দিতে ব্যর্থ হয়েছে:', error);
+                previews.date.textContent = submissionDate;
+
+                // Automatically set Department name in Teacher's section (Optional)
+                document.getElementById('preview-department').textContent = inputs.courseName.value ? 
+                    inputs.courseName.value.split(' ')[0] + ' ' + inputs.courseName.value.split(' ')[1] : 
+                    '[Your Department Name]';
+            }
+
+            // Attach event listeners to all input fields
+            Object.values(inputs).forEach(input => {
+                input.addEventListener('input', updatePreview);
+            });
+
+            // Set initial state
+            updatePreview();
+
+
+            // 3. PDF Generation Function
+            document.getElementById('download-btn').addEventListener('click', function() {
+                const element = document.getElementById('cover-page-preview'); // আপনার কভার পেইজের div ID
+                
+                // Set PDF options for A4 format
+                var opt = {
+                    margin:       0.5,
+                    filename:     'Patiya_Govt_College_Assignment_Cover_Page.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, logging: true, dpi: 192, letterRendering: true },
+                    jsPDF:        { unit: 'in', format: 'A4', orientation: 'portrait' }
+                };
+
+                // Generate and Save the PDF
+                html2pdf().set(opt).from(element).save();
+            });
         });
-    }
-
-    // --- ট্র্যাকার রিসেট করার ফাংশন ---
-    function resetTracker() {
-        currentSand = 0;
-        currentConcrete = 0;
-        totalCement = 0;
-        totalSand = 0;
-        totalConcrete = 0;
-        finalSubmitButton.disabled = false;
-        submitMessage.style.backgroundColor = '#fbebeb';
-        submitMessage.style.color = '#e53935';
-        submitMessage.textContent = "রেকর্ড জমা দেওয়ার জন্য প্রস্তুত।";
-        
-        // সেশন ইনফো রিসেট
-        sessionSetup.style.display = 'block';
-        mainTracker.style.display = 'none';
-        projectNameInput.value = "নতুন ছাদ ঢালাই";
-        projectDateInput.value = '';
-        projectDetails = { name: '', date: '' };
-        
-        updateDisplay();
-    }
-
-
-    // --- ইভেন্ট লিসেনার সেটআপ ---
-    addSandButton.addEventListener('click', () => {
-        if (currentSand < SAND_PER_BATCH) {
-            currentSand++;
-            totalSand++;
-            updateDisplay();
-        } else {
-            alert('সতর্কতা: ৩ বালতি বালি দেওয়া হয়ে গেছে!');
-        }
-    });
-
-    addConcreteButton.addEventListener('click', () => {
-        if (currentConcrete < CONCRETE_PER_BATCH) {
-            currentConcrete++;
-            totalConcrete++;
-            updateDisplay();
-        } else {
-             alert('সতর্কতা: ৫ বালতি ক্রংকিট দেওয়া হয়ে গেছে!');
-        }
-    });
-
-    nextBatchButton.addEventListener('click', () => {
-        if (currentSand >= SAND_PER_BATCH && currentConcrete >= CONCRETE_PER_BATCH) {
-            totalCement++; 
-            currentSand = 0;
-            currentConcrete = 0;
-            alert(`✅ ${totalCement} নং বস্তার কাজ সম্পন্ন।`);
-            updateDisplay();
-        }
-    });
-
-    finalSubmitButton.addEventListener('click', () => {
-        const confirmMsg = `আপনি প্রজেক্ট: ${projectDetails.name}-এর মোট ${totalCement} বস্তার হিসাব চূড়ান্তভাবে Google Sheet-এ জমা দিতে চলেছেন। নিশ্চিত করুন।`;
-        if (confirm(confirmMsg)) {
-            submitToGoogleForm();
-        }
-    });
-
-    // প্রথম লোডের সময় ডিসপ্লে আপডেট করা
-    // এখানে ডিফল্ট তারিখ সেট করা
-    projectDateInput.valueAsDate = new Date();
-    updateDisplay(); 
-</script>
-
+    </script>
 </body>
 </html>
