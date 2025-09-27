@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ঢালাই মিক্সিং কাউন্টার</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h2, h3 {
+            color: #333;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+        }
+        .controls, .summary {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        .controls {
+            background-color: #e6f7ff;
+        }
+        .summary {
+            background-color: #fff0e6;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        #addSand {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+        #addSand:hover {
+            background-color: #45a049;
+        }
+        #addConcrete {
+            background-color: #008CBA; /* Blue */
+            color: white;
+        }
+        #addConcrete:hover {
+            background-color: #007bb5;
+        }
+        #nextBatch {
+            background-color: #f44336; /* Red */
+            color: white;
+        }
+        #nextBatch:hover {
+            background-color: #da190b;
+        }
+        .counter-display {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 5px;
+            background-color: #eee;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>সিমেন্ট ঢালাই মিক্সিং ট্র্যাকার</h2>
+    <p>মিক্স অনুপাত: ১ বস্তা সিমেন্ট : **৩ বালতি বালি** : **৫ বালতি ক্রংকিট**</p>
+
+    <div class="controls">
+        <h3>১. বর্তমান ব্যাচ (সিমেন্টের বস্তা: <span id="cementCountDisplay">১</span>)</h3>
+        
+        <p>এই ব্যাচে বালি ও কংক্রিট যোগ করুন:</p>
+        
+        <button id="addSand"> বালির বালতি যোগ করুন</button>
+        <button id="addConcrete">ক্রংকিটের বালতি যোগ করুন</button>
+        
+        <div class="counter-display">
+            বালি: <span id="sandCounter">0</span> / 3 | 
+            ক্রংকিট: <span id="concreteCounter">0</span> / 5
+        </div>
+
+        <button id="nextBatch" disabled>পরবর্তী বস্তা (ঢালাই মিক্সিং শুরু)</button>
+        <p id="batchStatus" style="color: blue; font-weight: bold;"></p>
+    </div>
+
+    <div class="summary">
+        <h3>২. প্রথম থেকে শেষ অবধি মোট হিসাব</h3>
+        <p>মোট সিমেন্ট: <strong id="totalCement">0</strong> বস্তা</p>
+        <p>মোট বালি: <strong id="totalSand">0</strong> বালতি</p>
+        <p>মোট ক্রংকিট: <strong id="totalConcrete">0</strong> বালতি</p>
+    </div>
+</div>
+
+<script>
+    // --- মিক্সিং এর অনুপাত সেট করা ---
+    const SAND_PER_BATCH = 3;
+    const CONCRETE_PER_BATCH = 5;
+
+    // --- বর্তমান ব্যাচের জন্য ভেরিয়েবল ---
+    let currentSand = 0;
+    let currentConcrete = 0;
+
+    // --- মোট হিসেবের জন্য ভেরিয়েবল ---
+    let totalCement = 0;
+    let totalSand = 0;
+    let totalConcrete = 0;
+
+    // --- DOM উপাদান নির্বাচন করা ---
+    const sandCounter = document.getElementById('sandCounter');
+    const concreteCounter = document.getElementById('concreteCounter');
+    const totalCementDisplay = document.getElementById('totalCement');
+    const totalSandDisplay = document.getElementById('totalSand');
+    const totalConcreteDisplay = document.getElementById('totalConcrete');
+    const cementCountDisplay = document.getElementById('cementCountDisplay');
+    const nextBatchButton = document.getElementById('nextBatch');
+    const batchStatus = document.getElementById('batchStatus');
+
+    // --- ডিসপ্লে আপডেট করার ফাংশন ---
+    function updateDisplay() {
+        sandCounter.textContent = currentSand;
+        concreteCounter.textContent = currentConcrete;
+        cementCountDisplay.textContent = totalCement + 1; // বর্তমান ঢালাই মিক্সিং নম্বর
+        
+        // মোট হিসাব আপডেট
+        totalCementDisplay.textContent = totalCement;
+        totalSandDisplay.textContent = totalSand;
+        totalConcreteDisplay.textContent = totalConcrete;
+
+        // স্ট্যাটাস ও বাটন নিয়ন্ত্রণ
+        const isSandComplete = currentSand >= SAND_PER_BATCH;
+        const isConcreteComplete = currentConcrete >= CONCRETE_PER_BATCH;
+
+        if (isSandComplete && isConcreteComplete) {
+            nextBatchButton.disabled = false;
+            nextBatchButton.textContent = `সিমেন্টের ${totalCement + 1} নং বস্তা সম্পূর্ণ হয়েছে। পরবর্তী বস্তা শুরু করুন।`;
+            batchStatus.textContent = "সমস্ত উপাদান ঠিকমতো দেওয়া হয়েছে। পরবর্তী বস্তা ঢালার জন্য প্রস্তুত।";
+        } else {
+            nextBatchButton.disabled = true;
+            nextBatchButton.textContent = `পরবর্তী ঢালাই মিক্সিং  শুরু)`;
+            
+            let missing = [];
+            if (!isSandComplete) {
+                missing.push(`${SAND_PER_BATCH - currentSand} বালতি বালি`);
+            }
+            if (!isConcreteComplete) {
+                missing.push(`${CONCRETE_PER_BATCH - currentConcrete} বালতি ক্রংকিট`);
+            }
+
+            if (missing.length > 0) {
+                 batchStatus.textContent = `আরও দিতে হবে: ${missing.join(' এবং ')}।`;
+            } else {
+                 batchStatus.textContent = "";
+            }
+           
+        }
+    }
+
+    // --- বালতি যোগ করার ইভেন্ট লিসেনার ---
+    document.getElementById('addSand').addEventListener('click', () => {
+        if (currentSand < SAND_PER_BATCH) {
+            currentSand++;
+            totalSand++;
+            updateDisplay();
+        } else {
+            alert('সতর্কতা: এই মিক্সারের জন্য ৩ বালতি বালি দেওয়া হয়ে গেছে!');
+        }
+    });
+
+    document.getElementById('addConcrete').addEventListener('click', () => {
+        if (currentConcrete < CONCRETE_PER_BATCH) {
+            currentConcrete++;
+            totalConcrete++;
+            updateDisplay();
+        } else {
+             alert('সতর্কতা: এই মিক্সারের জন্য ৫ বালতি ক্রংকিট দেওয়া হয়ে গেছে!');
+        }
+    });
+
+    // --- পরবর্তী ব্যাচ শুরু করার ফাংশন ---
+    nextBatchButton.addEventListener('click', () => {
+        if (currentSand >= SAND_PER_BATCH && currentConcrete >= CONCRETE_PER_BATCH) {
+            // মোট সিমেন্টের হিসাব বাড়ানো
+            totalCement++; 
+            
+            // বর্তমান ব্যাচের হিসাব ০ করা
+            currentSand = 0;
+            currentConcrete = 0;
+            
+            alert(`সিমেন্টের ${totalCement} নং বস্তার কাজ শেষ। এখন ${totalCement + 1} নং বস্তা ঢালা হচ্ছে।`);
+            updateDisplay();
+        }
+    });
+
+    // প্রথম লোডের সময় ডিসপ্লে আপডেট করা
+    updateDisplay();
+</script>
+
+</body>
+</html>
