@@ -19,6 +19,7 @@
             justify-content: center;
             align-items: flex-start;
             gap: 30px;
+            width: 100%;
         }
 
         .app-container {
@@ -38,6 +39,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 20px;
+            height: fit-content; /* Sticky form height adjustment */
         }
 
         .input-form h2 {
@@ -125,6 +127,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             padding: 30px; /* Padding for inner content */
             box-sizing: border-box;
+            /* CRITICAL: Fixed size for accurate PDF conversion */
         }
 
         .cover-content {
@@ -470,8 +473,9 @@
                 previews.date.textContent = submissionDate;
 
                 // Automatically set Department name in Teacher's section (Optional)
-                document.getElementById('preview-department').textContent = inputs.courseName.value ? 
-                    inputs.courseName.value.split(' ')[0] + ' ' + inputs.courseName.value.split(' ')[1] : 
+                const courseWords = inputs.courseName.value ? inputs.courseName.value.split(' ') : [];
+                document.getElementById('preview-department').textContent = courseWords.length > 0 ? 
+                    courseWords.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 
                     '[Your Department Name]';
             }
 
@@ -484,17 +488,26 @@
             updatePreview();
 
 
-            // 3. PDF Generation Function
+            // 3. PDF Generation Function (CRITICAL CHANGES FOR ALIGNMENT)
             document.getElementById('download-btn').addEventListener('click', function() {
-                const element = document.getElementById('cover-page-preview'); // আপনার কভার পেইজের div ID
+                const element = document.getElementById('cover-page-preview'); 
                 
                 // Set PDF options for A4 format
                 var opt = {
-                    margin:       0.5,
+                    margin:       0.5, // 0.5 inch margin on all sides
                     filename:     'Patiya_Govt_College_Assignment_Cover_Page.pdf',
                     image:        { type: 'jpeg', quality: 0.98 },
-                    html2canvas:  { scale: 2, logging: true, dpi: 192, letterRendering: true },
-                    jsPDF:        { unit: 'in', format: 'A4', orientation: 'portrait' }
+                    html2canvas:  { 
+                        scale: 4, // Higher scale for better resolution and clarity
+                        logging: false, 
+                        dpi: 192, 
+                        letterRendering: true 
+                    },
+                    jsPDF:        { 
+                        unit: 'in', 
+                        format: 'A4', 
+                        orientation: 'portrait' 
+                    }
                 };
 
                 // Generate and Save the PDF
