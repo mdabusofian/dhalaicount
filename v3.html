@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Lab — Blood Group Report (Smooth & Verifiable)</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary: #8a0c20; /* Dark Maroon */
+  --secondary: #2d3748; /* Dark Slate Gray */
+  --accent: #e53e3e; /* Red Accent */
+  --bg-light: #f9fafb;
+  --bg-dark: #1a202c;
+  --text-dark: #1a202c;
+  --text-light: #fff;
+  --card-bg: #ffffff;
+  --border-color: #e2e8f0;
+  --input-bg: #ffffff;
+  --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+* {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans', system-ui, Arial, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+}
+.wrap {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 16px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--card-bg), var(--card-bg) 60%, rgba(138, 12, 32, 0.05));
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-light);
+}
+.logo-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgba(138, 12, 32, 0.1);
+  border: 1px solid rgba(138, 12, 32, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-size: 24px;
+  font-weight: 700;
+}
+.main-title {
+  margin: 0;
+  font-size: 22px;
+  color: var(--primary);
+  font-weight: 700;
+}
+.subtitle {
+  margin: 0;
+  color: var(--secondary);
+  font-size: 14px;
+  opacity: 0.8;
+}
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 450px;
+  gap: 24px;
+  margin-top: 24px;
+}
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-dark);
+}
+.card-title {
+  margin: 0 0 16px 0;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 18px;
+}
+label {
+  display: block;
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--secondary);
+  font-weight: 600;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-top: 6px;
+  font-size: 14px;
+  background-color: var(--input-bg);
+  color: var(--text-dark);
+  transition: all 0.2s;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(229, 62, 62, 0.2);
+}
+.row {
+  display: flex;
+  gap: 12px;
+}
+.btn {
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+.btn.primary {
+  background: var(--accent);
+  color: var(--text-light);
+}
+.btn.ghost {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--secondary);
+}
+.btn:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+.muted {
+  color: var(--secondary);
+  font-size: 14px;
+  opacity: 0.8;
+}
+#reportPreview {
+  display: none;
+}
+.reportPage {
+  width: 210mm;
+  max-width: 100%;
+  margin: 10px auto;
+  background: white;
+  border-radius: 12px;
+  padding: 22mm;
+  box-shadow: 0 8px 22px rgba(2,6,23,0.08);
+}
+.reportHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 12px;
+}
+.labTitle {
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 24px;
+}
+.labSub {
+  color: var(--secondary);
+  font-size: 13px;
+  opacity: 0.9;
+}
+.patientGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+.infoTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+.infoTable td {
+  padding: 10px;
+  border: 1px solid #f1f1f1;
+  font-size: 14px;
+}
+.infoTable b {
+  color: var(--secondary);
+}
+.resultTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.resultTable th, .resultTable td {
+  padding: 12px;
+  border: 1px solid #eaeaea;
+  text-align: left;
+}
+.resultTable thead {
+  background: var(--primary);
+  color: var(--text-light);
+}
+.resultTable th {
+  font-weight: 700;
+}
+.sigRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 24px;
+}
+.sigBox {
+  width: 45%;
+  text-align: center;
+}
+.sigLine {
+  border-top: 2px dashed #9ca3af;
+  padding-top: 8px;
+}
+.small {
+  font-size: 12px;
+  color: var(--secondary);
+}
+.qrWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #reportPreview, #reportPreview * {
+    visibility: visible;
+  }
+  #reportPreview {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
+@media (max-width: 980px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+  .qrWrap {
+    align-items: flex-start;
+  }
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+<header class="header">
+  <div class="logo-circle" id="logoBox">BD</div>
+  <div>
+    <h1 class="main-title">Chittagong Diagnostic Lab</h1>
+    <p class="subtitle">Accurate • Fast • Trusted — Address: Chattogram · Hotline: 01234-567890</p>
+  </div>
+  <div style="margin-left:auto" class="muted">Version 2.0</div>
+</header>
+
+<div class="main-content">
+  <div class="card">
+    <h3 class="card-title">Report Input</h3>
+    <div class="muted">Fill in the patient's information, then click Generate or Demo fill.</div>
+
+    <label>Patient Name</label>
+    <input id="inp_name" placeholder="Example: Md. Rafi" />
+
+    <div class="row">
+      <div style="flex:1">
+        <label>Reference / ID</label>
+        <input id="inp_ref" placeholder="Automatically Generated" readonly />
+      </div>
+      <div style="width:120px">
+        <label>Age</label>
+        <input id="inp_age" placeholder="28" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div style="flex:1">
+        <label>Gender</label>
+        <select id="inp_gender"><option>Male</option><option>Female</option><option>Other</option></select>
+      </div>
+      <div style="width:180px">
+        <label>Mobile</label>
+        <input id="inp_phone" placeholder="01xxxxxxxxx" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div style="flex:1">
+        <label>Blood Group</label>
+        <select id="inp_group"><option value="">--Select--</option><option>O+</option><option>O-</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option></select>
+      </div>
+      <div style="width:160px">
+        <label>Rh Factor</label>
+        <select id="inp_rh"><option>Positive</option><option>Negative</option><option>Unknown</option></select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div style="flex:1">
+        <label>Sample Collection Date</label>
+        <input id="inp_sample" type="date" />
+      </div>
+      <div style="width:200px">
+        <label>Report Issue Date</label>
+        <input id="inp_issue" type="date" />
+      </div>
+    </div>
+
+    <label>Technician / Report Prepared By</label>
+    <input id="inp_tech" placeholder="Md. Lab Tech" />
+
+    <label>Notes (Optional)</label>
+    <textarea id="inp_notes" rows="2" placeholder="Cross-match, remarks etc."></textarea>
+
+    <div style="display:flex;gap:8px;margin-top:20px;align-items:center">
+      <button class="btn ghost" id="btn_demo">Demo Fill</button>
+      <button class="btn ghost" id="btn_clear">Clear</button>
+      <button class="btn primary" id="btn_generate" style="margin-left:auto">Generate Report</button>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h4 class="card-title">Report Preview & Controls</h4>
+      <div class="muted">Clicking "Generate" will fill the report below — then Print or Download PDF.</div>
+
+      <div style="display:flex;gap:8px;margin-top:20px">
+        <button class="btn ghost" id="btn_print">Print</button>
+        <button class="btn ghost" id="btn_pdf">Download PDF</button>
+      </div>
+
+      <hr style="margin:20px 0;border-color:var(--border-color)">
+      <h4 class="card-title">Verify Report</h4>
+      <input id="verify_input" placeholder="Enter Report ID" />
+      <button class="btn ghost" id="btn_verify" style="margin-top:8px">Verify</button>
+      <div id="verify_result" class="muted" style="margin-top:8px"></div>
+    </div>
+  </div>
+</div>
+
+<div id="reportPreview" style="margin-top:18px">
+  <div class="reportPage" id="reportPage">
+    <div class="reportHeader">
+      <div>
+        <div class="labTitle" id="r_lab">CHITTAGONG DIAGNOSTIC LAB</div>
+        <div class="labSub" id="r_labSub">Address: Chattogram · Hotline: 01234-567890 · Email: info@lab.example</div>
+      </div>
+      <div style="text-align:right">
+        <div class="small">Report No</div>
+        <div style="font-family:monospace;font-weight:700;color:var(--secondary);font-size:16px" id="r_id">—</div>
+        <div id="barcodeBox" style="margin-top:10px"><svg id="barcodeSvg"></svg></div>
+      </div>
+    </div>
+    <div class="patientGrid">
+      <table class="infoTable">
+        <tr><td><b>Patient Name</b></td><td id="r_name">—</td></tr>
+        <tr><td><b>Reference / ID</b></td><td id="r_ref">—</td></tr>
+        <tr><td><b>Age / Gender</b></td><td id="r_ageSex">—</td></tr>
+        <tr><td><b>Mobile</b></td><td id="r_phone">—</td></tr>
+      </table>
+      <table class="infoTable">
+        <tr><td><b>Sample Collected</b></td><td id="r_sample">—</td></tr>
+        <tr><td><b>Report Issued</b></td><td id="r_issue">—</td></tr>
+        <tr><td><b>Technician</b></td><td id="r_tech">—</td></tr>
+        <tr><td><b>Notes</b></td><td id="r_notes">—</td></tr>
+      </table>
+    </div>
+    <table class="resultTable" aria-label="results">
+      <thead><tr><th>Test</th><th>Result</th><th>Reference</th></tr></thead>
+      <tbody>
+        <tr><td>Blood Group</td><td id="r_group" style="font-weight:800;color:var(--accent);font-size:24px;letter-spacing:1px">—</td><td>O, A, B, AB (+/-)</td></tr>
+        <tr><td>Rh Factor</td><td id="r_rh">—</td><td>Positive / Negative</td></tr>
+      </tbody>
+    </table>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-top:20px">
+      <div style="width:55%"><div class="small"><b>Notes:</b></div><div id="r_notes_block" style="margin-top:8px;color:var(--secondary)">—</div></div>
+      <div class="qrWrap">
+        <div id="r_qr" style="background:#fff;padding:8px;border-radius:8px;border:1px solid #e6e6e6"></div>
+        <div class="small">Scan to verify</div>
+        <button class="btn ghost small" id="btn_copyLink">Copy Verify Link</button>
+      </div>
+    </div>
+    <div class="sigRow">
+      <div class="small">Report generated by Laboratory Information System</div>
+      <div class="sigBox"><div class="sigLine">Dr. __________________</div><div class="small">Authorized Signatory</div></div>
+    </div>
+    <div style="margin-top:8px" class="small">This is a computer generated report. For verification scan QR or use the Copy Link button.</div>
+  </div>
+</div>
+
+<script>
+// helpers
+const $ = id => document.getElementById(id);
+const nowDate = () => new Date().toISOString().slice(0,10);
+const rand = (n=4) => Math.random().toString(36).slice(2,2+n).toUpperCase();
+const genReportId = () => 'BR-' + new Date().getTime().toString().slice(-8) + '-' + rand(3);
+const RK = 'lab_reports_v2';
+let saved = JSON.parse(localStorage.getItem(RK) || '[]');
+
+function renderReport(r){
+  $('r_id').textContent = r.reportId;
+  $('r_name').textContent = r.name;
+  $('r_ref').textContent = r.ref || '—';
+  $('r_ageSex').textContent = (r.age ? r.age + ' / ' : '') + (r.gender || '—');
+  $('r_phone').textContent = r.phone || '—';
+  $('r_sample').textContent = r.sampleDate || '—';
+  $('r_issue').textContent = r.issueDate || '—';
+  $('r_tech').textContent = r.tech || '—';
+  $('r_notes').textContent = r.notes || '—';
+  $('r_notes_block').textContent = r.notes || '—';
+  $('r_group').textContent = r.group || '—';
+  $('r_rh').textContent = r.rh || '—';
+  $('r_lab').textContent = 'CHITTAGONG DIAGNOSTIC LAB';
+  $('r_labSub').textContent = 'Address: Chattogram · Hotline: 01234-567890 · Email: info@lab.example';
+
+  const payload = btoa(unescape(encodeURIComponent(JSON.stringify(r))));
+  const verifyUrl = location.origin + location.pathname + '#r=' + encodeURIComponent(payload);
+
+  $('r_qr').innerHTML = '';
+  new QRCode($('r_qr'), { text: verifyUrl, width:110, height:110 });
+  $('barcodeBox').innerHTML = `<svg id="barcodeSvg"></svg>`;
+  try{ JsBarcode('#barcodeSvg', r.reportId, {format:'CODE128', lineColor:'#111827', width:1.2, height:36, displayValue:false}); }catch(e){}
+  $('reportPreview').style.display='block';
+
+  // store verifyUrl for copy button
+  $('btn_copyLink').dataset.url = verifyUrl;
+}
+
+// Demo Fill
+$('btn_demo').addEventListener('click', ()=>{
+  $('inp_name').value='Rashidul Islam';
+  $('inp_age').value='29';
+  $('inp_gender').value='Male';
+  $('inp_phone').value='017XXXXXXXX';
+  $('inp_group').value='A+';
+  $('inp_rh').value='Positive';
+  $('inp_sample').value=nowDate();
+  $('inp_issue').value=nowDate();
+  $('inp_tech').value='Md. Lab Tech';
+  $('inp_notes').value='Cross-match performed. No discrepancy.';
+});
+
+// Clear
+$('btn_clear').addEventListener('click', ()=>document.querySelectorAll('input,textarea').forEach(i=>i.value=''));
+
+// Generate
+$('btn_generate').addEventListener('click', ()=>{
+  // Generate a new ID every time the button is clicked
+  const newId = genReportId();
+  $('inp_ref').value = newId;
+
+  const r = {
+    reportId: newId,
+    name:$('inp_name').value,
+    ref:$('inp_ref').value,
+    age:$('inp_age').value,
+    gender:$('inp_gender').value,
+    phone:$('inp_phone').value,
+    group:$('inp_group').value,
+    rh:$('inp_rh').value,
+    sampleDate:$('inp_sample').value,
+    issueDate:$('inp_issue').value,
+    tech:$('inp_tech').value,
+    notes:$('inp_notes').value
+  };
+  saved.push(r); localStorage.setItem(RK,JSON.stringify(saved));
+  renderReport(r);
+});
+
+// Print
+$('btn_print').addEventListener('click', ()=>window.print());
+
+// PDF Download
+$('btn_pdf').addEventListener('click', async ()=>{
+  const page = $('reportPage');
+  const canvas = await html2canvas(page,{scale:2});
+  const imgData = canvas.toDataURL('image/png');
+  const pdf = new jspdf.jsPDF('p','mm','a4');
+  const imgProps = pdf.getImageProperties(imgData);
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+  pdf.addImage(imgData,'PNG',0,0,pdfWidth,pdfHeight);
+  pdf.save(($('r_id').textContent||'report')+'.pdf');
+});
+
+// Copy verify link
+$('btn_copyLink').addEventListener('click', ()=>{
+  const url = $('btn_copyLink').dataset.url;
+  if(url) navigator.clipboard.writeText(url).then(()=>alert('Verify link copied!'));
+});
+
+// Verify form
+$('btn_verify').addEventListener('click', ()=>{
+  const rid = $('verify_input').value.trim();
+  const report = saved.find(r=>r.reportId===rid);
+  $('verify_result').textContent = report? `✅ Valid Report: ${report.name}, Group: ${report.group}` : '❌ Invalid Report ID';
+});
+
+// On page load, check hash
+window.addEventListener('load', ()=>{
+  if(location.hash.startsWith('#r=')){
+    try{
+      const data = JSON.parse(decodeURIComponent(atob(location.hash.slice(3))));
+      renderReport(data);
+    }catch(e){}
+  }
+});
+</script>
+</body> 
+</html>
