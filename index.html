@@ -3,30 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ডিজিটাল ঢালাই ট্র্যাকার V2</title>
+    <title>ডিজিটাল ঢালাই ট্র্যাকার V3 - চূড়ান্ত</title>
     <style>
         /* Base Styling */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #e8f5e9; /* Light Green Background */
+            background-color: #f0f4f7; /* Light Blue Background */
             color: #333;
         }
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             background: #ffffff;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         h2 {
-            color: #1b5e20; /* Dark Green Header */
+            color: #0d47a1; /* Dark Blue Header */
             text-align: center;
             margin-bottom: 25px;
-            border-bottom: 3px solid #c8e6c9;
+            border-bottom: 3px solid #bbdefb;
             padding-bottom: 10px;
+        }
+
+        /* Input/Session Styling */
+        .session-info {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .session-info input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #90caf9;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .session-info label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        #startProject {
+            background-color: #4CAF50;
+            color: white;
+            margin-top: 15px;
         }
 
         /* Section Styling */
@@ -36,12 +62,12 @@
             border-radius: 8px;
         }
         .controls {
-            background-color: #f1f8e9; /* Lighter Green for controls */
-            border: 1px solid #c8e6c9;
+            background-color: #fcfcfc;
+            border: 1px solid #e0e0e0;
         }
         .summary {
-            background-color: #fff3e0; /* Orange/Yellow for summary */
-            border: 1px solid #ffe0b2;
+            background-color: #fff8e1; /* Yellow for summary */
+            border: 1px solid #ffe082;
         }
 
         /* Button Styling */
@@ -57,24 +83,24 @@
             font-weight: bold;
         }
         button:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
         #addSand {
-            background-color: #4CAF50; /* Green */
+            background-color: #64b5f6; /* Lighter Blue */
             color: white;
         }
         #addConcrete {
-            background-color: #2196F3; /* Blue */
+            background-color: #26a69a; /* Teal */
             color: white;
         }
         #nextBatch {
-            background-color: #ffc107; /* Amber when ready to go */
+            background-color: #ffb74d; /* Light Amber when ready */
             color: #333;
         }
         #finalSubmit {
-            background-color: #f44336; /* Red for final action */
+            background-color: #e53935; /* Red for final action */
             color: white;
             margin-top: 20px;
         }
@@ -86,85 +112,105 @@
             text-align: center;
             margin: 15px 0;
             padding: 10px;
-            background-color: #e0e0e0;
+            background-color: #eceff1;
             border-radius: 6px;
         }
         .counter-item {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             color: #333;
+            flex-grow: 1;
         }
         .counter-item span {
-            color: #1b5e20;
+            color: #0d47a1; /* Dark Blue */
         }
-
+        
+        .status-board {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-weight: bold;
+            text-align: center;
+            min-height: 40px;
+        }
+        
+        /* Summary Styling */
         .summary p {
             font-size: 16px;
             margin: 8px 0;
             padding-left: 10px;
-            border-left: 4px solid #ff9800;
+            border-left: 4px solid #f9a825;
         }
         .summary strong {
             font-size: 18px;
             color: #d84315;
         }
         
-        .status-message {
-            text-align: center;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>🛠️ ঢালাই মিশ্রণ ট্র্যাকার</h2>
-    <p style="text-align: center; font-weight: bold;">মিক্স অনুপাত: ১ বস্তা সিমেন্ট : ৩ বালতি বালি : ৫ বালতি ক্রংকিট</p>
+    <h2>🏗️ ডিজিটাল ঢালাই ট্র্যাকার</h2>
+    <p style="text-align: center;">মিক্স অনুপাত: **১ বস্তা সিমেন্ট : ৩ বালতি বালি : ৫ বালতি ক্রংকিট**</p>
 
-    <div class="controls">
-        <h3>১. বর্তমান ব্যাচ (<span id="cementCountDisplay">১</span> নং বস্তা)</h3>
+    <div class="session-info" id="sessionSetup">
+        <h3>প্রজেক্ট তথ্য (একবার শুরু করুন)</h3>
+        <label for="projectName">প্রজেক্ট/সাইটের নাম:</label>
+        <input type="text" id="projectName" value="নতুন ছাদ ঢালাই" required>
         
-        <div class="counter-display">
-            <div class="counter-item">
-                বালি: <span id="sandCounter">0</span> / 3
+        <label for="projectDate">আজকের তারিখ:</label>
+        <input type="date" id="projectDate" required>
+        
+        <button id="startProject">কাজ শুরু করুন</button>
+    </div>
+
+    <div id="mainTracker" style="display: none;">
+        <div class="controls">
+            <h3>১. বর্তমান ব্যাচ (<span id="cementCountDisplay">১</span> নং বস্তা)</h3>
+            
+            <div class="counter-display">
+                <div class="counter-item">
+                    বাকি বালি: <span id="sandCounter">3</span>
+                </div>
+                <div class="counter-item">
+                    বাকি ক্রংকিট: <span id="concreteCounter">5</span>
+                </div>
             </div>
-            <div class="counter-item">
-                ক্রংকিট: <span id="concreteCounter">0</span> / 5
-            </div>
+
+            <button id="addSand">১ বালতি বালি যোগ করুন</button>
+            <button id="addConcrete">১ বালতি ক্রংকিট যোগ করুন</button>
+            
+            <div id="batchStatus" class="status-board" style="background-color: #fff9c4; color: #f9a825;">উপাদান যোগ করা শুরু করুন।</div>
+            
+            <button id="nextBatch" disabled>পরবর্তী বস্তা (সিমেন্ট যোগ করা হয়েছে)</button>
         </div>
 
-        <button id="addSand">বালতি বালি যোগ করুন</button>
-        <button id="addConcrete">বালতি ক্রংকিট যোগ করুন</button>
-        
-        <div id="batchStatus" class="status-message" style="background-color: #fff9c4; color: #f9a825;">উপাদান যোগ করা শুরু করুন।</div>
-        
-        <button id="nextBatch" disabled>পরবর্তী বস্তা (ব্যাচ শুরু)</button>
-    </div>
+        <div class="summary">
+            <h3>২. প্রথম থেকে শেষ অবধি মোট হিসাব</h3>
+            <p>মোট সিমেন্ট: <strong id="totalCement">0</strong> বস্তা</p>
+            <p>মোট বালি: <strong id="totalSand">0</strong> বালতি</p>
+            <p>মোট ক্রংকিট: <strong id="totalConcrete">0</strong> বালতি</p>
+        </div>
 
-    <div class="summary">
-        <h3>২. প্রথম থেকে শেষ অবধি মোট হিসাব</h3>
-        <p>মোট সিমেন্ট: <strong id="totalCement">0</strong> বস্তা</p>
-        <p>মোট বালি: <strong id="totalSand">0</strong> বালতি</p>
-        <p>মোট ক্রংকিট: <strong id="totalConcrete">0</strong> বালতি</p>
-    </div>
-
-    <div class="submit-section">
-        <h3>৩. চূড়ান্ত রেকর্ড</h3>
-        <button id="finalSubmit">মোট কাজ শেষ ও হিসাব Google Sheet-এ জমা দিন</button>
-        <div id="submitMessage" class="status-message" style="background-color: #ffebee; color: #c62828;">রেকর্ড জমা দেওয়ার জন্য প্রস্তুত।</div>
+        <div class="submit-section">
+            <h3>৩. চূড়ান্ত রেকর্ড</h3>
+            <button id="finalSubmit">মোট কাজ শেষ ও হিসাব Google Sheet-এ জমা দিন</button>
+            <div id="submitMessage" class="status-board" style="background-color: #fbebeb; color: #e53935;">রেকর্ড জমা দেওয়ার জন্য প্রস্তুত।</div>
+        </div>
     </div>
 </div>
 
 <script>
     // ====================================================================================
     // !!! অত্যন্ত গুরুত্বপূর্ণ: নিচের তথ্যগুলি আপনার গুগল ফর্ম থেকে পাওয়া ডেটা দিয়ে পরিবর্তন করুন !!!
+    // মনে রাখবেন, আপনাকে Google Form-এ "প্রজেক্টের নাম" এবং "তারিখ" এর জন্য অতিরিক্ত দুটি প্রশ্ন যোগ করতে হবে।
     // ====================================================================================
     const GOOGLE_FORM_URL = 'আপনার_ফর্ম_রেসপন্স_URL_এখানে_দিন'; 
-    const ENTRY_ID_CEMENT = 'entry.XXXXXXXXX'; // সিমেন্টের এন্ট্রি আইডি দিন
-    const ENTRY_ID_SAND = 'entry.YYYYYYYYY';   // বালির এন্ট্রি আইডি দিন
+    const ENTRY_ID_PROJECT = 'entry.PPPPPPPPP';  // প্রজেক্টের নামের এন্ট্রি আইডি দিন
+    const ENTRY_ID_DATE = 'entry.DDDDDDDDD';     // তারিখের এন্ট্রি আইডি দিন
+    const ENTRY_ID_CEMENT = 'entry.XXXXXXXXX';   // সিমেন্টের এন্ট্রি আইডি দিন
+    const ENTRY_ID_SAND = 'entry.YYYYYYYYY';     // বালির এন্ট্রি আইডি দিন
     const ENTRY_ID_CONCRETE = 'entry.ZZZZZZZZZ'; // ক্রংকিটের এন্ট্রি আইডি দিন
     // ====================================================================================
 
@@ -176,7 +222,17 @@
     let totalCement = 0;
     let totalSand = 0;
     let totalConcrete = 0;
+    
+    let projectDetails = { name: '', date: '' };
 
+
+    // --- DOM উপাদান নির্বাচন ---
+    const mainTracker = document.getElementById('mainTracker');
+    const sessionSetup = document.getElementById('sessionSetup');
+    const startProjectButton = document.getElementById('startProject');
+    const projectNameInput = document.getElementById('projectName');
+    const projectDateInput = document.getElementById('projectDate');
+    
     const sandCounter = document.getElementById('sandCounter');
     const concreteCounter = document.getElementById('concreteCounter');
     const totalCementDisplay = document.getElementById('totalCement');
@@ -189,12 +245,27 @@
     const submitMessage = document.getElementById('submitMessage');
     const addSandButton = document.getElementById('addSand');
     const addConcreteButton = document.getElementById('addConcrete');
-
+    
+    // --- কাজ শুরু ফাংশন ---
+    startProjectButton.addEventListener('click', () => {
+        if (projectNameInput.value && projectDateInput.value) {
+            projectDetails.name = projectNameInput.value;
+            projectDetails.date = projectDateInput.value;
+            sessionSetup.style.display = 'none';
+            mainTracker.style.display = 'block';
+            alert(`কাজ শুরু! প্রজেক্ট: ${projectDetails.name}, তারিখ: ${projectDetails.date}`);
+            updateDisplay();
+        } else {
+            alert("প্রজেক্টের নাম এবং তারিখ অবশ্যই পূরণ করতে হবে।");
+        }
+    });
 
     // --- ডিসপ্লে আপডেট করার ফাংশন ---
     function updateDisplay() {
-        sandCounter.textContent = currentSand;
-        concreteCounter.textContent = currentConcrete;
+        // রিভার্স কাউন্টিং
+        sandCounter.textContent = SAND_PER_BATCH - currentSand;
+        concreteCounter.textContent = CONCRETE_PER_BATCH - currentConcrete;
+        
         cementCountDisplay.textContent = totalCement + 1;
         totalCementDisplay.textContent = totalCement;
         totalSandDisplay.textContent = totalSand;
@@ -211,14 +282,14 @@
         if (isSandComplete && isConcreteComplete) {
             nextBatchButton.disabled = false;
             nextBatchButton.style.backgroundColor = '#4CAF50'; /* Green when ready */
-            nextBatchButton.textContent = `সিমেন্টের ${totalCement + 1} নং বস্তা সম্পূর্ণ (১ বস্তা সিমেন্ট যোগ করুন)`;
+            nextBatchButton.textContent = `✅ ${totalCement + 1} নং বস্তা সম্পন্ন। পরবর্তী বস্তা শুরু করুন।`;
             batchStatus.style.backgroundColor = '#e8f5e9';
             batchStatus.style.color = '#1b5e20';
-            batchStatus.textContent = "✅ এই ব্যাচের উপাদান ঠিক আছে! পরবর্তী বস্তা ঢালার জন্য প্রস্তুত।";
+            batchStatus.textContent = "✅ এই ব্যাচের সমস্ত উপাদান (৩ বালি, ৫ ক্রংকিট) দেওয়া হয়ে গেছে।";
         } else {
             nextBatchButton.disabled = true;
-            nextBatchButton.style.backgroundColor = '#ffc107'; /* Amber when not ready */
-            nextBatchButton.textContent = `পরবর্তী বস্তা (ব্যাচ শুরু)`;
+            nextBatchButton.style.backgroundColor = '#ffb74d'; /* Amber when not ready */
+            nextBatchButton.textContent = `পরবর্তী বস্তা (সিমেন্ট যোগ করা হয়েছে)`;
             
             let missing = [];
             if (!isSandComplete) {
@@ -233,16 +304,16 @@
                  batchStatus.style.color = '#f9a825';
                  batchStatus.textContent = `⚠️ আরও দিতে হবে: ${missing.join(' এবং ')} বালতি।`;
             } else {
-                 batchStatus.textContent = "";
+                 batchStatus.textContent = "উপাদান যোগ করা শুরু করুন।";
             }
         }
     }
 
     // --- গুগল ফর্মে ডেটা সাবমিট করার ফাংশন ---
     function submitToGoogleForm() {
-        if (totalCement === 0) {
-             const confirmSubmit = confirm("সতর্কতা: কোনো সম্পূর্ণ বস্তা সাবমিট করা হয়নি। আপনি কি মোট হিসাব (০ বস্তা) জমা দিতে চান?");
-             if (!confirmSubmit) return;
+        if (!projectDetails.name || !projectDetails.date) {
+            alert("ত্রুটি: কাজ শুরুর আগে প্রজেক্টের তথ্য পূরণ করতে হবে!");
+            return;
         }
 
         submitMessage.style.backgroundColor = '#e3f2fd';
@@ -251,6 +322,8 @@
         finalSubmitButton.disabled = true;
 
         const data = {
+            [ENTRY_ID_PROJECT]: projectDetails.name,
+            [ENTRY_ID_DATE]: projectDetails.date,
             [ENTRY_ID_CEMENT]: totalCement,
             [ENTRY_ID_SAND]: totalSand,
             [ENTRY_ID_CONCRETE]: totalConcrete,
@@ -269,9 +342,8 @@
             submitMessage.style.backgroundColor = '#e8f5e9';
             submitMessage.style.color = '#1b5e20';
             submitMessage.textContent = `✅ সফল! মোট ${totalCement} বস্তার হিসাব Google Sheet-এ জমা হয়েছে।`;
-            console.log('মোট হিসাব সফলভাবে Google Form-এ জমা হয়েছে।');
             
-            // সাবমিট করার পর সব রিসেট করার জন্য একটি নিশ্চিত বার্তা দেওয়া
+            // সাবমিট করার পর রিসেট করার জন্য কনফার্মেশন
             setTimeout(() => {
                 const confirmReset = confirm("হিসাব সফলভাবে জমা হয়েছে। আপনি কি ট্র্যাকারটি নতুন কাজের জন্য রিসেট করতে চান?");
                 if (confirmReset) {
@@ -299,9 +371,17 @@
         totalSand = 0;
         totalConcrete = 0;
         finalSubmitButton.disabled = false;
-        submitMessage.style.backgroundColor = '#ffebee';
-        submitMessage.style.color = '#c62828';
+        submitMessage.style.backgroundColor = '#fbebeb';
+        submitMessage.style.color = '#e53935';
         submitMessage.textContent = "রেকর্ড জমা দেওয়ার জন্য প্রস্তুত।";
+        
+        // সেশন ইনফো রিসেট
+        sessionSetup.style.display = 'block';
+        mainTracker.style.display = 'none';
+        projectNameInput.value = "নতুন ছাদ ঢালাই";
+        projectDateInput.value = '';
+        projectDetails = { name: '', date: '' };
+        
         updateDisplay();
     }
 
@@ -338,14 +418,16 @@
     });
 
     finalSubmitButton.addEventListener('click', () => {
-        const confirmMsg = `আপনি মোট ${totalCement} বস্তার হিসাব চূড়ান্তভাবে Google Sheet-এ জমা দিতে চলেছেন। নিশ্চিত করুন।`;
+        const confirmMsg = `আপনি প্রজেক্ট: ${projectDetails.name}-এর মোট ${totalCement} বস্তার হিসাব চূড়ান্তভাবে Google Sheet-এ জমা দিতে চলেছেন। নিশ্চিত করুন।`;
         if (confirm(confirmMsg)) {
             submitToGoogleForm();
         }
     });
 
     // প্রথম লোডের সময় ডিসপ্লে আপডেট করা
-    updateDisplay();
+    // এখানে ডিফল্ট তারিখ সেট করা
+    projectDateInput.valueAsDate = new Date();
+    updateDisplay(); 
 </script>
 
 </body>
