@@ -3,350 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ডিজিটাল ঢালাই ট্র্যাকার V2</title>
+    <title>প্রাক্তন শিক্ষার্থী পরিষদ | দৌলতপুর বহুমুখী উচ্চ বিদ্যালয়</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Base Styling */
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
+        body { font-family: 'Arial', sans-serif; scroll-behavior: smooth; }
+        .hero {
+            /* Using a darker blue gradient for premium feel */
+            background: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.85)), url('https://source.unsplash.com/random/1200x600/?college,reunion') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed; /* Added parallax effect */
+        }
+        .section-heading {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 8px;
+            margin-bottom: 30px;
+            color: #1f2937; /* Dark Gray */
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            height: 4px;
+            width: 70px;
+            background-color: #f59e0b; /* Amber/Golden Accent */
+            border-radius: 2px;
+        }
+        /* Style for the downloadable ID Card */
+        #idCard {
+            border: 2px solid #374151;
             padding: 20px;
-            background-color: #e8f5e9; /* Light Green Background */
-            color: #333;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-        h2 {
-            color: #1b5e20; /* Dark Green Header */
-            text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 3px solid #c8e6c9;
-            padding-bottom: 10px;
-        }
-
-        /* Section Styling */
-        .controls, .summary, .submit-section {
-            margin-bottom: 25px;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .controls {
-            background-color: #f1f8e9; /* Lighter Green for controls */
-            border: 1px solid #c8e6c9;
-        }
-        .summary {
-            background-color: #fff3e0; /* Orange/Yellow for summary */
-            border: 1px solid #ffe0b2;
-        }
-
-        /* Button Styling */
-        button {
-            padding: 12px;
-            margin: 8px 0;
-            font-size: 18px;
-            cursor: pointer;
-            border: none;
-            border-radius: 6px;
-            transition: background-color 0.3s, opacity 0.3s;
-            width: 100%;
-            font-weight: bold;
-        }
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        #addSand {
-            background-color: #4CAF50; /* Green */
-            color: white;
-        }
-        #addConcrete {
-            background-color: #2196F3; /* Blue */
-            color: white;
-        }
-        #nextBatch {
-            background-color: #ffc107; /* Amber when ready to go */
-            color: #333;
-        }
-        #finalSubmit {
-            background-color: #f44336; /* Red for final action */
-            color: white;
-            margin-top: 20px;
-        }
-        
-        /* Display Counters */
-        .counter-display {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #e0e0e0;
-            border-radius: 6px;
-        }
-        .counter-item {
-            font-size: 22px;
-            font-weight: bold;
-            color: #333;
-        }
-        .counter-item span {
-            color: #1b5e20;
-        }
-
-        .summary p {
-            font-size: 16px;
-            margin: 8px 0;
-            padding-left: 10px;
-            border-left: 4px solid #ff9800;
-        }
-        .summary strong {
-            font-size: 18px;
-            color: #d84315;
-        }
-        
-        .status-message {
-            text-align: center;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 4px;
-            font-weight: bold;
+            width: 350px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-800">
 
-<div class="container">
-    <h2>🛠️ ঢালাই মিশ্রণ ট্র্যাকার</h2>
-    <p style="text-align: center; font-weight: bold;">মিক্স অনুপাত: ১ বস্তা সিমেন্ট : ৩ বালতি বালি : ৫ বালতি ক্রংকিট</p>
-
-    <div class="controls">
-        <h3>১. বর্তমান ব্যাচ (<span id="cementCountDisplay">১</span> নং বস্তা)</h3>
-        
-        <div class="counter-display">
-            <div class="counter-item">
-                বালি: <span id="sandCounter">0</span> / 3
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
+            <div class="text-2xl font-black text-blue-800 tracking-wider">
+                DBHSP <span class="text-amber-500">ALUMNI</span>
             </div>
-            <div class="counter-item">
-                ক্রংকিট: <span id="concreteCounter">0</span> / 5
+            <nav class="hidden md:flex space-x-8 font-semibold">
+                <a href="#home" class="text-gray-600 hover:text-blue-700 transition">হোম</a>
+                <a href="#about" class="text-gray-600 hover:text-blue-700 transition">পরিচিতি</a>
+                <a href="#events" class="text-gray-600 hover:text-blue-700 transition">ইভেন্ট</a>
+                <a href="#registration" class="bg-amber-500 text-white px-5 py-2 rounded-lg hover:bg-amber-600 transition shadow-md">অনলাইন রেজিস্ট্রেশন</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero text-white py-32 md:py-48 text-center">
+        <div class="max-w-5xl mx-auto px-4">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 leading-tight tracking-wide">
+                দৌলতপুর বহুমুখী উচ্চ বিদ্যালয়
+            </h1>
+            <p class="text-2xl md:text-3xl font-light mb-10 text-gray-200">
+                প্রাক্তন শিক্ষার্থী পরিষদ: শ্রেষ্ঠত্বের ঐতিহ্য ধরে রাখাই আমাদের অঙ্গীকার।
+            </p>
+            <a href="#registration" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-10 rounded-full shadow-xl transition duration-300 transform hover:scale-105 uppercase tracking-wide">
+                এখনই ইভেন্টের জন্য রেজিস্ট্রেশন করুন
+            </a>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-extrabold section-heading mx-auto">এসোসিয়েশনের পরিচিতি</h2>
+            <p class="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto mt-8">
+                আমাদের পরিষদ প্রাক্তন শিক্ষার্থীদের একটি শক্তিশালী নেটওয়ার্ক তৈরি করে, যা বিদ্যালয়ের সার্বিক উন্নয়ন এবং বর্তমান শিক্ষার্থীদের সঠিক দিকনির্দেশনা প্রদানে গুরুত্বপূর্ণ ভূমিকা পালন করে। প্রতি বছর আমরা গৌরবময় ইভেন্টসমূহের মাধ্যমে এই বন্ধনকে আরও দৃঢ় করি।
+            </p>
+            </div>
+    </section>
+
+    <section id="events" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-extrabold section-heading mx-auto">আমাদের বিশেষ ইভেন্টসমূহ</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                <div class="bg-white rounded-xl shadow-xl p-6 transition duration-500 hover:shadow-2xl hover:translate-y-[-5px]">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-2">ঐতিহাসিক পূর্ণ মিলনী</h3>
+                    <p class="text-sm text-amber-500 font-semibold mb-4">জানুয়ারী [বছর]</p>
+                    <p class="text-gray-600">সবচেয়ে বড় ইভেন্ট, যেখানে সকল ব্যাচের প্রাক্তন শিক্ষার্থীরা একত্রিত হন। সাংস্কৃতিক সন্ধ্যা ও ভোজের আয়োজন করা হয়।</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-xl p-6 transition duration-500 hover:shadow-2xl hover:translate-y-[-5px]">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-2">ইফতার মাহফিল</h3>
+                    <p class="text-sm text-amber-500 font-semibold mb-4">পবিত্র রমজান মাস</p>
+                    <p class="text-gray-600">রমজান মাসে প্রাক্তন ও বর্তমান শিক্ষক-শিক্ষিকাদের অংশগ্রহণে এই বিশেষ আয়োজনটি অনুষ্ঠিত হয়।</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-xl p-6 transition duration-500 hover:shadow-2xl hover:translate-y-[-5px]">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-2">কৃতি সংবর্ধনা ও বৃত্তি</h3>
+                    <p class="text-sm text-amber-500 font-semibold mb-4">সেপ্টেম্বর/অক্টোবর</p>
+                    <p class="text-gray-600">মেধাবী শিক্ষার্থীদের উৎসাহিত করার জন্য প্রতি বছর এই শিক্ষাবৃত্তি ও সংবর্ধনা দেওয়া হয়।</p>
+                </div>
             </div>
         </div>
-
-        <button id="addSand">বালতি বালি যোগ করুন</button>
-        <button id="addConcrete">বালতি ক্রংকিট যোগ করুন</button>
-        
-        <div id="batchStatus" class="status-message" style="background-color: #fff9c4; color: #f9a825;">উপাদান যোগ করা শুরু করুন।</div>
-        
-        <button id="nextBatch" disabled>পরবর্তী বস্তা (ব্যাচ শুরু)</button>
-    </div>
-
-    <div class="summary">
-        <h3>২. প্রথম থেকে শেষ অবধি মোট হিসাব</h3>
-        <p>মোট সিমেন্ট: <strong id="totalCement">0</strong> বস্তা</p>
-        <p>মোট বালি: <strong id="totalSand">0</strong> বালতি</p>
-        <p>মোট ক্রংকিট: <strong id="totalConcrete">0</strong> বালতি</p>
-    </div>
-
-    <div class="submit-section">
-        <h3>৩. চূড়ান্ত রেকর্ড</h3>
-        <button id="finalSubmit">মোট কাজ শেষ ও হিসাব Google Sheet-এ জমা দিন</button>
-        <div id="submitMessage" class="status-message" style="background-color: #ffebee; color: #c62828;">রেকর্ড জমা দেওয়ার জন্য প্রস্তুত।</div>
-    </div>
-</div>
-
-<script>
-    // ====================================================================================
-    // !!! অত্যন্ত গুরুত্বপূর্ণ: নিচের তথ্যগুলি আপনার গুগল ফর্ম থেকে পাওয়া ডেটা দিয়ে পরিবর্তন করুন !!!
-    // ====================================================================================
-    const GOOGLE_FORM_URL = 'আপনার_ফর্ম_রেসপন্স_URL_এখানে_দিন'; 
-    const ENTRY_ID_CEMENT = 'entry.XXXXXXXXX'; // সিমেন্টের এন্ট্রি আইডি দিন
-    const ENTRY_ID_SAND = 'entry.YYYYYYYYY';   // বালির এন্ট্রি আইডি দিন
-    const ENTRY_ID_CONCRETE = 'entry.ZZZZZZZZZ'; // ক্রংকিটের এন্ট্রি আইডি দিন
-    // ====================================================================================
-
-    const SAND_PER_BATCH = 3;
-    const CONCRETE_PER_BATCH = 5;
-
-    let currentSand = 0;
-    let currentConcrete = 0;
-    let totalCement = 0;
-    let totalSand = 0;
-    let totalConcrete = 0;
-
-    const sandCounter = document.getElementById('sandCounter');
-    const concreteCounter = document.getElementById('concreteCounter');
-    const totalCementDisplay = document.getElementById('totalCement');
-    const totalSandDisplay = document.getElementById('totalSand');
-    const totalConcreteDisplay = document.getElementById('totalConcrete');
-    const cementCountDisplay = document.getElementById('cementCountDisplay');
-    const nextBatchButton = document.getElementById('nextBatch');
-    const finalSubmitButton = document.getElementById('finalSubmit');
-    const batchStatus = document.getElementById('batchStatus');
-    const submitMessage = document.getElementById('submitMessage');
-    const addSandButton = document.getElementById('addSand');
-    const addConcreteButton = document.getElementById('addConcrete');
-
-
-    // --- ডিসপ্লে আপডেট করার ফাংশন ---
-    function updateDisplay() {
-        sandCounter.textContent = currentSand;
-        concreteCounter.textContent = currentConcrete;
-        cementCountDisplay.textContent = totalCement + 1;
-        totalCementDisplay.textContent = totalCement;
-        totalSandDisplay.textContent = totalSand;
-        totalConcreteDisplay.textContent = totalConcrete;
-
-        const isSandComplete = currentSand >= SAND_PER_BATCH;
-        const isConcreteComplete = currentConcrete >= CONCRETE_PER_BATCH;
-
-        // বালতি বাটন লক করা
-        addSandButton.disabled = isSandComplete;
-        addConcreteButton.disabled = isConcreteComplete;
-        
-        // স্ট্যাটাস ও বাটন নিয়ন্ত্রণ
-        if (isSandComplete && isConcreteComplete) {
-            nextBatchButton.disabled = false;
-            nextBatchButton.style.backgroundColor = '#4CAF50'; /* Green when ready */
-            nextBatchButton.textContent = `সিমেন্টের ${totalCement + 1} নং বস্তা সম্পূর্ণ (১ বস্তা সিমেন্ট যোগ করুন)`;
-            batchStatus.style.backgroundColor = '#e8f5e9';
-            batchStatus.style.color = '#1b5e20';
-            batchStatus.textContent = "✅ এই ব্যাচের উপাদান ঠিক আছে! পরবর্তী বস্তা ঢালার জন্য প্রস্তুত।";
-        } else {
-            nextBatchButton.disabled = true;
-            nextBatchButton.style.backgroundColor = '#ffc107'; /* Amber when not ready */
-            nextBatchButton.textContent = `পরবর্তী বস্তা (ব্যাচ শুরু)`;
+    </section>
+    
+    <section id="registration" class="py-20 bg-blue-50">
+        <div class="max-w-xl mx-auto px-4">
+            <h2 class="text-4xl font-extrabold section-heading mx-auto text-center">অনলাইন রেজিস্ট্রেশন</h2>
             
-            let missing = [];
-            if (!isSandComplete) {
-                missing.push(`বালি (${SAND_PER_BATCH - currentSand})`);
+            <div class="bg-white p-8 rounded-xl shadow-2xl border border-blue-200">
+                <form id="regForm" class="space-y-6">
+                    
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">শিক্ষার্থীর পূর্ণ নাম</label>
+                        <input type="text" id="name" name="name" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-amber-500 focus:border-amber-500" required>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="pass_year" class="block text-sm font-medium text-gray-700">এসএসসি পাসের সন</label>
+                            <select id="pass_year" name="pass_year" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-amber-500 focus:border-amber-500" required>
+                                <option value="">সাল নির্বাচন করুন</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="batch_no" class="block text-sm font-medium text-gray-700">ব্যাচ নং (১-৫৫)</label>
+                            <select id="batch_no" name="batch_no" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-amber-500 focus:border-amber-500" required>
+                                <option value="">ব্যাচ নির্বাচন করুন</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">লিঙ্গ</label>
+                        <div class="mt-2 flex space-x-6">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="gender" value="পুরুষ" class="form-radio text-blue-600 h-4 w-4" required>
+                                <span class="ml-2">পুরুষ</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="gender" value="মহিলা" class="form-radio text-pink-600 h-4 w-4" required>
+                                <span class="ml-2">মহিলা</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="mobile" class="block text-sm font-medium text-gray-700">মোবাইল নম্বর</label>
+                        <input type="tel" id="mobile" name="mobile" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-amber-500 focus:border-amber-500" required>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="w-full bg-blue-700 text-white py-3 rounded-lg font-bold hover:bg-blue-800 transition duration-300 shadow-lg">
+                        রেজিস্ট্রেশন সম্পন্ন করুন
+                    </button>
+                </form>
+
+                <div id="successCard" style="display:none;" class="mt-8 p-6 bg-green-50 border-l-4 border-green-500 text-green-800 rounded-lg shadow-inner text-center">
+                    <p class="font-bold text-2xl mb-2 text-green-700">অভিনন্দন, <span id="regName" class="text-blue-800"></span>!</p>
+                    <p class="text-lg">আপনার ইভেন্ট রেজিস্ট্রেশন সফল হয়েছে।</p>
+                    <p class="mt-3 text-sm">আপনার ইভেন্ট টোকেন আইডি:</p>
+                    <p class="text-3xl font-mono text-red-700 mt-1 break-all"><span id="tokenId"></span></p>
+                    
+                    <div id="idCardContainer" class="mt-6 p-4 border border-gray-300 rounded-lg">
+                        <p class="font-semibold text-lg mb-2">আপনার ইভেন্ট আইডি কার্ড</p>
+                        <div id="idCard" class="id-card-print">
+                            <h4 class="text-lg font-bold text-center border-b pb-1 mb-2 text-blue-800">অ্যালামনাই ইভেন্ট কার্ড</h4>
+                            <p class="text-sm">নাম: <span id="cardName" class="font-semibold"></span></p>
+                            <p class="text-sm">পাসের সন: <span id="cardPassYear"></span></p>
+                            <p class="text-sm">ব্যাচ: <span id="cardBatchNo"></span></p>
+                            <p class="text-sm font-bold mt-2 text-red-700">টোকেন আইডি: <span id="cardTokenId"></span></p>
+                            <p class="text-xs mt-3 text-center italic">প্রবেশের জন্য এটি আবশ্যক।</p>
+                        </div>
+                        <button onclick="printIdCard()" class="mt-4 bg-amber-500 text-gray-900 px-6 py-2 rounded-lg font-bold hover:bg-amber-600 transition shadow-md">
+                            আইডি কার্ড ডাউনলোড/প্রিন্ট করুন
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="mb-2 text-sm">© ২০২৫ দৌলতপুর বহুমুখী উচ্চ বিদ্যালয় প্রাক্তন শিক্ষার্থী পরিষদ।</p>
+            <p class="text-xs text-gray-400">এই সাইটের সকল ডাটা অনলাইন ডাটাবেজে সুরক্ষিত।</p>
+        </div>
+    </footer>
+
+    <script>
+        // *** ১. গুগল ওয়েব অ্যাপ URL এখানে বসাতে হবে ***
+        const scriptURL = 'আপনার_কপি_করা_গুগল_ওয়েব_অ্যাপ_ইউআরএল_এখানে_বসান'; 
+        
+        // ২. ডাইনামিক ফিল্ড পপুলেট করা (পাসের সাল ও ব্যাচ)
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentYear = new Date().getFullYear();
+            const startYear = 1970; // বিদ্যালয়ের শুরুর বছর
+            const passYearSelect = document.getElementById('pass_year');
+            const batchNoSelect = document.getElementById('batch_no');
+
+            // পাসের সাল পপুলেট
+            for (let i = currentYear; i >= startYear; i--) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                passYearSelect.appendChild(option);
             }
-            if (!isConcreteComplete) {
-                missing.push(`ক্রংকিট (${CONCRETE_PER_BATCH - currentConcrete})`);
+
+            // ব্যাচ নং পপুলেট (১ থেকে ৫৫)
+            for (let i = 1; i <= 55; i++) {
+                const option = document.createElement('option');
+                option.value = `Batch-${i}`;
+                option.textContent = `${i} তম ব্যাচ`;
+                batchNoSelect.appendChild(option);
             }
-
-            if (missing.length > 0) {
-                 batchStatus.style.backgroundColor = '#fff9c4';
-                 batchStatus.style.color = '#f9a825';
-                 batchStatus.textContent = `⚠️ আরও দিতে হবে: ${missing.join(' এবং ')} বালতি।`;
-            } else {
-                 batchStatus.textContent = "";
-            }
-        }
-    }
-
-    // --- গুগল ফর্মে ডেটা সাবমিট করার ফাংশন ---
-    function submitToGoogleForm() {
-        if (totalCement === 0) {
-             const confirmSubmit = confirm("সতর্কতা: কোনো সম্পূর্ণ বস্তা সাবমিট করা হয়নি। আপনি কি মোট হিসাব (০ বস্তা) জমা দিতে চান?");
-             if (!confirmSubmit) return;
-        }
-
-        submitMessage.style.backgroundColor = '#e3f2fd';
-        submitMessage.style.color = '#1565c0';
-        submitMessage.textContent = "🔄 ডেটা Google Sheet-এ জমা হচ্ছে, অপেক্ষা করুন...";
-        finalSubmitButton.disabled = true;
-
-        const data = {
-            [ENTRY_ID_CEMENT]: totalCement,
-            [ENTRY_ID_SAND]: totalSand,
-            [ENTRY_ID_CONCRETE]: totalConcrete,
-        };
-
-        const formBody = Object.keys(data).map(key => {
-            return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
-        }).join('&');
-
-        fetch(GOOGLE_FORM_URL, {
-            method: 'POST',
-            body: formBody,
-            mode: 'no-cors' 
-        })
-        .then(() => {
-            submitMessage.style.backgroundColor = '#e8f5e9';
-            submitMessage.style.color = '#1b5e20';
-            submitMessage.textContent = `✅ সফল! মোট ${totalCement} বস্তার হিসাব Google Sheet-এ জমা হয়েছে।`;
-            console.log('মোট হিসাব সফলভাবে Google Form-এ জমা হয়েছে।');
-            
-            // সাবমিট করার পর সব রিসেট করার জন্য একটি নিশ্চিত বার্তা দেওয়া
-            setTimeout(() => {
-                const confirmReset = confirm("হিসাব সফলভাবে জমা হয়েছে। আপনি কি ট্র্যাকারটি নতুন কাজের জন্য রিসেট করতে চান?");
-                if (confirmReset) {
-                    resetTracker();
-                    alert("ট্র্যাকার রিসেট করা হয়েছে।");
-                } else {
-                    finalSubmitButton.disabled = false;
-                }
-            }, 1000);
-        })
-        .catch(error => {
-            submitMessage.style.backgroundColor = '#ffebee';
-            submitMessage.style.color = '#c62828';
-            submitMessage.textContent = '❌ ডেটা জমা দিতে ব্যর্থ হয়েছে। ইন্টারনেট সংযোগ দেখুন।';
-            finalSubmitButton.disabled = false;
-            console.error('Google Form-এ ডেটা জমা দিতে ব্যর্থ হয়েছে:', error);
         });
-    }
 
-    // --- ট্র্যাকার রিসেট করার ফাংশন ---
-    function resetTracker() {
-        currentSand = 0;
-        currentConcrete = 0;
-        totalCement = 0;
-        totalSand = 0;
-        totalConcrete = 0;
-        finalSubmitButton.disabled = false;
-        submitMessage.style.backgroundColor = '#ffebee';
-        submitMessage.style.color = '#c62828';
-        submitMessage.textContent = "রেকর্ড জমা দেওয়ার জন্য প্রস্তুত।";
-        updateDisplay();
-    }
+        // ৩. ফর্ম সাবমিশন লজিক (Apps Script-এ ডাটা পাঠানো)
+        const form = document.getElementById('regForm');
+        const submitBtn = document.getElementById('submitBtn');
 
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            
+            submitBtn.disabled = true;
+            submitBtn.innerText = "ডাটা সেভ হচ্ছে...";
 
-    // --- ইভেন্ট লিসেনার সেটআপ ---
-    addSandButton.addEventListener('click', () => {
-        if (currentSand < SAND_PER_BATCH) {
-            currentSand++;
-            totalSand++;
-            updateDisplay();
-        } else {
-            alert('সতর্কতা: ৩ বালতি বালি দেওয়া হয়ে গেছে!');
+            const selectedGender = document.querySelector('input[name="gender"]:checked').value;
+            const enteredName = document.getElementById('name').value;
+            const enteredPassYear = document.getElementById('pass_year').value;
+            const enteredBatchNo = document.getElementById('batch_no').value;
+
+            const formData = {
+                name: enteredName,
+                pass_year: enteredPassYear,
+                batch_no: enteredBatchNo,
+                mobile: document.getElementById('mobile').value,
+                gender: selectedGender 
+            };
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.result === 'success') {
+                    // Success Message & Token Display
+                    document.getElementById('regForm').style.display = 'none';
+                    document.getElementById('regName').innerText = enteredName; // নাম সহ অভিনন্দন
+                    document.getElementById('tokenId').innerText = data.token;
+                    document.getElementById('successCard').style.display = 'block';
+
+                    // Populate ID Card Data
+                    document.getElementById('cardName').innerText = enteredName;
+                    document.getElementById('cardPassYear').innerText = enteredPassYear;
+                    document.getElementById('cardBatchNo').innerText = enteredBatchNo;
+                    document.getElementById('cardTokenId').innerText = data.token;
+
+                } else {
+                    alert('রেজিস্ট্রেশনে সমস্যা হয়েছে।');
+                }
+            })
+            .catch(error => {
+                alert('নেটওয়ার্ক বা সার্ভার ত্রুটি! আবার চেষ্টা করুন।');
+                console.error('Error!', error.message);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "রেজিস্ট্রেশন সম্পন্ন করুন";
+            });
+        });
+
+        // ৪. আইডি কার্ড প্রিন্ট ফাংশন
+        function printIdCard() {
+            const printContent = document.getElementById('idCard').innerHTML;
+            const originalContent = document.body.innerHTML;
+
+            // শুধুমাত্র আইডি কার্ডটি প্রিন্টের জন্য নতুন উইন্ডো তৈরি
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>অ্যালামনাই আইডি কার্ড</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write('@media print { body{ font-family: Arial, sans-serif; } #idCard{ border: 2px solid #374151; padding: 20px; width: 300px; margin: 20px auto; background-color: #ffffff; box-shadow: none; } }');
+            printWindow.document.write('</style>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write(printContent);
+            printWindow.document.write('</body></html>');
+            
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
         }
-    });
-
-    addConcreteButton.addEventListener('click', () => {
-        if (currentConcrete < CONCRETE_PER_BATCH) {
-            currentConcrete++;
-            totalConcrete++;
-            updateDisplay();
-        } else {
-             alert('সতর্কতা: ৫ বালতি ক্রংকিট দেওয়া হয়ে গেছে!');
-        }
-    });
-
-    nextBatchButton.addEventListener('click', () => {
-        if (currentSand >= SAND_PER_BATCH && currentConcrete >= CONCRETE_PER_BATCH) {
-            totalCement++; 
-            currentSand = 0;
-            currentConcrete = 0;
-            alert(`✅ ${totalCement} নং বস্তার কাজ সম্পন্ন।`);
-            updateDisplay();
-        }
-    });
-
-    finalSubmitButton.addEventListener('click', () => {
-        const confirmMsg = `আপনি মোট ${totalCement} বস্তার হিসাব চূড়ান্তভাবে Google Sheet-এ জমা দিতে চলেছেন। নিশ্চিত করুন।`;
-        if (confirm(confirmMsg)) {
-            submitToGoogleForm();
-        }
-    });
-
-    // প্রথম লোডের সময় ডিসপ্লে আপডেট করা
-    updateDisplay();
-</script>
-
+    </script>
 </body>
 </html>
