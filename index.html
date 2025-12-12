@@ -7,17 +7,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Arial', sans-serif; scroll-behavior: smooth; }
+        /* Darker, Premium Hero Section */
         .hero {
-            /* Using a darker blue gradient for premium feel */
-            background: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.85)), url('https://source.unsplash.com/random/1200x600/?college,reunion') no-repeat center center;
+            background: linear-gradient(rgba(0, 0, 50, 0.88), rgba(0, 0, 50, 0.88)), url('https://source.unsplash.com/random/1600x900/?graduation,achievement') no-repeat center center;
             background-size: cover;
-            background-attachment: fixed; /* Added parallax effect */
+            background-attachment: fixed;
         }
         .section-heading {
             position: relative;
             display: inline-block;
-            padding-bottom: 8px;
-            margin-bottom: 30px;
+            padding-bottom: 10px;
+            margin-bottom: 40px;
             color: #1f2937; /* Dark Gray */
         }
         .section-heading::after {
@@ -27,88 +27,101 @@
             bottom: 0;
             transform: translateX(-50%);
             height: 4px;
-            width: 70px;
-            background-color: #f59e0b; /* Amber/Golden Accent */
+            width: 80px;
+            background-color: #f59e0b; /* Golden Accent */
             border-radius: 2px;
         }
-        /* Style for the downloadable ID Card */
-        #idCard {
-            border: 2px solid #374151;
-            padding: 20px;
-            width: 350px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        /* Custom styles for ID Card Print */
+        @media print {
+            body * { visibility: hidden; }
+            .id-card-print, .id-card-print * { visibility: visible; }
+            .id-card-print { 
+                position: absolute; 
+                left: 0; 
+                top: 0; 
+                width: 350px; 
+                border: 2px solid #374151; 
+                padding: 20px; 
+                margin: 50px auto;
+                box-shadow: none;
+            }
         }
+        .alert-error { transition: opacity 0.5s ease-in-out; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <header class="bg-white shadow-lg sticky top-0 z-50">
+    <header class="bg-white shadow-xl sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
-            <div class="text-2xl font-black text-blue-800 tracking-wider">
+            <div class="text-3xl font-black text-indigo-900 tracking-wider">
                 DBHSP <span class="text-amber-500">ALUMNI</span>
             </div>
-            <nav class="hidden md:flex space-x-8 font-semibold">
-                <a href="#home" class="text-gray-600 hover:text-blue-700 transition">হোম</a>
-                <a href="#about" class="text-gray-600 hover:text-blue-700 transition">পরিচিতি</a>
-                <a href="#events" class="text-gray-600 hover:text-blue-700 transition">ইভেন্ট</a>
-                <a href="#registration" class="bg-amber-500 text-white px-5 py-2 rounded-lg hover:bg-amber-600 transition shadow-md">অনলাইন রেজিস্ট্রেশন</a>
+            <nav class="hidden md:flex space-x-10 font-semibold">
+                <a href="#home" class="text-gray-600 hover:text-indigo-700 transition">হোম</a>
+                <a href="#about" class="text-gray-600 hover:text-indigo-700 transition">পরিচিতি</a>
+                <a href="#events" class="text-gray-600 hover:text-indigo-700 transition">ইভেন্ট</a>
+                <a href="#registration" class="bg-amber-500 text-white px-5 py-2.5 rounded-full hover:bg-amber-600 transition shadow-lg">অনলাইন রেজিস্ট্রেশন</a>
             </nav>
         </div>
     </header>
 
-    <section id="home" class="hero text-white py-32 md:py-48 text-center">
+    <section id="home" class="hero text-white py-40 md:py-56 text-center">
         <div class="max-w-5xl mx-auto px-4">
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 leading-tight tracking-wide">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 leading-tight tracking-wide text-amber-400">
                 দৌলতপুর বহুমুখী উচ্চ বিদ্যালয়
             </h1>
-            <p class="text-2xl md:text-3xl font-light mb-10 text-gray-200">
-                প্রাক্তন শিক্ষার্থী পরিষদ: শ্রেষ্ঠত্বের ঐতিহ্য ধরে রাখাই আমাদের অঙ্গীকার।
+            <p class="text-2xl md:text-3xl font-light mb-10 text-gray-300">
+                প্রাক্তন শিক্ষার্থী পরিষদ: একতাই শক্তি, একতাই ঐতিহ্য।
             </p>
-            <a href="#registration" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-10 rounded-full shadow-xl transition duration-300 transform hover:scale-105 uppercase tracking-wide">
-                এখনই ইভেন্টের জন্য রেজিস্ট্রেশন করুন
+            <a href="#registration" class="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-12 rounded-full shadow-2xl transition duration-300 transform hover:scale-105 uppercase tracking-wide text-lg">
+                ইভেন্টের জন্য রেজিস্ট্রেশন শুরু করুন
             </a>
         </div>
     </section>
 
-    <section id="about" class="py-20 bg-white">
+    <section id="about" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-extrabold section-heading mx-auto">এসোসিয়েশনের পরিচিতি</h2>
-            <p class="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto mt-8">
-                আমাদের পরিষদ প্রাক্তন শিক্ষার্থীদের একটি শক্তিশালী নেটওয়ার্ক তৈরি করে, যা বিদ্যালয়ের সার্বিক উন্নয়ন এবং বর্তমান শিক্ষার্থীদের সঠিক দিকনির্দেশনা প্রদানে গুরুত্বপূর্ণ ভূমিকা পালন করে। প্রতি বছর আমরা গৌরবময় ইভেন্টসমূহের মাধ্যমে এই বন্ধনকে আরও দৃঢ় করি।
+            <h2 class="text-4xl font-extrabold section-heading mx-auto">আমাদের পরিষদ</h2>
+            <p class="text-xl text-gray-600 leading-relaxed max-w-5xl mx-auto mt-8">
+                আমাদের প্রাক্তন শিক্ষার্থী পরিষদ হলো প্রাক্তন ছাত্রদের মিলনস্থল। আমরা বিশ্বাস করি, অতীত ও বর্তমানের সম্মিলিত প্রচেষ্টাই পারে বিদ্যালয়কে নতুন উচ্চতায় নিয়ে যেতে। আমরা স্বচ্ছতা ও অঙ্গীকারের সাথে বিভিন্ন সামাজিক ও শিক্ষাভিত্তিক কার্যক্রমে অংশগ্রহণ করি।
             </p>
-            </div>
+        </div>
     </section>
 
-    <section id="events" class="py-20 bg-gray-100">
+    <section id="events" class="py-24 bg-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-extrabold section-heading mx-auto">আমাদের বিশেষ ইভেন্টসমূহ</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                <div class="bg-white rounded-xl shadow-xl p-6 transition duration-500 hover:shadow-2xl hover:translate-y-[-5px]">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-2">ঐতিহাসিক পূর্ণ মিলনী</h3>
-                    <p class="text-sm text-amber-500 font-semibold mb-4">জানুয়ারী [বছর]</p>
-                    <p class="text-gray-600">সবচেয়ে বড় ইভেন্ট, যেখানে সকল ব্যাচের প্রাক্তন শিক্ষার্থীরা একত্রিত হন। সাংস্কৃতিক সন্ধ্যা ও ভোজের আয়োজন করা হয়।</p>
+            <h2 class="text-4xl font-extrabold section-heading mx-auto">আসন্ন ও পূর্ববর্তী ইভেন্ট</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12">
+                <div class="bg-white rounded-xl shadow-2xl p-8 transition duration-500 hover:shadow-3xl hover:translate-y-[-5px]">
+                    <h3 class="text-2xl font-bold text-indigo-700 mb-3">মেগা পুনর্মিলনী ২০২৫</h3>
+                    <p class="text-md text-amber-600 font-semibold mb-4">তারিখ: ১ জানুয়ারী ২০২৫</p>
+                    <p class="text-gray-600">সকল ব্যাচের মিলনমেলা। স্মৃতিচারণ, সাংস্কৃতিক অনুষ্ঠান, এবং নৈশভোজ।</p>
+                    <a href="#registration" class="block mt-4 text-red-600 font-bold hover:underline">রেজিস্ট্রেশন করতে এখানে ক্লিক করুন</a>
                 </div>
-                <div class="bg-white rounded-xl shadow-xl p-6 transition duration-500 hover:shadow-2xl hover:translate-y-[-5px]">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-2">ইফতার মাহফিল</h3>
-                    <p class="text-sm text-amber-500 font-semibold mb-4">পবিত্র রমজান মাস</p>
-                    <p class="text-gray-600">রমজান মাসে প্রাক্তন ও বর্তমান শিক্ষক-শিক্ষিকাদের অংশগ্রহণে এই বিশেষ আয়োজনটি অনুষ্ঠিত হয়।</p>
+                <div class="bg-white rounded-xl shadow-2xl p-8 transition duration-500 hover:shadow-2xl hover:translate-y-[-5px]">
+                    <h3 class="text-2xl font-bold text-indigo-700 mb-3">বার্ষিক ইফতার মাহফিল</h3>
+                    <p class="text-md text-amber-600 font-semibold mb-4">পবিত্র রমজান মাস</p>
+                    <p class="text-gray-600">সকল শিক্ষক ও প্রাক্তন ছাত্রদের অংশগ্রহণে এই ইভেন্টটি আয়োজিত হয়।</p>
                 </div>
-                <div class="bg-white rounded-xl shadow-xl p-6 transition duration-500 hover:shadow-2xl hover:translate-y-[-5px]">
-                    <h3 class="text-2xl font-bold text-blue-700 mb-2">কৃতি সংবর্ধনা ও বৃত্তি</h3>
-                    <p class="text-sm text-amber-500 font-semibold mb-4">সেপ্টেম্বর/অক্টোবর</p>
-                    <p class="text-gray-600">মেধাবী শিক্ষার্থীদের উৎসাহিত করার জন্য প্রতি বছর এই শিক্ষাবৃত্তি ও সংবর্ধনা দেওয়া হয়।</p>
+                <div class="bg-white rounded-xl shadow-2xl p-8 transition duration-500 hover:shadow-2xl hover:translate-y-[-5px]">
+                    <h3 class="text-2xl font-bold text-indigo-700 mb-3">কৃতি শিক্ষার্থী সংবর্ধনা</h3>
+                    <p class="text-md text-amber-600 font-semibold mb-4">প্রতি বছর</p>
+                    <p class="text-gray-600">মেধাবী ছাত্রদের সংবর্ধনা এবং শিক্ষাবৃত্তি বিতরণ।</p>
                 </div>
             </div>
         </div>
     </section>
     
-    <section id="registration" class="py-20 bg-blue-50">
+    <section id="registration" class="py-24 bg-indigo-50">
         <div class="max-w-xl mx-auto px-4">
             <h2 class="text-4xl font-extrabold section-heading mx-auto text-center">অনলাইন রেজিস্ট্রেশন</h2>
             
-            <div class="bg-white p-8 rounded-xl shadow-2xl border border-blue-200">
+            <div class="bg-white p-8 rounded-xl shadow-2xl border-t-4 border-amber-500">
+                
+                <div id="errorAlert" style="display:none;" class="alert-error p-4 mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 rounded-lg font-medium">
+                    <p>দুঃখিত! রেজিস্ট্রেশন সফল হয়নি। অনুগ্রহ করে ইন্টারনেট সংযোগ পরীক্ষা করুন বা অ্যাডমিনকে জানান।</p>
+                </div>
+
                 <form id="regForm" class="space-y-6">
                     
                     <div>
@@ -135,11 +148,11 @@
                         <label class="block text-sm font-medium text-gray-700">লিঙ্গ</label>
                         <div class="mt-2 flex space-x-6">
                             <label class="inline-flex items-center">
-                                <input type="radio" name="gender" value="পুরুষ" class="form-radio text-blue-600 h-4 w-4" required>
+                                <input type="radio" name="gender" value="পুরুষ" class="form-radio text-indigo-600 h-5 w-5" required>
                                 <span class="ml-2">পুরুষ</span>
                             </label>
                             <label class="inline-flex items-center">
-                                <input type="radio" name="gender" value="মহিলা" class="form-radio text-pink-600 h-4 w-4" required>
+                                <input type="radio" name="gender" value="মহিলা" class="form-radio text-pink-600 h-5 w-5" required>
                                 <span class="ml-2">মহিলা</span>
                             </label>
                         </div>
@@ -150,29 +163,33 @@
                         <input type="tel" id="mobile" name="mobile" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-amber-500 focus:border-amber-500" required>
                     </div>
 
-                    <button type="submit" id="submitBtn" class="w-full bg-blue-700 text-white py-3 rounded-lg font-bold hover:bg-blue-800 transition duration-300 shadow-lg">
+                    <button type="submit" id="submitBtn" class="w-full bg-indigo-700 text-white py-3 rounded-lg font-bold hover:bg-indigo-800 transition duration-300 shadow-lg uppercase tracking-wider">
                         রেজিস্ট্রেশন সম্পন্ন করুন
                     </button>
                 </form>
 
                 <div id="successCard" style="display:none;" class="mt-8 p-6 bg-green-50 border-l-4 border-green-500 text-green-800 rounded-lg shadow-inner text-center">
-                    <p class="font-bold text-2xl mb-2 text-green-700">অভিনন্দন, <span id="regName" class="text-blue-800"></span>!</p>
+                    <p class="font-bold text-2xl mb-2 text-green-700">অভিনন্দন, <span id="regName" class="text-indigo-800"></span>!</p>
                     <p class="text-lg">আপনার ইভেন্ট রেজিস্ট্রেশন সফল হয়েছে।</p>
-                    <p class="mt-3 text-sm">আপনার ইভেন্ট টোকেন আইডি:</p>
+                    <p class="mt-3 text-sm font-medium">আপনার অনন্য ইভেন্ট টোকেন আইডি:</p>
                     <p class="text-3xl font-mono text-red-700 mt-1 break-all"><span id="tokenId"></span></p>
                     
-                    <div id="idCardContainer" class="mt-6 p-4 border border-gray-300 rounded-lg">
-                        <p class="font-semibold text-lg mb-2">আপনার ইভেন্ট আইডি কার্ড</p>
-                        <div id="idCard" class="id-card-print">
-                            <h4 class="text-lg font-bold text-center border-b pb-1 mb-2 text-blue-800">অ্যালামনাই ইভেন্ট কার্ড</h4>
-                            <p class="text-sm">নাম: <span id="cardName" class="font-semibold"></span></p>
-                            <p class="text-sm">পাসের সন: <span id="cardPassYear"></span></p>
-                            <p class="text-sm">ব্যাচ: <span id="cardBatchNo"></span></p>
-                            <p class="text-sm font-bold mt-2 text-red-700">টোকেন আইডি: <span id="cardTokenId"></span></p>
-                            <p class="text-xs mt-3 text-center italic">প্রবেশের জন্য এটি আবশ্যক।</p>
+                    <div id="idCardContainer" class="mt-6 p-4 border border-gray-300 rounded-lg bg-white">
+                        <p class="font-semibold text-xl mb-3 text-indigo-700 border-b pb-2">আপনার ইভেন্ট আইডি কার্ড</p>
+                        
+                        <div id="idCard" class="id-card-print p-4">
+                            <h4 class="text-xl font-bold text-center mb-3 text-indigo-800">DBHSP ইভেন্ট পাস</h4>
+                            <div class="text-left space-y-1 text-gray-700">
+                                <p class="text-sm">নাম: <span id="cardName" class="font-semibold"></span></p>
+                                <p class="text-sm">পাসের সন: <span id="cardPassYear"></span></p>
+                                <p class="text-sm">ব্যাচ: <span id="cardBatchNo"></span></p>
+                            </div>
+                            <p class="text-lg font-extrabold mt-3 text-red-700 border-t pt-2">টোকেন আইডি: <span id="cardTokenId"></span></p>
+                            <p class="text-xs mt-3 text-center italic text-gray-500">অনুষ্ঠানে প্রবেশের জন্য এই কার্ডটি অবশ্যই সঙ্গে রাখুন।</p>
                         </div>
-                        <button onclick="printIdCard()" class="mt-4 bg-amber-500 text-gray-900 px-6 py-2 rounded-lg font-bold hover:bg-amber-600 transition shadow-md">
-                            আইডি কার্ড ডাউনলোড/প্রিন্ট করুন
+                        
+                        <button onclick="printIdCard()" class="mt-4 bg-amber-500 text-gray-900 px-6 py-3 rounded-lg font-bold hover:bg-amber-600 transition shadow-lg text-sm">
+                            আইডি কার্ড প্রিন্ট করুন (PDF সেভ)
                         </button>
                     </div>
                 </div>
@@ -188,7 +205,7 @@
     </footer>
 
     <script>
-        // *** ১. গুগল ওয়েব অ্যাপ URL এখানে বসাতে হবে ***
+        // *** ১. আপনার দেওয়া Google Apps Script URL এখানে বসানো হয়েছে ***
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwg4wBbtvWiF0Zd9zzQfzQtd7aSZvgCNaCZ6GjMd5d8pnHfvfD6AS11mi1p77C6LFrF/exec'; 
         
         // ২. ডাইনামিক ফিল্ড পপুলেট করা (পাসের সাল ও ব্যাচ)
@@ -218,37 +235,61 @@
         // ৩. ফর্ম সাবমিশন লজিক (Apps Script-এ ডাটা পাঠানো)
         const form = document.getElementById('regForm');
         const submitBtn = document.getElementById('submitBtn');
+        const errorAlert = document.getElementById('errorAlert');
 
-        form.addEventListener('submit', e => {
+        form.addEventListener('submit', async e => {
             e.preventDefault();
             
+            errorAlert.style.display = 'none'; // পূর্ববর্তী ত্রুটি বার্তা লুকানো
             submitBtn.disabled = true;
             submitBtn.innerText = "ডাটা সেভ হচ্ছে...";
 
+            // সমস্ত ডেটা সংগ্রহ
             const selectedGender = document.querySelector('input[name="gender"]:checked').value;
             const enteredName = document.getElementById('name').value;
             const enteredPassYear = document.getElementById('pass_year').value;
             const enteredBatchNo = document.getElementById('batch_no').value;
+            const enteredMobile = document.getElementById('mobile').value;
 
+            // FormData তৈরি করা
             const formData = {
                 name: enteredName,
                 pass_year: enteredPassYear,
                 batch_no: enteredBatchNo,
-                mobile: document.getElementById('mobile').value,
+                mobile: enteredMobile,
                 gender: selectedGender 
             };
+            
+            // ত্রুটিমুক্তির জন্য URLSearchParams ব্যবহার করে ডেটা পাঠানো
+            const urlEncodedData = new URLSearchParams(formData).toString();
 
-            fetch(scriptURL, {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    'Content-Type': 'application/json'
+            try {
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    body: urlEncodedData, // এখানে JSON.stringify এর বদলে URLSearchParams ব্যবহার করা হলো
+                    headers: {
+                        // এই Content-Type টি Google Apps Script এ POST রিকোয়েস্টের জন্য সবচেয়ে নির্ভরযোগ্য
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' 
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-            })
-            .then(response => response.json())
-            .then(data => {
+
+                const dataText = await response.text();
+                // Apps Script প্রায়ই JSON return করলেও Content-Type ঠিক দেয় না।
+                // তাই প্রাপ্ত টেক্সটকে JSON এ পার্স করার চেষ্টা করা হলো:
+                let data;
+                try {
+                    data = JSON.parse(dataText);
+                } catch(e) {
+                    throw new Error("Apps Script response format error.");
+                }
+
                 if(data.result === 'success') {
                     // Success Message & Token Display
+                    document.getElementById('regForm').reset(); // ফর্ম রিসেট
                     document.getElementById('regForm').style.display = 'none';
                     document.getElementById('regName').innerText = enteredName; // নাম সহ অভিনন্দন
                     document.getElementById('tokenId').innerText = data.token;
@@ -259,34 +300,31 @@
                     document.getElementById('cardPassYear').innerText = enteredPassYear;
                     document.getElementById('cardBatchNo').innerText = enteredBatchNo;
                     document.getElementById('cardTokenId').innerText = data.token;
-
                 } else {
-                    alert('রেজিস্ট্রেশনে সমস্যা হয়েছে।');
+                    throw new Error('Apps Script returned non-success result: ' + data.message);
                 }
-            })
-            .catch(error => {
-                alert('নেটওয়ার্ক বা সার্ভার ত্রুটি! আবার চেষ্টা করুন।');
-                console.error('Error!', error.message);
-            })
-            .finally(() => {
+            } catch (error) {
+                console.error('Error in submission:', error);
+                errorAlert.innerText = `রেজিস্ট্রেশন ব্যর্থ। অনুগ্রহ করে ইন্টারনেট সংযোগ পরীক্ষা করুন। ত্রুটি: ${error.message}`;
+                errorAlert.style.display = 'block';
+            } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerText = "রেজিস্ট্রেশন সম্পন্ন করুন";
-            });
+            }
         });
 
         // ৪. আইডি কার্ড প্রিন্ট ফাংশন
         function printIdCard() {
-            const printContent = document.getElementById('idCard').innerHTML;
-            const originalContent = document.body.innerHTML;
+            // শুধুমাত্র আইডি কার্ড অংশটি প্রিন্ট করার জন্য
+            const printContent = document.getElementById('idCardContainer').innerHTML;
+            const originalBody = document.body.innerHTML;
 
-            // শুধুমাত্র আইডি কার্ডটি প্রিন্টের জন্য নতুন উইন্ডো তৈরি
+            // নতুন উইন্ডো তৈরি করে প্রিন্ট করা
             const printWindow = window.open('', '', 'height=600,width=800');
             printWindow.document.write('<html><head><title>অ্যালামনাই আইডি কার্ড</title>');
-            printWindow.document.write('<style>');
-            printWindow.document.write('@media print { body{ font-family: Arial, sans-serif; } #idCard{ border: 2px solid #374151; padding: 20px; width: 300px; margin: 20px auto; background-color: #ffffff; box-shadow: none; } }');
-            printWindow.document.write('</style>');
+            printWindow.document.write('<style>body{font-family: Arial, sans-serif;} .id-card-print{border: 2px solid #374151; padding: 20px; width: 350px; margin: 20px auto; box-shadow: none;} .text-left{text-align: left;}</style>'); // CSS for print
             printWindow.document.write('</head><body>');
-            printWindow.document.write(printContent);
+            printWindow.document.write(document.getElementById('idCard').outerHTML);
             printWindow.document.write('</body></html>');
             
             printWindow.document.close();
