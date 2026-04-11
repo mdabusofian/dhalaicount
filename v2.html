@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KBH Member Poster Generator</title>
+    <title>KBH Premium Representative Card Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        /* Import a clean Bengali font */
-        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+        :root {
+            --app-red: #d32f2f;
+            --app-blue: #1976d2;
+            --premium-gold: #d4af37;
+            --premium-dark: #1a1a1a;
+            --text-white: #ffffff;
+        }
 
         body {
             font-family: 'Hind Siliguri', sans-serif;
@@ -16,134 +23,168 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            margin: 0;
             color: #333;
         }
 
-        /* Input Panel Styling */
+        /* Input Panel Styling (Will not be part of the final image) */
         .input-panel {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
+            box-sizing: border-box;
         }
 
-        .input-panel h3 {
+        .input-panel h2 {
             margin-top: 0;
-            color: #d32f2f; /* App Red */
+            color: var(--app-red);
             text-align: center;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
         }
 
         .input-panel input, .input-panel select {
-            width: 95%;
-            padding: 10px;
-            margin: 10px 0;
+            width: 100%;
+            padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 15px;
         }
 
-        /* Action Buttons */
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        button {
+        button.btn-download {
+            width: 100%;
+            background: linear-gradient(135deg, var(--premium-gold), #b8962e);
+            color: var(--premium-dark);
             border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            font-weight: bold;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 16px;
-            flex: 1;
-            transition: background 0.3s ease;
+            font-size: 18px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Hind Siliguri', sans-serif;
+            margin-top: 10px;
         }
 
-        .btn-download {
-            background-color: #d32f2f; /* App Red */
-            color: white;
+        button.btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
         }
 
-        .btn-download:hover {
-            background-color: #b71c1c;
+        button.btn-download:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
-        /* Poster Styling - Fixed aspect ratio 4:5 for social media */
-        #poster {
+        /* Poster/Card Styling - 4:5 Aspect Ratio (1080x1350px for high res) */
+        #poster-container {
             width: 500px;
             height: 625px;
-            background-color: #ffffff;
+            background-color: var(--premium-dark);
             position: relative;
             overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Border style matches previous posters */
-            border: 4px solid #1976d2; /* App Blue */
+            /* Thin premium gold border */
+            border: 3px solid var(--premium-gold);
+            box-sizing: border-box;
         }
 
-        /* App Red Header with Wave */
-        .poster-header {
-            width: 100%;
-            height: 180px;
-            background-color: #d32f2f; /* App Red */
+        /* Premium Gold Gradient Overlay */
+        #poster-container::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(0,0,0,0) 50%, rgba(212, 175, 55, 0.05) 100%);
             z-index: 1;
+        }
+
+        /* Header Styling */
+        .poster-header {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, var(--app-red), #b71c1c);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-bottom-left-radius: 50% 20px;
-            border-bottom-right-radius: 50% 20px;
+            border-bottom: 4px solid var(--premium-gold);
         }
 
-        .logo-section h1 {
-            color: #ffffff;
-            font-size: 32px;
+        .header-logo-text {
+            color: var(--text-white);
+            font-size: 36px;
             margin: 0;
             font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .logo-section p {
-            color: #ffffff;
+        .header-slogan {
+            color: rgba(255,255,255,0.9);
             font-size: 16px;
             margin: 5px 0 0;
-            opacity: 0.9;
+            font-weight: 400;
         }
 
-        /* Floating Congrats Tag */
-        .congrats-tag {
-            background-color: #ffffff;
-            color: #d32f2f;
-            padding: 8px 25px;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 20px;
+        /* Photo Frame - Premium Circular with Gold & Blue */
+        .photo-frame-container {
+            width: 200px;
+            height: 200px;
             position: absolute;
-            top: 155px; /* Sits on the red/white boundary */
-            z-index: 3;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            top: 110px; /* Sits over the header boundary */
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Photo Frame with Blue Border */
-        .photo-frame {
-            width: 190px;
-            height: 190px;
-            border: 6px solid #1976d2; /* App Blue */
+        .photo-frame-outer {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            margin-top: 140px; /* Position below header */
+            background: conic-gradient(var(--premium-gold), var(--app-blue), var(--premium-gold));
+            padding: 8px; /* Thickness of the outer frame */
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            box-sizing: border-box;
+        }
+
+        .photo-frame-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: var(--text-white);
             overflow: hidden;
-            background: #fff;
-            z-index: 2;
-            position: relative;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            border: 2px solid var(--premium-dark);
+            box-sizing: border-box;
         }
 
         #outputImg {
@@ -152,64 +193,121 @@
             object-fit: cover;
         }
 
-        /* Info Section Styling */
+        /* Info Section */
         .info-section {
-            margin-top: 50px; /* Space from photo frame */
-            text-align: center;
             width: 90%;
-            z-index: 2;
+            position: absolute;
+            top: 330px;
+            z-index: 3;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .congrats-text {
+            color: var(--premium-gold);
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .member-name {
-            font-size: 30px;
+            font-size: 34px;
             font-weight: 700;
-            color: #1976d2; /* App Blue for name */
-            margin-bottom: 10px;
+            color: var(--text-white);
+            margin: 0 0 10px;
             line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
 
-        .designation-box {
-            background: #d32f2f; /* App Red for designation */
-            color: white;
-            padding: 8px 25px;
-            border-radius: 25px;
+        .designation-badge {
+            background: linear-gradient(135deg, var(--app-blue), #1565c0);
+            color: var(--text-white);
+            padding: 8px 30px;
+            border-radius: 30px;
             font-weight: 600;
             font-size: 18px;
             display: inline-block;
             margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(25, 118, 210, 0.3);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .address-box {
             font-size: 16px;
-            color: #555;
+            color: rgba(255,255,255,0.8);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 8px;
         }
 
         .address-icon {
-            color: #d32f2f; /* Red location icon */
+            color: var(--app-red);
+            font-size: 18px;
         }
 
-        /* Footer with Contact Info */
+        /* Footer with QR Code & Link */
         .poster-footer {
             width: 100%;
+            height: 100px;
             position: absolute;
             bottom: 0;
             left: 0;
-            background-color: #f5f5f5;
-            padding: 15px 0;
-            border-top: 1px solid #e0e0e0;
-            text-align: center;
-            font-size: 14px;
-            z-index: 1;
-            color: #1976d2;
+            background-color: rgba(0,0,0,0.5);
+            border-top: 2px solid var(--premium-gold);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            color: var(--text-white);
         }
 
         .footer-url {
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--premium-gold);
             margin-bottom: 3px;
+        }
+
+        .footer-moto {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .footer-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* QR Code Container */
+        #qrcode-container {
+            width: 70px;
+            height: 70px;
+            background-color: var(--text-white);
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 2px solid var(--premium-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #qrcode img {
+            width: 100%;
+            height: 100%;
         }
 
     </style>
@@ -217,59 +315,90 @@
 <body>
 
 <div class="input-panel">
-    <h3>মেম্বার পোস্টার জেনারেটর</h3>
-    <p style="text-align:center; color:#666; font-size:14px; margin-top:0;">তথ্য ইনপুট দিলে পোস্টারটি স্বয়ংক্রিয়ভাবে আপডেট হবে।</p>
+    <h2>প্রিমিয়াম কার্ড জেনারেটর</h2>
     
-    <label for="imageInput">মেম্বারের ছবি আপলোড করুন:</label>
-    <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)">
-    
-    <input type="text" id="nameInput" placeholder="মেম্বারের নাম (উদা: আবু সুফিয়ান)" oninput="updateText()" maxlength="25">
-    
-    <select id="desigInput" onchange="updateText()">
-        <option value="" disabled selected>পদবি নির্বাচন করুন</option>
-        <option value="এলাকা সমন্বয়কারী">এলাকা সমন্বয়কারী</option>
-        <option value="ব্লাড হিরো">ব্লাড হিরো</option>
-        <option value="এলাকা প্রতিনিধি">এলাকা প্রতিনিধি</option>
-        <option value="কমিউনিটি অ্যাম্বাসেডর">কমিউনিটি অ্যাম্বাসেডর</option>
-    </select>
-    
-    <input type="text" id="addrInput" placeholder="এলাকা/ঠিকানা (উদা: কর্ণফুলী, চট্টগ্রাম)" oninput="updateText()" maxlength="35">
-    
-    <div class="btn-group">
-        <button class="btn-download" onclick="downloadPoster()">Download Poster</button>
+    <div class="form-group">
+        <label for="imageInput">১. মেম্বারের ছবি আপলোড করুন:</label>
+        <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)">
     </div>
+    
+    <div class="form-group">
+        <label for="nameInput">২. মেম্বারের নাম:</label>
+        <input type="text" id="nameInput" placeholder="উদা: আবু সুফিয়ান" oninput="updatePoster()" maxlength="25">
+    </div>
+    
+    <div class="form-group">
+        <label for="desigInput">৩. পদবি নির্বাচন করুন:</label>
+        <select id="desigInput" onchange="updatePoster()">
+            <option value="" disabled selected>নির্বাচন করুন</option>
+            <option value="এলাকা সমন্বয়কারী">এলাকা সমন্বয়কারী</option>
+            <option value="ব্লাড হিরো">ব্লাড হিরো</option>
+            <option value="এলাকা প্রতিনিধি">এলাকা প্রতিনিধি</option>
+            <option value="কমিউনিটি অ্যাম্বাসেডর">কমিউনিটি অ্যাম্বাসেডর</option>
+            <option value="ফাউন্ডার এডমিন">ফাউন্ডার এডমিন</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="addrInput">৪. এলাকা/ঠিকানা:</label>
+        <input type="text" id="addrInput" placeholder="উদা: কর্ণফুলী, চট্টগ্রাম" oninput="updatePoster()" maxlength="35">
+    </div>
+    
+    <button class="btn-download" id="downloadBtn" onclick="downloadPremiumCard()">Download Premium Card</button>
 </div>
 
-<div id="poster">
+<div id="poster-container">
+    
     <div class="poster-header">
-        <div class="logo-section">
-            <h1>কর্ণফুলী ব্লাড হাব</h1>
-            <p>রক্তের প্রয়োজনে আপনার পাশে</p>
-        </div>
+        <h1 class="header-logo-text">কর্ণফুলী ব্লাড হাব</h1>
+        <p class="header-slogan">চট্টগ্রামের নির্ভরযোগ্য রক্তদাতা নেটওয়ার্ক</p>
     </div>
     
-    <div class="congrats-tag">অভিনন্দন!</div>
-
-    <div class="photo-frame">
-        <img id="outputImg" src="https://via.placeholder.com/190x190/eeeeee/d32f2f?text=Photo" alt="Member Photo">
+    <div class="photo-frame-container">
+        <div class="photo-frame-outer">
+            <div class="photo-frame-inner">
+                <img id="outputImg" src="https://via.placeholder.com/200x200/333333/d4af37?text=KBH" alt="Member Photo">
+            </div>
+        </div>
     </div>
 
     <div class="info-section">
-        <div class="member-name" id="nameText">আবু সুফিয়ান</div>
-        <div class="designation-box" id="desigText">এলাকা সমন্বয়কারী</div>
+        <div class="congrats-text">অভিনন্দন!</div>
+        <h2 class="member-name" id="nameText">মেম্বারের নাম</h2>
+        <div class="designation-badge" id="desigText">পদবি</div>
         <div class="address-box">
             <span class="address-icon">📍</span>
-            <span id="addrText">কর্ণফুলী, চট্টগ্রাম</span>
+            <span id="addrText">এলাকা, চট্টগ্রাম</span>
         </div>
     </div>
 
     <div class="poster-footer">
-        <div class="footer-url">mdabusofian.github.io/karnaphulibloodhub/</div>
-        <div class="footer-moto">চট্টগ্রামের নির্ভরযোগ্য রক্তদাতা নেটওয়ার্ক</div>
+        <div class="footer-left">
+            <div class="footer-url">karnaphulibloodhub.com</div>
+            <div class="footer-moto">রক্তের প্রয়োজনে আপনার পাশে</div>
+        </div>
+        <div class="footer-right">
+            <div id="qrcode-container">
+                <div id="qrcode"></div>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
+    // Constants
+    const WEBSITE_URL = "https://mdabusofian.github.io/karnaphulibloodhub/";
+
+    // Initialize QR Code
+    const qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: WEBSITE_URL,
+        width: 60,
+        height: 60,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+
     // 1. Image Preview Function
     function previewImage(event) {
         const file = event.target.files[0];
@@ -283,68 +412,71 @@
         }
     }
 
-    // 2. Real-time Text Update Function
-    function updateText() {
+    // 2. Real-time Poster Update Function
+    function updatePoster() {
         const nameInput = document.getElementById('nameInput').value;
         const desigInput = document.getElementById('desigInput').value;
         const addrInput = document.getElementById('addrInput').value;
 
-        // Update poster elements, use placeholders if inputs are empty
-        document.getElementById('nameText').innerText = nameInput || 'মেম্বারের নাম';
-        document.getElementById('desigText').innerText = desigInput || 'পদবি';
-        document.getElementById('addrText').innerText = addrInput || 'এলাকা, চট্টগ্রাম';
+        // Update elements, use placeholders if inputs are empty
+        document.getElementById('nameText').innerText = nameInput || 'আবু সুফিয়ান';
+        document.getElementById('desigText').innerText = desigInput || 'এলাকা সমন্বয়কারী';
+        document.getElementById('addrText').innerText = addrInput || 'কর্ণফুলী, চট্টগ্রাম';
 
-        // Adjust font size for long names to keep them on one line
-        const nameTextElement = document.getElementById('nameText');
-        if (nameTextElement.innerText.length > 20) {
-            nameTextElement.style.fontSize = '24px';
+        // Dynamic Font Size for long names
+        const nameElement = document.getElementById('nameText');
+        if (nameElement.innerText.length > 20) {
+            nameElement.style.fontSize = '26px';
+        } else if (nameElement.innerText.length > 15) {
+            nameElement.style.fontSize = '30px';
         } else {
-            nameTextElement.style.fontSize = '30px';
+            nameElement.style.fontSize = '34px';
         }
     }
 
-    // 3. Download Poster as Image Function
-    function downloadPoster() {
-        const poster = document.getElementById('poster');
-        const btn = document.querySelector('.btn-download');
-        
-        // Change button text to indicate processing
-        btn.innerText = "Processing...";
+    // 3. Download Poster as High-Res Image
+    function downloadPremiumCard() {
+        const container = document.getElementById('poster-container');
+        const btn = document.getElementById('downloadBtn');
+        const memberName = document.getElementById('nameText').innerText.trim().replace(/\s+/g, '_');
+
+        // Indicate processing
+        btn.innerText = "Generating High-Res Image...";
         btn.disabled = true;
 
-        // Use html2canvas to capture the poster div
-        html2canvas(poster, {
-            scale: 3, // Set high scale (3x) for premium, clear image
-            useCORS: true, // Allow cross-origin images (like the placeholder)
-            backgroundColor: null // Transparent background around rounded corners
+        // Use html2canvas to capture
+        html2canvas(container, {
+            scale: 4, // 4x scale for super crisp, premium print quality
+            useCORS: true, // Allow cross-origin images
+            backgroundColor: "#1a1a1a", // Set canvas background same as premium dark
+            logging: false,
+            onclone: function(clonedDoc) {
+                // Ensure QR code is fully rendered in the clone
+                clonedDoc.getElementById('qrcode').style.display = 'block';
+            }
         }).then(canvas => {
-            // Create a temporary link element to trigger download
+            // Create download link
             const link = document.createElement('a');
-            
-            // Generate filename based on member name
-            const memberName = document.getElementById('nameText').innerText.trim().replace(/\s+/g, '_');
-            link.download = `KBH_Member_${memberName}.png`;
-            
-            // Convert canvas to base64 PNG data
+            link.download = `KBH_Premium_Card_${memberName}.png`;
             link.href = canvas.toDataURL("image/png", 1.0);
             
-            // Trigger the download
+            // Trigger download
             link.click();
             
-            // Restore button state
-            btn.innerText = "Download Poster";
+            // Restore button
+            btn.innerText = "Download Premium Card";
             btn.disabled = false;
         }).catch(err => {
             console.error("Error generating image:", err);
-            alert("দুঃখিত, পোস্টারটি তৈরি করা যায়নি। আবার চেষ্টা করুন।");
-            btn.innerText = "Download Poster";
+            alert("দুঃখিত, কার্ডটি তৈরি করা যায়নি। আবার চেষ্টা করুন।");
+            btn.innerText = "Download Premium Card";
             btn.disabled = false;
         });
     }
     
-    // Initial call to set placeholder texts
-    updateText();
+    // Initial update to set placeholder texts
+    updatePoster();
 </script>
 
 </body>
-            </html>
+</html>
