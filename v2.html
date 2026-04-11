@@ -3,194 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KBH Ultimate Premium Card Generator</title>
+    <title>KBH Light Professional Representative Card Generator</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
-            --premium-red: #8e0e00;
-            --premium-red-light: #b71c1c;
-            --premium-gold: #d4af37;
-            --premium-gold-dark: #b8962e;
-            --premium-dark-bg: #111111;
-            --premium-dark-gradient: linear-gradient(135deg, #1f1c18 0%, #111111 100%);
+            --kbh-red: #e31b23; /* Vibrant Blood Red */
+            --kbh-red-dark: #b71c1c;
+            --kbh-red-light: #ffcdd2;
+            --bg-light: #ffffff;
+            --bg-subtle: #f8f9fa;
+            --text-main: #212121;
+            --text-subtle: #616161;
             --text-white: #ffffff;
-            --text-gold: #d4af37;
         }
 
         body {
             font-family: 'Hind Siliguri', sans-serif;
-            background-color: #1a1a1a; /* Dark background for browser */
+            background-color: #e0e0e0; /* Neutral background for browser */
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 30px;
+            padding: 20px;
             margin: 0;
-            color: #eee;
+            color: var(--text-main);
         }
 
         /* Input Panel Styling (Will not be part of the final image) */
         .input-panel {
-            background: #2a2a2a;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin-bottom: 40px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
             width: 100%;
-            max-width: 480px;
+            max-width: 450px;
             box-sizing: border-box;
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-top: 4px solid var(--kbh-red);
         }
 
         .input-panel h2 {
             margin-top: 0;
-            color: var(--premium-gold);
+            color: var(--kbh-red);
             text-align: center;
-            font-size: 26px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 24px;
+            font-weight: 700;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             font-weight: 600;
-            color: rgba(255,255,255,0.7);
+            color: var(--text-main);
         }
 
         .input-panel input, .input-panel select {
             width: 100%;
-            padding: 13px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
             box-sizing: border-box;
             font-family: 'Hind Siliguri', sans-serif;
             font-size: 15px;
-            background-color: #1a1a1a;
-            color: #eee;
+            background-color: white;
         }
 
         button.btn-download {
             width: 100%;
-            background: linear-gradient(135deg, var(--premium-gold), var(--premium-gold-dark));
-            color: var(--premium-dark-bg);
+            background-color: var(--kbh-red);
+            color: white;
             border: none;
-            padding: 16px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 6px;
             font-weight: 700;
             cursor: pointer;
-            font-size: 19px;
-            transition: transform 0.2s, box-shadow 0.3s;
+            font-size: 17px;
+            transition: background 0.3s ease, transform 0.2s;
             font-family: 'Hind Siliguri', sans-serif;
-            margin-top: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-top: 10px;
         }
 
         button.btn-download:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+            background-color: var(--kbh-red-dark);
+            transform: translateY(-2px);
         }
 
         button.btn-download:disabled {
-            background: #555;
+            background-color: #ccc;
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
         }
 
-        /* Poster/Card Container - Ultimate Premium Design */
+        /* Poster/Card Container - Light & Professional Design */
         /* 4:5 Aspect Ratio (1080x1350px for high res) */
-        #ultimate-card-container {
+        #light-card-container {
             width: 500px;
             height: 625px;
-            background: var(--premium-dark-gradient); /* Ultimate Dark Gradient Background */
+            background-color: var(--bg-light); /* Complete Light Background */
             position: relative;
             overflow: hidden;
-            border-radius: 25px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Premium double border effect */
-            border: 4px solid var(--premium-gold);
+            /* Vibrant red border only on top */
+            border-top: 10px solid var(--kbh-red);
             box-sizing: border-box;
         }
 
-        /* Top Gilded Arch */
-        #ultimate-card-container::before {
+        /* Red Blood Drop Graphic Elements */
+        #light-card-container::before {
             content: '';
             position: absolute;
-            top: -50px;
-            left: -50px;
-            width: 600px;
-            height: 250px;
-            background: conic-gradient(var(--premium-red), var(--premium-red-light), var(--premium-red));
-            border-radius: 50%;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(227, 27, 35, 0.05); /* Subtle red drop */
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
             z-index: 1;
-            filter: blur(1px);
-            opacity: 0.9;
-            border-bottom: 5px solid var(--premium-gold);
-        }
-
-        /* Glossy Highlight Overlay */
-        #ultimate-card-container::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0.05) 100%);
-            z-index: 5;
-            pointer-events: none;
         }
 
         /* Header Styling */
         .poster-header {
-            width: 100%;
-            height: 140px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 2;
+            width: 90%;
+            margin-top: 30px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
+            z-index: 2;
+            position: relative;
+        }
+        
+        /* New Logo Symbol: stylized 'K' with blood drop */
+        .logo-symbol {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--kbh-red);
+            margin-right: 15px;
+            position: relative;
+        }
+        
+        .logo-symbol::after {
+            content: '🩸';
+            font-size: 25px;
+            position: absolute;
+            top: -10px;
+            right: -15px;
         }
 
         .header-logo-text {
-            color: var(--text-white);
-            font-size: 38px;
+            color: var(--kbh-red);
+            font-size: 34px;
             margin: 0;
             font-weight: 700;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-            -webkit-background-clip: text;
-            background-image: linear-gradient(135deg, var(--text-white), #cccccc);
+            letter-spacing: 0.5px;
         }
 
-        .header-slogan {
-            color: var(--text-gold);
-            font-size: 17px;
-            margin: 5px 0 0;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Photo Frame - Premium Pentagonal with Gold & Red */
+        /* Photo Frame - Clean with Red Outline */
         .photo-frame-container {
-            width: 210px;
-            height: 210px;
+            width: 190px;
+            height: 190px;
             position: absolute;
-            top: 100px; /* Sits over boundary */
+            top: 110px; /* Sits below header */
             z-index: 4;
             display: flex;
             align-items: center;
@@ -201,33 +183,21 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: conic-gradient(var(--premium-gold), var(--premium-red-light), var(--premium-gold));
-            padding: 8px; /* Thickness */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            background-color: var(--bg-light);
+            padding: 5px; /* Thickness */
+            box-shadow: 0 6px 20px rgba(227, 27, 35, 0.2);
             box-sizing: border-box;
+            border: 3px solid var(--kbh-red); /* Main Red Border */
             position: relative;
-        }
-        
-        /* Gilded border effect inside frame */
-        .photo-frame-outer::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.3);
-            z-index: 1;
         }
 
         .photo-frame-inner {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background-color: var(--premium-dark-bg);
             overflow: hidden;
-            border: 3px solid var(--premium-dark-bg);
             box-sizing: border-box;
-            z-index: 2;
-            position: relative;
+            background-color: var(--bg-subtle);
         }
 
         #outputImg {
@@ -240,7 +210,7 @@
         .info-section {
             width: 90%;
             position: absolute;
-            top: 330px;
+            top: 320px;
             z-index: 3;
             text-align: center;
             display: flex;
@@ -249,62 +219,55 @@
         }
 
         .congrats-text {
-            color: var(--premium-gold);
-            font-size: 24px;
-            font-weight: 700;
+            color: var(--text-main);
+            font-size: 22px;
+            font-weight: 600;
             margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 1px 1px 3px rgba(212, 175, 55, 0.3);
         }
 
         .member-name {
             font-size: 36px;
             font-weight: 700;
-            color: var(--text-white);
-            margin: 0 0 12px;
+            color: var(--kbh-red); /* Name in Red */
+            margin: 0 0 10px;
             line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
         }
 
         .designation-badge {
-            background: linear-gradient(135deg, var(--premium-red-light), var(--premium-red));
+            background-color: var(--text-main); /* Designation in Black */
             color: var(--text-white);
-            padding: 10px 35px;
+            padding: 8px 30px;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 19px;
+            font-size: 17px;
             display: inline-block;
-            margin-bottom: 18px;
-            box-shadow: 0 6px 15px rgba(183, 28, 28, 0.4);
-            border: 2px solid rgba(255,255,255,0.2);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
 
         .address-box {
-            font-size: 17px;
-            color: rgba(255,255,255,0.8);
+            font-size: 16px;
+            color: var(--text-subtle);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .address-icon {
-            color: var(--premium-gold);
-            font-size: 19px;
+            color: var(--kbh-red);
+            font-size: 18px;
         }
 
-        /* Footer with QR Code & Link */
+        /* Footer with QR Code & Link - Separated Red Line */
         .poster-footer {
             width: 100%;
-            height: 110px;
+            height: 120px;
             position: absolute;
             bottom: 0;
             left: 0;
-            background-color: rgba(0,0,0,0.7);
-            border-top: 3px solid var(--premium-gold);
+            background-color: var(--bg-subtle);
+            border-top: 2px solid #eeeeee;
             z-index: 2;
             display: flex;
             align-items: center;
@@ -316,21 +279,20 @@
         .footer-left {
             display: flex;
             flex-direction: column;
-            color: var(--text-white);
+            color: var(--text-main);
         }
 
         .footer-url {
-            font-size: 19px;
+            font-size: 18px;
             font-weight: 700;
-            color: var(--premium-gold);
+            color: var(--kbh-red); /* Link in Red */
             margin-bottom: 4px;
             text-transform: lowercase;
-            letter-spacing: 0.5px;
         }
 
         .footer-moto {
-            font-size: 15px;
-            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            color: var(--text-subtle);
             font-weight: 400;
         }
 
@@ -340,15 +302,15 @@
             justify-content: center;
         }
 
-        /* QR Code Container */
+        /* QR Code Container - Clean Red Border */
         #qrcode-container {
-            width: 75px;
-            height: 75px;
-            background-color: var(--text-white);
+            width: 80px;
+            height: 80px;
+            background-color: var(--bg-light);
             padding: 6px;
             border-radius: 10px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-            border: 3px solid var(--premium-gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 2px solid var(--kbh-red);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -365,7 +327,8 @@
 <body>
 
 <div class="input-panel">
-    <h2>KBH Ultimate Card</h2>
+    <h2>KBH মেম্বার কার্ড</h2>
+    <p style="text-align:center; color:#666; font-size:14px; margin-top:-10px; margin-bottom:20px;">লাইট থিম ডিজাইন</p>
     
     <div class="form-group">
         <label for="imageInput">১. মেম্বারের ছবি আপলোড করুন:</label>
@@ -385,7 +348,6 @@
             <option value="ব্লাড হিরো">ব্লাড হিরো</option>
             <option value="এলাকা প্রতিনিধি">এলাকা প্রতিনিধি</option>
             <option value="কমিউনিটি অ্যাম্বাসেডর">কমিউনিটি অ্যাম্বাসেডর</option>
-            <option value="ফাউন্ডার এডমিন">ফাউন্ডার এডমিন</option>
             <option value="স্বেচ্ছাসেবী">স্বেচ্ছাসেবী</option>
         </select>
     </div>
@@ -395,26 +357,26 @@
         <input type="text" id="addrInput" placeholder="উদা: কর্ণফুলী, চট্টগ্রাম" oninput="updatePoster()" maxlength="35">
     </div>
     
-    <button class="btn-download" id="downloadBtn" onclick="downloadUltimateCard()">Download Ultimate Card</button>
+    <button class="btn-download" id="downloadBtn" onclick="downloadLightCard()">Download High-Res Card</button>
 </div>
 
-<div id="ultimate-card-container">
+<div id="light-card-container">
     
     <div class="poster-header">
+        <div class="logo-symbol">K</div>
         <h1 class="header-logo-text">কর্ণফুলী ব্লাড হাব</h1>
-        <p class="header-slogan">Reliable Blood Donor Network</p>
     </div>
     
     <div class="photo-frame-container">
         <div class="photo-frame-outer">
             <div class="photo-frame-inner">
-                <img id="outputImg" src="https://via.placeholder.com/210x210/111111/d4af37?text=KBH" alt="Member Photo">
+                <img id="outputImg" src="https://via.placeholder.com/190x190/eeeeee/e31b23?text=Photo" alt="Member Photo">
             </div>
         </div>
     </div>
 
     <div class="info-section">
-        <div class="congrats-text">অভিনন্দন!</div>
+        <div class="congrats-text">অভিনন্দন! আপনি এখন আমাদের</div>
         <h2 class="member-name" id="nameText">মেম্বারের নাম</h2>
         <div class="designation-badge" id="desigText">পদবি</div>
         <div class="address-box">
@@ -426,7 +388,7 @@
     <div class="poster-footer">
         <div class="footer-left">
             <div class="footer-url">karnaphulibloodhub.com</div>
-            <div class="footer-moto">রক্তের প্রয়োজনে আপনার পাশে</div>
+            <div class="footer-moto">চট্টগ্রামের নির্ভরযোগ্য রক্তদাতা নেটওয়ার্ক</div>
         </div>
         <div class="footer-right">
             <div id="qrcode-container">
@@ -443,8 +405,8 @@
     // Initialize QR Code
     const qrcode = new QRCode(document.getElementById("qrcode"), {
         text: WEBSITE_URL,
-        width: 63,
-        height: 63,
+        width: 66,
+        height: 66,
         colorDark : "#000000",
         colorLight : "#ffffff",
         correctLevel : QRCode.CorrectLevel.H
@@ -477,29 +439,29 @@
         // Dynamic Font Size for long names
         const nameElement = document.getElementById('nameText');
         if (nameElement.innerText.length > 20) {
-            nameElement.style.fontSize = '28px';
+            nameElement.style.fontSize = '26px';
         } else if (nameElement.innerText.length > 15) {
-            nameElement.style.fontSize = '32px';
+            nameElement.style.fontSize = '30px';
         } else {
             nameElement.style.fontSize = '36px';
         }
     }
 
     // 3. Download Poster as High-Res Image
-    function downloadUltimateCard() {
-        const container = document.getElementById('ultimate-card-container');
+    function downloadLightCard() {
+        const container = document.getElementById('light-card-container');
         const btn = document.getElementById('downloadBtn');
         const memberName = document.getElementById('nameText').innerText.trim().replace(/\s+/g, '_');
 
         // Indicate processing
-        btn.innerText = "Generating Ultra High-Res Image...";
+        btn.innerText = "Generating High-Res Image...";
         btn.disabled = true;
 
         // Use html2canvas to capture
         html2canvas(container, {
-            scale: 5, // 5x scale for extremely crisp, print-ready premium quality
+            scale: 4, // 4x scale for super crisp, premium print quality
             useCORS: true, // Allow cross-origin images
-            backgroundColor: "#111111", // Dark canvas background
+            backgroundColor: "#ffffff", // Pure white background
             logging: false,
             onclone: function(clonedDoc) {
                 // Ensure QR code is rendered
@@ -508,19 +470,19 @@
         }).then(canvas => {
             // Create download link
             const link = document.createElement('a');
-            link.download = `KBH_Ultimate_Card_${memberName}.png`;
+            link.download = `KBH_Light_Card_${memberName}.png`;
             link.href = canvas.toDataURL("image/png", 1.0);
             
             // Trigger download
             link.click();
             
             // Restore button
-            btn.innerText = "Download Ultimate Card";
+            btn.innerText = "Download High-Res Card";
             btn.disabled = false;
         }).catch(err => {
             console.error("Error generating image:", err);
             alert("দুঃখিত, কার্ডটি তৈরি করা যায়নি। আবার চেষ্টা করুন।");
-            btn.innerText = "Download Ultimate Card";
+            btn.innerText = "Download High-Res Card";
             btn.disabled = false;
         });
     }
