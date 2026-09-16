@@ -1,1193 +1,384 @@
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>আল ফালাহ মানবসেবা ফাউন্ডেশন — PhotoCard Generator</title>
-
-<!-- Bangla Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800;900&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-<style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    min-height:100vh;
-    background:
-        radial-gradient(circle at top left,#1b2538 0,#0b101a 35%,#05070b 100%);
-    color:#fff;
-    font-family:"Noto Sans Bengali",sans-serif;
-}
-
-.app{
-    display:grid;
-    grid-template-columns:360px 1fr;
-    min-height:100vh;
-}
-
-/* =========================
-   SIDEBAR
-========================= */
-
-.sidebar{
-    padding:25px;
-    background:rgba(10,15,25,.94);
-    border-right:1px solid rgba(255,255,255,.08);
-    overflow-y:auto;
-}
-
-.brand{
-    margin-bottom:25px;
-}
-
-.brand h1{
-    font-size:22px;
-    font-weight:900;
-    line-height:1.35;
-}
-
-.brand p{
-    margin-top:6px;
-    color:#8f9bae;
-    font-size:12px;
-}
-
-.section{
-    margin-bottom:23px;
-}
-
-.section-title{
-    font-size:12px;
-    color:#8995a8;
-    margin-bottom:9px;
-    text-transform:uppercase;
-    letter-spacing:.8px;
-}
-
-input,
-textarea,
-select{
-    width:100%;
-    background:#121a28;
-    border:1px solid #273246;
-    color:white;
-    border-radius:10px;
-    padding:12px 13px;
-    font-family:inherit;
-    outline:none;
-}
-
-input:focus,
-textarea:focus,
-select:focus{
-    border-color:#25c99b;
-}
-
-textarea{
-    height:100px;
-    resize:vertical;
-    line-height:1.6;
-}
-
-.upload{
-    border:1px dashed #405069;
-    border-radius:13px;
-    padding:20px;
-    text-align:center;
-    cursor:pointer;
-    background:#101724;
-    transition:.2s;
-}
-
-.upload:hover{
-    border-color:#2dd4a3;
-    background:#121e2d;
-}
-
-.upload strong{
-    display:block;
-    margin-bottom:5px;
-}
-
-.upload small{
-    color:#7f8ca0;
-}
-
-#imageInput{
-    display:none;
-}
-
-/* Templates */
-
-.templates{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:7px;
-}
-
-.template{
-    height:52px;
-    border-radius:9px;
-    border:2px solid transparent;
-    cursor:pointer;
-    position:relative;
-    overflow:hidden;
-}
-
-.template.active{
-    border-color:white;
-}
-
-.t1{
-    background:linear-gradient(135deg,#0f172a,#00a878);
-}
-
-.t2{
-    background:linear-gradient(135deg,#111,#d62828);
-}
-
-.t3{
-    background:linear-gradient(135deg,#102a43,#2589bd);
-}
-
-.t4{
-    background:linear-gradient(135deg,#20110c,#e08a2e);
-}
-
-.t5{
-    background:linear-gradient(135deg,#16151d,#a855f7);
-}
-
-/* Buttons */
-
-.actions{
-    display:grid;
-    gap:9px;
-}
-
-button{
-    border:0;
-    cursor:pointer;
-    font-family:inherit;
-    font-weight:800;
-    border-radius:10px;
-    padding:13px;
-    transition:.2s;
-}
-
-.download{
-    background:#20bd8c;
-    color:#03130e;
-}
-
-.download:hover{
-    background:#31d9a4;
-    transform:translateY(-1px);
-}
-
-.reset{
-    background:#192231;
-    color:#dbe3ed;
-}
-
-.reset:hover{
-    background:#253247;
-}
-
-/* =========================
-   WORKSPACE
-========================= */
-
-.workspace{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding:35px;
-    min-width:0;
-}
-
-.workspace-title{
-    width:min(900px,100%);
-    margin-bottom:20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.workspace-title h2{
-    font-size:18px;
-}
-
-.workspace-title span{
-    font-size:11px;
-    color:#778397;
-}
-
-/* =========================
-   CARD
-========================= */
-
-.card{
-    width:min(760px,90vw);
-    aspect-ratio:1/1;
-    position:relative;
-    overflow:hidden;
-    background:#101722;
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.55),
-        0 5px 20px rgba(0,0,0,.25);
-}
-
-/* Image */
-
-.hero{
-    position:absolute;
-    inset:0;
-    background:#182131;
-}
-
-.hero img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:none;
-}
-
-/* Image overlay */
-
-.image-overlay{
-    position:absolute;
-    inset:0;
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,.05) 0%,
-            rgba(0,0,0,.02) 35%,
-            rgba(0,0,0,.38) 70%,
-            rgba(0,0,0,.92) 100%
-        );
-}
-
-/* Header */
-
-.card-header{
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    padding:26px 30px;
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    z-index:4;
-}
-
-.foundation{
-    font-size:18px;
-    font-weight:900;
-    line-height:1.25;
-    max-width:68%;
-    text-shadow:0 2px 10px rgba(0,0,0,.5);
-}
-
-.category{
-    font-size:11px;
-    font-weight:900;
-    padding:7px 11px;
-    border-radius:5px;
-    background:#20bd8c;
-    color:#03130e;
-    white-space:nowrap;
-}
-
-/* Bottom */
-
-.content{
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    padding:32px 30px 27px;
-    z-index:5;
-}
-
-.date{
-    font-size:12px;
-    font-weight:700;
-    margin-bottom:10px;
-    opacity:.85;
-}
-
-.headline{
-    font-size:clamp(25px,4vw,43px);
-    line-height:1.2;
-    font-weight:900;
-    letter-spacing:-.5px;
-    text-shadow:0 3px 15px rgba(0,0,0,.6);
-}
-
-/* Footer */
-
-.footer-line{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:17px;
-    padding-top:11px;
-    border-top:1px solid rgba(255,255,255,.28);
-}
-
-.footer-brand{
-    font-size:10px;
-    font-weight:700;
-    opacity:.8;
-}
-
-.footer-mark{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:#20bd8c;
-}
-
-/* =========================
-   TEMPLATE 1
-========================= */
-
-.card.template-1 .category{
-    background:#20bd8c;
-}
-
-.card.template-1 .headline{
-    color:white;
-}
-
-/* =========================
-   TEMPLATE 2
-========================= */
-
-.card.template-2{
-    background:#111;
-}
-
-.card.template-2 .image-overlay{
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,.05),
-            rgba(0,0,0,.15) 45%,
-            rgba(0,0,0,.95)
-        );
-}
-
-.card.template-2 .category{
-    background:#e63946;
-    color:white;
-}
-
-.card.template-2 .footer-mark{
-    background:#e63946;
-}
-
-/* =========================
-   TEMPLATE 3
-========================= */
-
-.card.template-3 .image-overlay{
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(3,25,48,.03),
-            rgba(3,25,48,.2) 45%,
-            rgba(2,13,25,.94)
-        );
-}
-
-.card.template-3 .category{
-    background:#38bdf8;
-    color:#062033;
-}
-
-.card.template-3 .footer-mark{
-    background:#38bdf8;
-}
-
-/* =========================
-   TEMPLATE 4
-========================= */
-
-.card.template-4 .image-overlay{
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(50,25,5,.02),
-            rgba(40,20,5,.25) 45%,
-            rgba(20,10,3,.95)
-        );
-}
-
-.card.template-4 .category{
-    background:#f59e0b;
-    color:#241500;
-}
-
-.card.template-4 .footer-mark{
-    background:#f59e0b;
-}
-
-/* =========================
-   TEMPLATE 5
-========================= */
-
-.card.template-5 .image-overlay{
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(35,15,50,.04),
-            rgba(35,15,50,.18) 45%,
-            rgba(13,7,20,.95)
-        );
-}
-
-.card.template-5 .category{
-    background:#c084fc;
-    color:#210b36;
-}
-
-.card.template-5 .footer-mark{
-    background:#c084fc;
-}
-
-/* =========================
-   EMPTY IMAGE
-========================= */
-
-.placeholder{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    gap:10px;
-    color:#8290a4;
-}
-
-.placeholder-icon{
-    width:65px;
-    height:65px;
-    border:2px dashed #536176;
-    border-radius:15px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:25px;
-}
-
-.placeholder small{
-    font-size:12px;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:900px){
-
-    .app{
-        grid-template-columns:1fr;
-    }
-
-    .sidebar{
-        border-right:0;
-        border-bottom:1px solid rgba(255,255,255,.08);
-    }
-
-    .workspace{
-        padding:25px 15px;
-    }
-
-    .card{
-        width:100%;
-        max-width:700px;
-    }
-}
-
-@media(max-width:520px){
-
-    .sidebar{
-        padding:18px;
-    }
-
-    .card-header{
-        padding:20px;
-    }
-
-    .content{
-        padding:22px 20px 20px;
-    }
-
-    .foundation{
-        font-size:14px;
-    }
-
-    .category{
-        font-size:9px;
-        padding:6px 8px;
-    }
-
-    .headline{
-        font-size:25px;
-    }
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="app">
-
-<!-- =========================
-     SIDEBAR
-========================= -->
-
-<aside class="sidebar">
-
-    <div class="brand">
-        <h1>আল ফালাহ<br>PhotoCard Generator</h1>
-        <p>Professional Humanitarian News Card</p>
-    </div>
-
-    <div class="section">
-
-        <div class="section-title">Hero Photo</div>
-
-        <label class="upload" for="imageInput">
-
-            <strong>📷 ছবি নির্বাচন করুন</strong>
-
-            <small>
-                JPG / PNG / WebP
-            </small>
-
-        </label>
-
-        <input
-            id="imageInput"
-            type="file"
-            accept="image/*"
-        >
-
-    </div>
-
-
-    <div class="section">
-
-        <div class="section-title">
-            Headline / Caption
-        </div>
-
-        <textarea
-            id="headlineInput"
-            placeholder="যেমন: বন্যার্ত মানুষের মাঝে ত্রাণ বিতরণ"
-        ></textarea>
-
-    </div>
-
-
-    <div class="section">
-
-        <div class="section-title">
-            Category
-        </div>
-
-        <select id="categoryInput">
-
-            <option>ত্রাণ বিতরণ</option>
-            <option>চিকিৎসা সহায়তা</option>
-            <option>খাদ্য বিতরণ</option>
-            <option>শিক্ষা সহায়তা</option>
-            <option>মানবিক সহায়তা</option>
-            <option>শীতবস্ত্র বিতরণ</option>
-            <option>অন্যান্য</option>
-
-        </select>
-
-    </div>
-
-
-    <div class="section">
-
-        <div class="section-title">
-            Date
-        </div>
-
-        <input
-            type="date"
-            id="dateInput"
-        >
-
-    </div>
-
-
-    <div class="section">
-
-        <div class="section-title">
-            Template
-        </div>
-
-        <div class="templates">
-
-            <div
-                class="template t1 active"
-                data-template="1"
-                title="Emerald"
-            ></div>
-
-            <div
-                class="template t2"
-                data-template="2"
-                title="Red"
-            ></div>
-
-            <div
-                class="template t3"
-                data-template="3"
-                title="Blue"
-            ></div>
-
-            <div
-                class="template t4"
-                data-template="4"
-                title="Amber"
-            ></div>
-
-            <div
-                class="template t5"
-                data-template="5"
-                title="Purple"
-            ></div>
-
-        </div>
-
-    </div>
-
-
-    <div class="section">
-
-        <div class="actions">
-
-            <button
-                class="download"
-                id="downloadBtn"
-            >
-                ⬇ Download PhotoCard
-            </button>
-
-            <button
-                class="reset"
-                id="resetBtn"
-            >
-                ↻ Reset
-            </button>
-
-        </div>
-
-    </div>
-
-</aside>
-
-
-<!-- =========================
-     WORKSPACE
-========================= -->
-
-<main class="workspace">
-
-    <div class="workspace-title">
-
-        <h2>Live Preview</h2>
-
-        <span>
-            1080 × 1080 • Facebook Ready
-        </span>
-
-    </div>
-
-
-    <!-- CARD -->
-
-    <div
-        class="card template-1"
-        id="photoCard"
-    >
-
-        <div class="hero">
-
-            <img
-                id="heroImage"
-                alt="Hero Image"
-            >
-
-            <div
-                class="placeholder"
-                id="placeholder"
-            >
-
-                <div class="placeholder-icon">
-                    📷
-                </div>
-
-                <small>
-                    আপনার প্রধান ছবি এখানে দেখাবে
-                </small>
-
-            </div>
-
-            <div class="image-overlay"></div>
-
-        </div>
-
-
-        <!-- HEADER -->
-
-        <div class="card-header">
-
-            <div class="foundation">
-                আল ফালাহ মানবসেবা ফাউন্ডেশন
-            </div>
-
-            <div
-                class="category"
-                id="categoryPreview"
-            >
-                ত্রাণ বিতরণ
-            </div>
-
-        </div>
-
-
-        <!-- CONTENT -->
-
-        <div class="content">
-
-            <div
-                class="date"
-                id="datePreview"
-            >
-                ১৬ সেপ্টেম্বর ২০২৬
-            </div>
-
-
-            <div
-                class="headline"
-                id="headlinePreview"
-            >
-                মানবতার পাশে আল ফালাহ মানবসেবা ফাউন্ডেশন
-            </div>
-
-
-            <div class="footer-line">
-
-                <div class="footer-brand">
-                    AL FALAH HUMAN SERVICE FOUNDATION
-                </div>
-
-                <div class="footer-mark"></div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</main>
-
-</div>
-
-
-<script>
-
-/* =========================
-   ELEMENTS
-========================= */
-
-const imageInput =
-    document.getElementById("imageInput");
-
-const heroImage =
-    document.getElementById("heroImage");
-
-const placeholder =
-    document.getElementById("placeholder");
-
-const headlineInput =
-    document.getElementById("headlineInput");
-
-const headlinePreview =
-    document.getElementById("headlinePreview");
-
-const categoryInput =
-    document.getElementById("categoryInput");
-
-const categoryPreview =
-    document.getElementById("categoryPreview");
-
-const dateInput =
-    document.getElementById("dateInput");
-
-const datePreview =
-    document.getElementById("datePreview");
-
-const photoCard =
-    document.getElementById("photoCard");
-
-const downloadBtn =
-    document.getElementById("downloadBtn");
-
-const resetBtn =
-    document.getElementById("resetBtn");
-
-
-/* =========================
-   DEFAULT DATE
-========================= */
-
-const today =
-    new Date();
-
-const yyyy =
-    today.getFullYear();
-
-const mm =
-    String(today.getMonth()+1).padStart(2,"0");
-
-const dd =
-    String(today.getDate()).padStart(2,"0");
-
-dateInput.value =
-    `${yyyy}-${mm}-${dd}`;
-
-
-/* =========================
-   IMAGE UPLOAD
-========================= */
-
-imageInput.addEventListener(
-    "change",
-    function(){
-
-        const file =
-            this.files[0];
-
-        if(!file) return;
-
-        const reader =
-            new FileReader();
-
-        reader.onload =
-            function(e){
-
-                heroImage.src =
-                    e.target.result;
-
-                heroImage.style.display =
-                    "block";
-
-                placeholder.style.display =
-                    "none";
-
-            };
-
-        reader.readAsDataURL(file);
-
-    }
-);
-
-
-/* =========================
-   HEADLINE
-========================= */
-
-headlineInput.addEventListener(
-    "input",
-    function(){
-
-        const value =
-            this.value.trim();
-
-        headlinePreview.textContent =
-            value ||
-            "মানবতার পাশে আল ফালাহ মানবসেবা ফাউন্ডেশন";
-
-    }
-);
-
-
-/* =========================
-   CATEGORY
-========================= */
-
-categoryInput.addEventListener(
-    "change",
-    function(){
-
-        categoryPreview.textContent =
-            this.value;
-
-    }
-);
-
-
-/* =========================
-   DATE
-========================= */
-
-function formatBanglaDate(dateValue){
-
-    if(!dateValue)
-        return "";
-
-    const date =
-        new Date(
-            dateValue + "T00:00:00"
-        );
-
-    const months = [
-        "জানুয়ারি",
-        "ফেব্রুয়ারি",
-        "মার্চ",
-        "এপ্রিল",
-        "মে",
-        "জুন",
-        "জুলাই",
-        "আগস্ট",
-        "সেপ্টেম্বর",
-        "অক্টোবর",
-        "নভেম্বর",
-        "ডিসেম্বর"
-    ];
-
-    const banglaDigits = {
-        "0":"০",
-        "1":"১",
-        "2":"২",
-        "3":"৩",
-        "4":"৪",
-        "5":"৫",
-        "6":"৬",
-        "7":"৭",
-        "8":"৮",
-        "9":"৯"
-    };
-
-    function bn(number){
-
-        return String(number)
-            .split("")
-            .map(x =>
-                banglaDigits[x] || x
-            )
-            .join("");
-
-    }
-
-    return (
-        bn(date.getDate()) +
-        " " +
-        months[date.getMonth()] +
-        " " +
-        bn(date.getFullYear())
-    );
-
-}
-
-
-dateInput.addEventListener(
-    "change",
-    function(){
-
-        datePreview.textContent =
-            formatBanglaDate(
-                this.value
-            );
-
-    }
-);
-
-
-/* =========================
-   TEMPLATE SWITCH
-========================= */
-
-document
-.querySelectorAll(".template")
-.forEach(
-    template => {
-
-        template.addEventListener(
-            "click",
-            function(){
-
-                document
-                .querySelectorAll(".template")
-                .forEach(t =>
-                    t.classList.remove("active")
-                );
-
-                this.classList.add("active");
-
-                const number =
-                    this.dataset.template;
-
-                photoCard.className =
-                    "card template-" +
-                    number;
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================
-   DOWNLOAD
-========================= */
-
-downloadBtn.addEventListener(
-    "click",
-    async function(){
-
-        const originalText =
-            this.textContent;
-
-        this.textContent =
-            "⏳ তৈরি হচ্ছে...";
-
-        try{
-
-            const canvas =
-                await html2canvas(
-                    photoCard,
-                    {
-                        scale:2,
-                        useCORS:true,
-                        backgroundColor:null,
-                        logging:false
-                    }
-                );
-
-            const link =
-                document.createElement("a");
-
-            link.download =
-                "al-falah-photocard-" +
-                Date.now() +
-                ".png";
-
-            link.href =
-                canvas.toDataURL(
-                    "image/png"
-                );
-
-            link.click();
-
-        }catch(error){
-
-            console.error(error);
-
-            alert(
-                "PhotoCard তৈরি করতে সমস্যা হয়েছে।"
-            );
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আল ফালাহ মানবসেবা ফাউন্ডেশন - ফটোকার্ড জেনারেটর</title>
+    <!-- Kalpurush Font & FontAwesome Icons -->
+    <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- html2canvas Library for Exporting Image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Kalpurush', sans-serif;
         }
 
-        this.textContent =
-            originalText;
+        body {
+            background-color: #f3f4f6;
+            color: #1f2937;
+            padding: 20px;
+        }
 
-    }
-);
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
 
+        .header h1 {
+            color: #1e3a8a;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
 
-/* =========================
-   RESET
-========================= */
+        .header p {
+            color: #4b5563;
+            font-size: 16px;
+        }
 
-resetBtn.addEventListener(
-    "click",
-    function(){
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
 
-        imageInput.value = "";
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
 
-        heroImage.src = "";
+        /* Control Panel Form */
+        .form-panel {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
 
-        heroImage.style.display =
-            "none";
+        .form-group {
+            margin-bottom: 18px;
+        }
 
-        placeholder.style.display =
-            "flex";
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #374151;
+        }
 
-        headlineInput.value =
-            "";
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s;
+        }
 
-        headlinePreview.textContent =
-            "মানবতার পাশে আল ফালাহ মানবসেবা ফাউন্ডেশন";
+        .form-group input:focus, 
+        .form-group textarea:focus, 
+        .form-group select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
 
-        categoryInput.selectedIndex =
-            0;
+        .btn-download {
+            width: 100%;
+            background-color: #2563eb;
+            color: #ffffff;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
 
-        categoryPreview.textContent =
-            categoryInput.value;
+        .btn-download:hover {
+            background-color: #1d4ed8;
+        }
 
-        dateInput.value =
-            `${yyyy}-${mm}-${dd}`;
+        /* Preview Panel */
+        .preview-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        datePreview.textContent =
-            formatBanglaDate(
-                dateInput.value
-            );
+        /* Photo Card Outer Frame (Aspect Ratio 1:1 Square for Social Media) */
+        .photocard {
+            width: 500px;
+            height: 500px;
+            background-color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-radius: 4px;
+        }
 
-        photoCard.className =
-            "card template-1";
+        /* Top Header Area */
+        .card-header-bar {
+            height: 60px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #ffffff;
+            z-index: 2;
+        }
 
-        document
-        .querySelectorAll(".template")
-        .forEach(t =>
-            t.classList.remove("active")
-        );
+        .brand-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-        document
-        .querySelector(".template.t1")
-        .classList.add("active");
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #ffffff;
+            object-fit: cover;
+            border: 2px solid #ffffff;
+        }
 
-    }
-);
+        .brand-name {
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
 
+        .card-date {
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
 
-/* =========================
-   INITIAL DATE
-========================= */
+        /* Image Area (Highlithed News Style) */
+        .card-image-box {
+            flex: 1;
+            position: relative;
+            background-color: #e5e7eb;
+            overflow: hidden;
+        }
 
-datePreview.textContent =
-    formatBanglaDate(
-        dateInput.value
-    );
+        .card-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-</script>
+        /* Category Badge on Image */
+        .card-category {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            padding: 4px 14px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
 
+        /* Bottom Headline Overlay Block */
+        .card-headline-box {
+            padding: 20px;
+            color: #ffffff;
+            position: relative;
+            min-height: 130px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-headline-text {
+            font-size: 22px;
+            line-height: 1.4;
+            font-weight: bold;
+            width: 100%;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Color Templates Styling */
+        
+        /* Template 1: Classic Red (Default) */
+        .theme-red .card-header-bar { background-color: #b91c1c; }
+        .theme-red .card-category { background-color: #b91c1c; }
+        .theme-red .card-headline-box { background-color: #991b1b; border-top: 4px solid #f87171; }
+
+        /* Template 2: Professional Blue */
+        .theme-blue .card-header-bar { background-color: #1e40af; }
+        .theme-blue .card-category { background-color: #1e40af; }
+        .theme-blue .card-headline-box { background-color: #1e3a8a; border-top: 4px solid #60a5fa; }
+
+        /* Template 3: Deep Green */
+        .theme-green .card-header-bar { background-color: #15803d; }
+        .theme-green .card-category { background-color: #15803d; }
+        .theme-green .card-headline-box { background-color: #166534; border-top: 4px solid #4ade80; }
+
+        /* Template 4: Dark Premium */
+        .theme-dark .card-header-bar { background-color: #111827; }
+        .theme-dark .card-category { background-color: #374151; }
+        .theme-dark .card-headline-box { background-color: #1f2937; border-top: 4px solid #9ca3af; }
+
+        /* Template 5: Royal Gold */
+        .theme-gold .card-header-bar { background-color: #854d0e; }
+        .theme-gold .card-category { background-color: #a16207; }
+        .theme-gold .card-headline-box { background-color: #713f12; border-top: 4px solid #facc15; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>আল ফালাহ মানবসেবা ফাউন্ডেশন</h1>
+        <p>নিউজ প্রফেশনাল ফটোকার্ড জেনারেটর টুল</p>
+    </div>
+
+    <div class="container">
+        <!-- Input Form Section -->
+        <div class="form-panel">
+            <div class="form-group">
+                <label for="templateSelect"><i class="fa-solid fa-palette"></i> কালার টেমপ্লেট নির্বাচন করুন</label>
+                <select id="templateSelect" onchange="updateCard()">
+                    <option value="theme-red">১. ক্লাসিক লাল (Classic Red)</option>
+                    <option value="theme-blue">২. প্রফেশনাল নীল (Professional Blue)</option>
+                    <option value="theme-green">৩. গাঢ় সবুজ (Deep Green)</option>
+                    <option value="theme-dark">৪. প্রিমিয়াম ডার্ক (Dark Premium)</option>
+                    <option value="theme-gold">৫. রয়্যাল গোল্ড (Royal Gold)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="orgNameInput"><i class="fa-solid fa-building-flag"></i> ফাউন্ডেশনের নাম</label>
+                <input type="text" id="orgNameInput" value="আল ফালাহ মানবসেবা ফাউন্ডেশন" oninput="updateCard()">
+            </div>
+
+            <div class="form-group">
+                <label for="categoryInput"><i class="fa-solid fa-layer-group"></i> ক্যাটাগরি</label>
+                <input type="text" id="categoryInput" value="ত্রাণ বিতরণ" oninput="updateCard()">
+            </div>
+
+            <div class="form-group">
+                <label for="dateInput"><i class="fa-solid fa-calendar-days"></i> তারিখ</label>
+                <input type="text" id="dateInput" value="১৬ সেপ্টেম্বর, ২০২৬" oninput="updateCard()">
+            </div>
+
+            <div class="form-group">
+                <label for="headlineInput"><i class="fa-solid fa-newspaper"></i> হেডলাইন / বিবরণ</label>
+                <textarea id="headlineInput" rows="3" oninput="updateCard()">বন্যাদুর্গত এলাকায় আল ফালাহ মানবসেবা ফাউন্ডেশনের উদ্যোগে খাদ্য ও জরুরি ত্রাণ সামগ্রী বিতরণ করা হয়েছে।</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="mainImageInput"><i class="fa-solid fa-image"></i> মূল ছবি আপলোড করুন (Highlight Image)</label>
+                <input type="file" id="mainImageInput" accept="image/*" onchange="loadMainImage(event)">
+            </div>
+
+            <div class="form-group">
+                <label for="logoInput"><i class="fa-solid fa-circle-user"></i> লোগো আপলোড করুন (ঐচ্ছিক)</label>
+                <input type="file" id="logoInput" accept="image/*" onchange="loadLogoImage(event)">
+            </div>
+
+            <button class="btn-download" onclick="downloadPhotoCard()">
+                <i class="fa-solid fa-download"></i> ফটোকার্ড ডাউনলোড করুন
+            </button>
+        </div>
+
+        <!-- Live Preview Section -->
+        <div class="preview-panel">
+            <div id="photoCard" class="photocard theme-red">
+                <!-- Top Header -->
+                <div class="card-header-bar">
+                    <div class="brand-info">
+                        <img id="cardLogo" class="brand-logo" src="https://via.placeholder.com/50/ffffff/000000?text=Logo" alt="Logo">
+                        <span id="cardOrgName" class="brand-name">আল ফালাহ মানবসেবা ফাউন্ডেশন</span>
+                    </div>
+                    <div id="cardDate" class="card-date">১৬ সেপ্টেম্বর, ২০২৬</div>
+                </div>
+
+                <!-- Main Highlighted Image -->
+                <div class="card-image-box">
+                    <span id="cardCategory" class="card-category">ত্রাণ বিতরণ</span>
+                    <img id="cardMainImg" src="https://via.placeholder.com/600x400/cccccc/333333?text=Main+Photo+Highlight" alt="Main Photo">
+                </div>
+
+                <!-- Bottom Headline -->
+                <div class="card-headline-box">
+                    <div id="cardHeadline" class="card-headline-text">
+                        বন্যাদুর্গত এলাকায় আল ফালাহ মানবসেবা ফাউন্ডেশনের উদ্যোগে খাদ্য ও জরুরি ত্রাণ সামগ্রী বিতরণ করা হয়েছে।
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update Live Card Content
+        function updateCard() {
+            document.getElementById('cardOrgName').innerText = document.getElementById('orgNameInput').value || 'আল ফালাহ মানবসেবা ফাউন্ডেশন';
+            document.getElementById('cardCategory').innerText = document.getElementById('categoryInput').value || 'ক্যাটাগরি';
+            document.getElementById('cardDate').innerText = document.getElementById('dateInput').value || 'তারিখ';
+            document.getElementById('cardHeadline').innerText = document.getElementById('headlineInput').value || 'এখানে আপনার সংবাদ বা হেডলাইন থাকবে...';
+
+            // Change Theme Template
+            const card = document.getElementById('photoCard');
+            const selectedTheme = document.getElementById('templateSelect').value;
+            card.className = 'photocard ' + selectedTheme;
+        }
+
+        // Handle Main Image Upload
+        function loadMainImage(event) {
+            const output = document.getElementById('cardMainImg');
+            if (event.target.files && event.target.files[0]) {
+                output.src = URL.createObjectURL(event.target.files[0]);
+            }
+        }
+
+        // Handle Logo Upload
+        function loadLogoImage(event) {
+            const output = document.getElementById('cardLogo');
+            if (event.target.files && event.target.files[0]) {
+                output.src = URL.createObjectURL(event.target.files[0]);
+            }
+        }
+
+        // Download Photo Card as PNG
+        function downloadPhotoCard() {
+            const card = document.getElementById('photoCard');
+            
+            html2canvas(card, {
+                scale: 2, // High DPI Resolution Output
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Al_Falah_Photocard.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+    </script>
 </body>
 </html>
