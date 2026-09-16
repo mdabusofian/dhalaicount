@@ -1,355 +1,538 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল ফালাহ মানবসেবা ফাউন্ডেশন - ফটোকার্ড জেনারেটর</title>
-    <!-- Kalpurush Font & FontAwesome Icons -->
-    <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
+    <title>আল ফালাহ মানবসেবা ফাউন্ডেশন - প্রিমিয়াম ফটোকার্ড জেনারেটর</title>
+
+    <!-- Google Fonts: Anek Bangla for Premium News Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- html2canvas Library for Exporting Image -->
+    <!-- html2canvas Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --border-color: #334155;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Kalpurush', sans-serif;
+            font-family: 'Anek Bangla', sans-serif;
         }
 
         body {
-            background-color: #f3f4f6;
-            color: #1f2937;
-            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px 10px;
         }
 
-        .header {
+        /* Top Bar */
+        .app-header {
             text-align: center;
-            margin-bottom: 25px;
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+            padding: 10px;
         }
 
-        .header h1 {
-            color: #1e3a8a;
+        .app-header h1 {
             font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #a7f3d0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 5px;
         }
 
-        .header p {
-            color: #4b5563;
-            font-size: 16px;
+        .app-header p {
+            color: #94a3b8;
+            font-size: 15px;
         }
 
-        .container {
-            max-width: 1200px;
+        /* Main Layout Grid */
+        .main-wrapper {
+            max-width: 1250px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            grid-template-columns: 420px 1fr;
+            gap: 25px;
+            align-items: start;
         }
 
-        @media (max-width: 900px) {
-            .container {
+        @media (max-width: 992px) {
+            .main-wrapper {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* Control Panel Form */
-        .form-panel {
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        /* Form Panel (Mobile Friendly UI) */
+        .form-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #38bdf8;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .form-group label {
             display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #cbd5e1;
         }
 
         .form-group input, 
         .form-group textarea, 
         .form-group select {
             width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
+            padding: 12px 14px;
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: #ffffff;
             font-size: 15px;
             outline: none;
-            transition: 0.2s;
+            transition: all 0.3s ease;
         }
 
         .form-group input:focus, 
         .form-group textarea:focus, 
         .form-group select:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+        }
+
+        .file-upload-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #334155;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.2s;
+            text-align: center;
+        }
+
+        .file-upload-btn:hover {
+            background: #475569;
+        }
+
+        .file-upload-btn input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
         }
 
         .btn-download {
             width: 100%;
-            background-color: #2563eb;
+            background: linear-gradient(135deg, #0284c7, #2563eb);
             color: #ffffff;
-            padding: 12px;
+            padding: 14px;
             border: none;
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: bold;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+            margin-top: 20px;
         }
 
         .btn-download:hover {
-            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.6);
         }
 
         /* Preview Panel */
-        .preview-panel {
+        .preview-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            position: sticky;
+            top: 20px;
         }
 
-        /* Photo Card Outer Frame (Aspect Ratio 1:1 Square for Social Media) */
-        .photocard {
-            width: 500px;
-            height: 500px;
-            background-color: #ffffff;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            border-radius: 4px;
-        }
-
-        /* Top Header Area */
-        .card-header-bar {
-            height: 60px;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: #ffffff;
-            z-index: 2;
-        }
-
-        .brand-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .brand-logo {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: #ffffff;
-            object-fit: cover;
-            border: 2px solid #ffffff;
-        }
-
-        .brand-name {
-            font-size: 20px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-
-        .card-date {
+        .preview-title {
             font-size: 14px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 4px 10px;
-            border-radius: 20px;
+            color: #94a3b8;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        /* Image Area (Highlithed News Style) */
-        .card-image-box {
-            flex: 1;
+        /* ------------------------------------------------------------- */
+        /* PHOTO CARD PREVIEW FRAME (1:1 Square 1080x1080 Scaled Down)   */
+        /* ------------------------------------------------------------- */
+        .photocard-container {
+            width: 540px;
+            height: 540px;
+            background-color: #000;
             position: relative;
-            background-color: #e5e7eb;
             overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .card-image-box img {
+        /* Full Background Image Layer with Blur Backdrop */
+        .card-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            z-index: 1;
         }
 
-        /* Category Badge on Image */
-        .card-category {
+        /* Top Gradient Overlay */
+        .top-gradient {
             position: absolute;
-            top: 15px;
-            left: 20px;
-            padding: 4px 14px;
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 3px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+            z-index: 2;
         }
 
-        /* Bottom Headline Overlay Block */
-        .card-headline-box {
-            padding: 20px;
-            color: #ffffff;
+        /* Bottom Heavy Gradient Overlay for Text Clarity */
+        .bottom-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 320px;
+            background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0) 100%);
+            z-index: 2;
+        }
+
+        /* Card Top Bar Header */
+        .card-top-bar {
             position: relative;
-            min-height: 130px;
+            z-index: 3;
+            padding: 16px 20px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
         }
 
-        .card-headline-text {
-            font-size: 22px;
-            line-height: 1.4;
-            font-weight: bold;
-            width: 100%;
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .brand-title-text {
+            color: #ffffff;
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .date-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* News Content Area (Bottom Section) */
+        .card-content-area {
+            position: relative;
+            z-index: 3;
+            padding: 20px 22px 24px 22px;
+        }
+
+        /* Category Shape Tag */
+        .category-tag-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .category-tag {
+            font-size: 14px;
+            font-weight: 800;
+            color: #ffffff;
+            padding: 4px 14px;
+            text-transform: uppercase;
+            clip-path: polygon(0 0, 100% 0, 92% 100%, 0% 100%);
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .news-badge {
+            background: #ffffff;
+            color: #000;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Highilghted Main Headline */
+        .headline-main {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.38;
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.9);
+            margin-bottom: 14px;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
-        /* Color Templates Styling */
-        
-        /* Template 1: Classic Red (Default) */
-        .theme-red .card-header-bar { background-color: #b91c1c; }
-        .theme-red .card-category { background-color: #b91c1c; }
-        .theme-red .card-headline-box { background-color: #991b1b; border-top: 4px solid #f87171; }
+        /* Footer Accent Strip */
+        .footer-strip {
+            height: 6px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 4;
+        }
 
-        /* Template 2: Professional Blue */
-        .theme-blue .card-header-bar { background-color: #1e40af; }
-        .theme-blue .card-category { background-color: #1e40af; }
-        .theme-blue .card-headline-box { background-color: #1e3a8a; border-top: 4px solid #60a5fa; }
 
-        /* Template 3: Deep Green */
-        .theme-green .card-header-bar { background-color: #15803d; }
-        .theme-green .card-category { background-color: #15803d; }
-        .theme-green .card-headline-box { background-color: #166534; border-top: 4px solid #4ade80; }
+        /* ------------------------------------------------------------- */
+        /* 5 PREMIUM COLOR TEMPLATES DESIGN                              */
+        /* ------------------------------------------------------------- */
 
-        /* Template 4: Dark Premium */
-        .theme-dark .card-header-bar { background-color: #111827; }
-        .theme-dark .card-category { background-color: #374151; }
-        .theme-dark .card-headline-box { background-color: #1f2937; border-top: 4px solid #9ca3af; }
+        /* Template 1: Breaking Red (Somoy News Style) */
+        .theme-red .category-tag { background: linear-gradient(135deg, #dc2626, #991b1b); }
+        .theme-red .footer-strip { background: linear-gradient(90deg, #ef4444, #f87171, #ef4444); }
+        .theme-red .brand-title-text { color: #ffffff; }
 
-        /* Template 5: Royal Gold */
-        .theme-gold .card-header-bar { background-color: #854d0e; }
-        .theme-gold .card-category { background-color: #a16207; }
-        .theme-gold .card-headline-box { background-color: #713f12; border-top: 4px solid #facc15; }
+        /* Template 2: Royal Blue (Jamuna TV Style) */
+        .theme-blue .category-tag { background: linear-gradient(135deg, #2563eb, #1e3a8a); }
+        .theme-blue .footer-strip { background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6); }
 
+        /* Template 3: Royal Gold (Premium Awards Style) */
+        .theme-gold .category-tag { background: linear-gradient(135deg, #d97706, #78350f); }
+        .theme-gold .footer-strip { background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b); }
+
+        /* Template 4: Emerald Green (Islamic/Humanity Style) */
+        .theme-green .category-tag { background: linear-gradient(135deg, #16a34a, #14532d); }
+        .theme-green .footer-strip { background: linear-gradient(90deg, #22c55e, #4ade80, #22c55e); }
+
+        /* Template 5: Dark Premium (Midnight Style) */
+        .theme-dark .category-tag { background: linear-gradient(135deg, #475569, #0f172a); border: 1px solid #64748b; }
+        .theme-dark .footer-strip { background: linear-gradient(90deg, #94a3b8, #cbd5e1, #94a3b8); }
+
+        /* Responsive preview scale for mobile devices */
+        @media (max-width: 580px) {
+            .photocard-container {
+                width: 340px;
+                height: 340px;
+            }
+
+            .brand-title-text { font-size: 14px; }
+            .brand-logo-img { width: 32px; height: 32px; }
+            .date-badge { font-size: 10px; padding: 2px 8px; }
+            .headline-main { font-size: 16px; line-height: 1.35; }
+            .category-tag { font-size: 11px; padding: 3px 10px; }
+            .news-badge { font-size: 9px; }
+            .card-content-area { padding: 12px 14px 16px 14px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>আল ফালাহ মানবসেবা ফাউন্ডেশন</h1>
-        <p>নিউজ প্রফেশনাল ফটোকার্ড জেনারেটর টুল</p>
+    <!-- App Header -->
+    <div class="app-header">
+        <h1><i class="fa-solid fa-newspaper"></i> আল ফালাহ মানবসেবা ফাউন্ডেশন</h1>
+        <p>প্রফেশনাল নিউজ ফটোকার্ড জেনারেটর (গিটহাব রেডি)</p>
     </div>
 
-    <div class="container">
-        <!-- Input Form Section -->
-        <div class="form-panel">
+    <!-- Main Content Container -->
+    <div class="main-wrapper">
+        
+        <!-- Controls & Input Form Panel -->
+        <div class="form-card">
+            <div class="form-card-title">
+                <i class="fa-solid fa-sliders"></i> কাস্টমাইজেশন প্যানেল
+            </div>
+
             <div class="form-group">
-                <label for="templateSelect"><i class="fa-solid fa-palette"></i> কালার টেমপ্লেট নির্বাচন করুন</label>
+                <label for="templateSelect"><i class="fa-solid fa-palette"></i> নিউজ কালার থিম থিম</label>
                 <select id="templateSelect" onchange="updateCard()">
-                    <option value="theme-red">১. ক্লাসিক লাল (Classic Red)</option>
-                    <option value="theme-blue">২. প্রফেশনাল নীল (Professional Blue)</option>
-                    <option value="theme-green">৩. গাঢ় সবুজ (Deep Green)</option>
-                    <option value="theme-dark">৪. প্রিমিয়াম ডার্ক (Dark Premium)</option>
-                    <option value="theme-gold">৫. রয়্যাল গোল্ড (Royal Gold)</option>
+                    <option value="theme-red">১. ব্রেকিং রেড (Breaking Red)</option>
+                    <option value="theme-blue">২. রয়েল নিউজ ব্লু (Royal News Blue)</option>
+                    <option value="theme-gold">৩. ক্লাসিক রয়েল গোল্ড (Royal Gold)</option>
+                    <option value="theme-green" selected>৪. হিউম্যানিটি গ্রীন (Emerald Green)</option>
+                    <option value="theme-dark">৫. ডার্ক নাইট এডিটরস চয়েস (Dark Premium)</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="orgNameInput"><i class="fa-solid fa-building-flag"></i> ফাউন্ডেশনের নাম</label>
+                <label for="orgNameInput"><i class="fa-solid fa-heart-pulse"></i> ফাউন্ডেশনের নাম</label>
                 <input type="text" id="orgNameInput" value="আল ফালাহ মানবসেবা ফাউন্ডেশন" oninput="updateCard()">
             </div>
 
             <div class="form-group">
-                <label for="categoryInput"><i class="fa-solid fa-layer-group"></i> ক্যাটাগরি</label>
-                <input type="text" id="categoryInput" value="ত্রাণ বিতরণ" oninput="updateCard()">
+                <label for="categoryInput"><i class="fa-solid fa-tag"></i> সংবাদ ক্যাটাগরি / বিষয়</label>
+                <input type="text" id="categoryInput" value="জরুরি ত্রাণ সহায়তা" oninput="updateCard()">
             </div>
 
             <div class="form-group">
-                <label for="dateInput"><i class="fa-solid fa-calendar-days"></i> তারিখ</label>
+                <label for="dateInput"><i class="fa-regular fa-calendar-check"></i> তারিখ</label>
                 <input type="text" id="dateInput" value="১৬ সেপ্টেম্বর, ২০২৬" oninput="updateCard()">
             </div>
 
             <div class="form-group">
-                <label for="headlineInput"><i class="fa-solid fa-newspaper"></i> হেডলাইন / বিবরণ</label>
-                <textarea id="headlineInput" rows="3" oninput="updateCard()">বন্যাদুর্গত এলাকায় আল ফালাহ মানবসেবা ফাউন্ডেশনের উদ্যোগে খাদ্য ও জরুরি ত্রাণ সামগ্রী বিতরণ করা হয়েছে।</textarea>
+                <label for="headlineInput"><i class="fa-solid fa-heading"></i> সংবাদের মূল বিষয় / হেডলাইন</label>
+                <textarea id="headlineInput" rows="3" oninput="updateCard()">বন্যাদুর্গত এলাকার অসহায় মানুষদের মাঝে আল ফালাহ মানবসেবা ফাউন্ডেশনের উদ্যোগে খাদ্য সামগ্রী ও বিশুদ্ধ পানি বিতরণ।</textarea>
             </div>
 
             <div class="form-group">
-                <label for="mainImageInput"><i class="fa-solid fa-image"></i> মূল ছবি আপলোড করুন (Highlight Image)</label>
-                <input type="file" id="mainImageInput" accept="image/*" onchange="loadMainImage(event)">
+                <label><i class="fa-solid fa-image"></i> মূল ছবি বেছে নিন (High Res Photo)</label>
+                <div class="file-upload-btn">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> ফটো আপলোড করুন
+                    <input type="file" id="mainImageInput" accept="image/*" onchange="loadMainImage(event)">
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="logoInput"><i class="fa-solid fa-circle-user"></i> লোগো আপলোড করুন (ঐচ্ছিক)</label>
-                <input type="file" id="logoInput" accept="image/*" onchange="loadLogoImage(event)">
+                <label><i class="fa-solid fa-shield-halved"></i> ফাউন্ডেশন লোগো (ঐচ্ছিক)</label>
+                <div class="file-upload-btn" style="background: #1e293b; border: 1px dashed #475569;">
+                    <i class="fa-solid fa-circle-user"></i> লোগো বেছে নিন
+                    <input type="file" id="logoInput" accept="image/*" onchange="loadLogoImage(event)">
+                </div>
             </div>
 
             <button class="btn-download" onclick="downloadPhotoCard()">
-                <i class="fa-solid fa-download"></i> ফটোকার্ড ডাউনলোড করুন
+                <i class="fa-solid fa-download"></i> HD ফটোকার্ড ডাউনলোড
             </button>
         </div>
 
-        <!-- Live Preview Section -->
-        <div class="preview-panel">
-            <div id="photoCard" class="photocard theme-red">
-                <!-- Top Header -->
-                <div class="card-header-bar">
-                    <div class="brand-info">
-                        <img id="cardLogo" class="brand-logo" src="https://via.placeholder.com/50/ffffff/000000?text=Logo" alt="Logo">
-                        <span id="cardOrgName" class="brand-name">আল ফালাহ মানবসেবা ফাউন্ডেশন</span>
+        <!-- Real-Time PhotoCard Canvas Preview -->
+        <div class="preview-wrapper">
+            <div class="preview-title">
+                <i class="fa-solid fa-eye"></i> লাইভ নিউজ ফটোকার্ড প্রিভিউ (১:১ স্কয়ার)
+            </div>
+
+            <div id="photoCard" class="photocard-container theme-green">
+                <!-- Main Highlighted Background Image -->
+                <img id="cardMainImg" class="card-bg-image" src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1000&auto=format&fit=crop" alt="News Image">
+
+                <!-- Gradients for Text Readability -->
+                <div class="top-gradient"></div>
+                <div class="bottom-gradient"></div>
+
+                <!-- Top Header Bar -->
+                <div class="card-top-bar">
+                    <div class="brand-box">
+                        <img id="cardLogo" class="brand-logo-img" src="https://via.placeholder.com/100/10b981/ffffff?text=AF" alt="Logo">
+                        <span id="cardOrgName" class="brand-title-text">আল ফালাহ মানবসেবা ফাউন্ডেশন</span>
                     </div>
-                    <div id="cardDate" class="card-date">১৬ সেপ্টেম্বর, ২০২৬</div>
+                    <div class="date-badge">
+                        <i class="fa-regular fa-clock"></i> <span id="cardDate">১৬ সেপ্টেম্বর, ২০২৬</span>
+                    </div>
                 </div>
 
-                <!-- Main Highlighted Image -->
-                <div class="card-image-box">
-                    <span id="cardCategory" class="card-category">ত্রাণ বিতরণ</span>
-                    <img id="cardMainImg" src="https://via.placeholder.com/600x400/cccccc/333333?text=Main+Photo+Highlight" alt="Main Photo">
-                </div>
-
-                <!-- Bottom Headline -->
-                <div class="card-headline-box">
-                    <div id="cardHeadline" class="card-headline-text">
-                        বন্যাদুর্গত এলাকায় আল ফালাহ মানবসেবা ফাউন্ডেশনের উদ্যোগে খাদ্য ও জরুরি ত্রাণ সামগ্রী বিতরণ করা হয়েছে।
+                <!-- Bottom News Details Bar -->
+                <div class="card-content-area">
+                    <div class="category-tag-wrapper">
+                        <span id="cardCategory" class="category-tag">জরুরি ত্রাণ সহায়তা</span>
+                        <span class="news-badge">মানবসেবা</span>
+                    </div>
+                    
+                    <div id="cardHeadline" class="headline-main">
+                        বন্যাদুর্গত এলাকার অসহায় মানুষদের মাঝে আল ফালাহ মানবসেবা ফাউন্ডেশনের উদ্যোগে খাদ্য সামগ্রী ও বিশুদ্ধ পানি বিতরণ।
                     </div>
                 </div>
+
+                <!-- Accent Line Strip at Bottom -->
+                <div class="footer-strip"></div>
             </div>
         </div>
+
     </div>
 
+    <!-- JavaScript Engine -->
     <script>
-        // Update Live Card Content
+        // Update Live Card Input Data
         function updateCard() {
             document.getElementById('cardOrgName').innerText = document.getElementById('orgNameInput').value || 'আল ফালাহ মানবসেবা ফাউন্ডেশন';
-            document.getElementById('cardCategory').innerText = document.getElementById('categoryInput').value || 'ক্যাটাগরি';
+            document.getElementById('cardCategory').innerText = document.getElementById('categoryInput').value || 'সংবাদ';
             document.getElementById('cardDate').innerText = document.getElementById('dateInput').value || 'তারিখ';
-            document.getElementById('cardHeadline').innerText = document.getElementById('headlineInput').value || 'এখানে আপনার সংবাদ বা হেডলাইন থাকবে...';
+            document.getElementById('cardHeadline').innerText = document.getElementById('headlineInput').value || 'এখানে সংবাদের হেডলাইন থাকবে...';
 
-            // Change Theme Template
+            // Change Theme Dynamic Classes
             const card = document.getElementById('photoCard');
             const selectedTheme = document.getElementById('templateSelect').value;
-            card.className = 'photocard ' + selectedTheme;
+            card.className = 'photocard-container ' + selectedTheme;
         }
 
-        // Handle Main Image Upload
+        // Upload and Preview Main Highlight Photo
         function loadMainImage(event) {
             const output = document.getElementById('cardMainImg');
             if (event.target.files && event.target.files[0]) {
@@ -357,7 +540,7 @@
             }
         }
 
-        // Handle Logo Upload
+        // Upload and Preview Logo
         function loadLogoImage(event) {
             const output = document.getElementById('cardLogo');
             if (event.target.files && event.target.files[0]) {
@@ -365,17 +548,20 @@
             }
         }
 
-        // Download Photo Card as PNG
+        // High Quality PNG Export Function
         function downloadPhotoCard() {
             const card = document.getElementById('photoCard');
-            
+
+            // Temporary scale reset for crisp HD 1080p render
             html2canvas(card, {
-                scale: 2, // High DPI Resolution Output
-                useCORS: true
+                scale: 3, 
+                useCORS: true,
+                allowTaint: true,
+                logging: false
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Al_Falah_Photocard.png';
-                link.href = canvas.toDataURL('image/png');
+                link.download = 'Al_Falah_News_Card.png';
+                link.href = canvas.toDataURL('image/png', 1.0);
                 link.click();
             });
         }
