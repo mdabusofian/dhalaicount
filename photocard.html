@@ -1,548 +1,165 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল ফালাহ মানবসেবা ফাউন্ডেশন - হাইলাইটেড নিউজ ফটোকার্ড জেনারেটর</title>
-
-    <!-- Kalpurush Font & FontAwesome Icons -->
-    <link rel="stylesheet" href="https://fonts.maateen.me/kalpurush/font.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- html2canvas Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --border-color: #334155;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Kalpurush', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
-            padding: 20px 10px;
-        }
-
-        .app-header {
-            text-align: center;
-            max-width: 900px;
-            margin: 0 auto 25px auto;
-            padding: 10px;
-        }
-
-        .app-header h1 {
-            font-size: 28px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #60a5fa, #a7f3d0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
-        }
-
-        .app-header p {
-            color: #94a3b8;
-            font-size: 15px;
-        }
-
-        .main-wrapper {
-            max-width: 1250px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 420px 1fr;
-            gap: 25px;
-            align-items: start;
-        }
-
-        @media (max-width: 992px) {
-            .main-wrapper {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Form UI */
-        .form-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .form-card-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #38bdf8;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: #cbd5e1;
-        }
-
-        .form-group input, 
-        .form-group textarea, 
-        .form-group select {
-            width: 100%;
-            padding: 12px 14px;
-            background: #0f172a;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: #ffffff;
-            font-size: 15px;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus, 
-        .form-group textarea:focus, 
-        .form-group select:focus {
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
-        }
-
-        .file-upload-btn {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: #334155;
-            color: #fff;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: 0.2s;
-            text-align: center;
-        }
-
-        .file-upload-btn:hover {
-            background: #475569;
-        }
-
-        .file-upload-btn input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-
-        .btn-download {
-            width: 100%;
-            background: linear-gradient(135deg, #0284c7, #2563eb);
-            color: #ffffff;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
-            margin-top: 20px;
-        }
-
-        .btn-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.6);
-        }
-
-        /* Preview Canvas Section */
-        .preview-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: sticky;
-            top: 20px;
-        }
-
-        .preview-title {
-            font-size: 14px;
-            color: #94a3b8;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* ------------------------------------------------------------- */
-        /* PHOTOCARD FRAME (Clear & Highlithed Image News Design)         */
-        /* ------------------------------------------------------------- */
-        .photocard-container {
-            width: 540px;
-            height: 540px;
-            background-color: #000;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-            border-radius: 6px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        /* Clear Main Image Box (Highlighted) */
-        .image-viewport {
-            width: 100%;
-            height: 380px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .card-bg-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* Top Brand Header Over Image */
-        .card-top-bar {
-            position: relative;
-            z-index: 3;
-            padding: 14px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
-        }
-
-        .brand-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .brand-logo-img {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ffffff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        }
-
-        .brand-title-text {
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: bold;
-            letter-spacing: 0.3px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-
-        .date-badge {
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(4px);
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: bold;
-            padding: 5px 12px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.3);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Solid News TV Bottom Banner (Highlighted Content Area) */
-        .card-bottom-banner {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 175px;
-            z-index: 3;
-            padding: 16px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 -5px 25px rgba(0,0,0,0.5);
-        }
-
-        .category-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .category-tag {
-            font-size: 14px;
-            font-weight: bold;
-            color: #ffffff;
-            padding: 4px 14px;
-            border-radius: 3px;
-            display: inline-block;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-
-        .live-news-tag {
-            background: #ef4444;
-            color: #ffffff;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 3px 10px;
-            border-radius: 3px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .headline-main {
-            color: #ffffff;
-            font-size: 21px;
-            font-weight: bold;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            flex: 1;
-        }
-
-        .footer-accent-strip {
-            height: 6px;
-            width: 100%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 4;
-        }
-
-
-        /* ------------------------------------------------------------- */
-        /* 5 CLEAR NEWS COLOR THEMES                                     */
-        /* ------------------------------------------------------------- */
-
-        /* 1. Somoy News Red Theme */
-        .theme-red .card-bottom-banner { background-color: #7f1d1d; border-top: 4px solid #ef4444; }
-        .theme-red .category-tag { background-color: #dc2626; }
-        .theme-red .footer-accent-strip { background: #ef4444; }
-
-        /* 2. Jamuna TV Royal Blue Theme */
-        .theme-blue .card-bottom-banner { background-color: #0f172a; border-top: 4px solid #3b82f6; }
-        .theme-blue .category-tag { background-color: #2563eb; }
-        .theme-blue .footer-accent-strip { background: #3b82f6; }
-
-        /* 3. Emerald Humanity Green Theme */
-        .theme-green .card-bottom-banner { background-color: #064e3b; border-top: 4px solid #10b981; }
-        .theme-green .category-tag { background-color: #059669; }
-        .theme-green .footer-accent-strip { background: #10b981; }
-
-        /* 4. Royal Gold Theme */
-        .theme-gold .card-bottom-banner { background-color: #451a03; border-top: 4px solid #f59e0b; }
-        .theme-gold .category-tag { background-color: #d97706; }
-        .theme-gold .footer-accent-strip { background: #f59e0b; }
-
-        /* 5. Dark Premium Theme */
-        .theme-dark .card-bottom-banner { background-color: #18181b; border-top: 4px solid #a1a1aa; }
-        .theme-dark .category-tag { background-color: #3f3f46; }
-        .theme-dark .footer-accent-strip { background: #a1a1aa; }
-
-
-        /* Mobile Scaling */
-        @media (max-width: 580px) {
-            .photocard-container {
-                width: 340px;
-                height: 340px;
-            }
-            .image-viewport { height: 230px; }
-            .card-bottom-banner { height: 120px; padding: 10px 12px; }
-            .brand-title-text { font-size: 14px; }
-            .brand-logo-img { width: 32px; height: 32px; }
-            .date-badge { font-size: 10px; padding: 2px 8px; }
-            .headline-main { font-size: 14px; line-height: 1.35; }
-            .category-tag { font-size: 11px; padding: 2px 8px; }
-            .live-news-tag { font-size: 9px; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ফটোকার্ড স্টুডিও — CHATTALA WIKI</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500;700;800&family=Hind+Siliguri:wght@400;600;700&family=Atma:wght@600;700&family=Noto+Serif+Bengali:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B2545;--or:#FF6B2C;--bg:#F4EFE6;--card:#fff;--ink:#10213a;--mut:#6b7a90;--line:#e6e0d4;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0c1626;--card:#15233b;--ink:#f1e8d6;--mut:#93a3bb;--line:#243656}}
+:root[data-theme=dark]{--bg:#0c1626;--card:#15233b;--ink:#f1e8d6;--mut:#93a3bb;--line:#243656}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font-family:'Hind Siliguri',sans-serif;background:var(--bg);color:var(--ink);padding-bottom:40px}
+header{background:var(--navy);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px;justify-content:space-between;position:sticky;top:0;z-index:30;padding-top:max(14px,env(safe-area-inset-top,0px))}
+.lg{font:800 22px 'Baloo Da 2';display:flex;gap:8px;align-items:center}.lg b{background:var(--or);border-radius:10px;padding:0 10px;transform:rotate(-3deg)}
+header small{opacity:.75;font-size:13px}
+.wrap{max-width:1180px;margin:auto;padding:16px;display:grid;gap:18px}
+@media(min-width:900px){.wrap{grid-template-columns:minmax(0,1fr) 440px;align-items:start}.pv{position:sticky;top:78px}}
+.pv .box{background:var(--card);border-radius:24px;padding:12px;box-shadow:0 14px 40px -18px rgba(11,37,69,.45)}
+#cv{width:100%;height:auto;display:block;border-radius:14px;touch-action:none;cursor:grab}
+.bt{width:100%;margin-top:12px;height:58px;border:0;border-radius:18px;background:linear-gradient(135deg,#ff8a4c,var(--or));color:#fff;font:800 20px 'Baloo Da 2';box-shadow:0 12px 24px -8px rgba(255,107,44,.6);cursor:pointer}
+.bt:active{transform:scale(.97)}
+.cd{background:var(--card);border-radius:24px;padding:18px;margin-bottom:14px;box-shadow:0 8px 28px -16px rgba(11,37,69,.35)}
+.cd h3{font:700 18px 'Baloo Da 2';margin-bottom:10px;display:flex;gap:8px;align-items:center}.cd h3::before{content:'';width:6px;height:18px;border-radius:4px;background:var(--or)}
+label{font-size:12px;font-weight:700;color:var(--mut);display:block;margin:10px 4px 4px}
+input[type=text],input[type=date],textarea{width:100%;border:2px solid var(--line);border-radius:14px;background:transparent;color:var(--ink);font:500 16px 'Hind Siliguri';padding:11px 14px;outline:none}
+textarea{resize:vertical;min-height:84px}
+input:focus,textarea:focus{border-color:var(--or)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{border:2px solid var(--line);background:transparent;color:var(--ink);border-radius:99px;padding:7px 14px;font:600 14px 'Hind Siliguri';cursor:pointer}
+.chips button.on{color:#fff;border-color:transparent}
+.seg{display:flex;gap:8px}.seg button{flex:1;height:44px;border-radius:14px;border:2px solid var(--line);background:transparent;color:var(--ink);font:700 14px 'Hind Siliguri';cursor:pointer}.seg button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.up{display:flex;gap:10px;align-items:center}
+.up label.f{margin:0;flex:1;height:50px;border-radius:14px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font:700 15px 'Hind Siliguri';cursor:pointer}
+.up button{height:50px;padding:0 16px;border-radius:14px;border:2px solid var(--line);background:transparent;color:var(--ink);font:600 14px 'Hind Siliguri'}
+input[type=range]{width:100%;accent-color:var(--or)}
+.rg{display:grid;grid-template-columns:70px 1fr;align-items:center;gap:6px;font-size:13px;color:var(--mut);font-weight:600}
+.tp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tp button{border:3px solid transparent;border-radius:14px;padding:0;background:var(--line);cursor:pointer;overflow:hidden;position:relative}
+.tp button.on{border-color:var(--or)}
+.tp canvas{width:100%;display:block}
+.tp span{position:absolute;left:0;right:0;bottom:0;background:rgba(11,37,69,.85);color:#fff;font:600 11px 'Hind Siliguri';padding:3px}
+.hint{font-size:12px;color:var(--mut);margin:4px 4px 0}
+.rw2{display:flex;gap:8px;align-items:center;margin-top:8px}.mb{height:46px;padding:0 14px;border-radius:14px;border:0;background:var(--navy);color:#fff;font:700 14px 'Hind Siliguri';white-space:nowrap}select{width:100%;border:2px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);font:600 15px 'Hind Siliguri';padding:11px 12px}input[type=color]{width:56px;height:42px;border:0;border-radius:10px;padding:0;background:none;flex:none}.ck{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}.ck label{margin:0;display:flex;gap:6px;align-items:center;color:var(--ink);font-size:14px;font-weight:600}.seg{flex-wrap:wrap}.seg button{min-width:44%}.seg2{display:flex;gap:8px}.seg2 button{flex:1;height:50px;border-radius:14px;border:2px solid var(--line);background:transparent;color:var(--ink);font:700 16px 'Hind Siliguri';cursor:pointer}.seg2 button.on{background:var(--navy);color:#fff;border-color:var(--navy)}#modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;z-index:99;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:20px;color:#fff;text-align:center}
+#modal img{max-width:100%;max-height:70vh;border-radius:12px}#modal button{background:#fff;border:0;border-radius:14px;padding:10px 24px;font:700 15px 'Hind Siliguri'}
+</style>
 </head>
 <body>
-
-    <div class="app-header">
-        <h1><i class="fa-solid fa-newspaper"></i> আল ফালাহ মানবসেবা ফাউন্ডেশন</h1>
-        <p>হাইলাইটেড ইমেজ নিউজ ফটোকার্ড জেনারেটর</p>
-    </div>
-
-    <div class="main-wrapper">
-        <!-- Controls Panel -->
-        <div class="form-card">
-            <div class="form-card-title">
-                <i class="fa-solid fa-sliders"></i> কাস্টমাইজেশন প্যানেল
-            </div>
-
-            <div class="form-group">
-                <label for="templateSelect"><i class="fa-solid fa-palette"></i> নিউজ থিম সিলেক্ট করুন</label>
-                <select id="templateSelect" onchange="updateCard()">
-                    <option value="theme-red">১. সময় নিউজ রেড (Somoy Red)</option>
-                    <option value="theme-blue">২. যমুনা টিভি ব্লু (Jamuna Blue)</option>
-                    <option value="theme-green" selected>৩. হিউম্যানিটি গ্রীন (Emerald Green)</option>
-                    <option value="theme-gold">৪. প্রিমিয়াম গোল্ড (Royal Gold)</option>
-                    <option value="theme-dark">৫. ডার্ক নাইট এডিটরস (Dark Premium)</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="orgNameInput"><i class="fa-solid fa-heart-pulse"></i> ফাউন্ডেশনের নাম</label>
-                <input type="text" id="orgNameInput" value="আল ফালাহ মানবসেবা ফাউন্ডেশন" oninput="updateCard()">
-            </div>
-
-            <div class="form-group">
-                <label for="categoryInput"><i class="fa-solid fa-tag"></i> সংবাদ ক্যাটাগরি</label>
-                <input type="text" id="categoryInput" value="জরুরি ত্রাণ সহায়তা" oninput="updateCard()">
-            </div>
-
-            <div class="form-group">
-                <label for="dateInput"><i class="fa-regular fa-calendar-check"></i> তারিখ</label>
-                <input type="text" id="dateInput" value="১৬ সেপ্টেম্বর, ২০২৬" oninput="updateCard()">
-            </div>
-
-            <div class="form-group">
-                <label for="headlineInput"><i class="fa-solid fa-heading"></i> সংবাদের মূল বিবরণ / হেডলাইন</label>
-                <textarea id="headlineInput" rows="3" oninput="updateCard()">বন্যাদুর্গত এলাকার অসহায় মানুষদের মাঝে আল ফালাহ মানবসেবা ফাউন্ডেশনের উদ্যোগে খাদ্য সামগ্রী ও বিশুদ্ধ পানি বিতরণ।</textarea>
-            </div>
-
-            <div class="form-group">
-                <label><i class="fa-solid fa-image"></i> মূল ফটো আপলোড (Highlighted Image)</label>
-                <div class="file-upload-btn">
-                    <i class="fa-solid fa-cloud-arrow-up"></i> ছবি সিলেক্ট করুন
-                    <input type="file" id="mainImageInput" accept="image/*" onchange="loadMainImage(event)">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label><i class="fa-solid fa-shield-halved"></i> লোগো আপলোড (ঐচ্ছিক)</label>
-                <div class="file-upload-btn" style="background: #1e293b; border: 1px dashed #475569;">
-                    <i class="fa-solid fa-circle-user"></i> লোগো সিলেক্ট করুন
-                    <input type="file" id="logoInput" accept="image/*" onchange="loadLogoImage(event)">
-                </div>
-            </div>
-
-            <button class="btn-download" onclick="downloadPhotoCard()">
-                <i class="fa-solid fa-download"></i> HD ফটোকার্ড ডাউনলোড
-            </button>
-        </div>
-
-        <!-- Live Preview -->
-        <div class="preview-wrapper">
-            <div class="preview-title">
-                <i class="fa-solid fa-eye"></i> ফটোকার্ড লাইভ প্রিভিউ (১:১ স্কয়ার)
-            </div>
-
-            <div id="photoCard" class="photocard-container theme-green">
-                
-                <!-- Clear & Highlighted Image Box -->
-                <div class="image-viewport">
-                    <img id="cardMainImg" class="card-bg-image" src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1000&auto=format&fit=crop" alt="Main Photo">
-                </div>
-
-                <!-- Top Bar Header -->
-                <div class="card-top-bar">
-                    <div class="brand-box">
-                        <img id="cardLogo" class="brand-logo-img" src="https://via.placeholder.com/100/10b981/ffffff?text=AF" alt="Logo">
-                        <span id="cardOrgName" class="brand-title-text">আল ফালাহ মানবসেবা ফাউন্ডেশন</span>
-                    </div>
-                    <div class="date-badge">
-                        <i class="fa-regular fa-clock"></i> <span id="cardDate">১৬ সেপ্টেম্বর, ২০২৬</span>
-                    </div>
-                </div>
-
-                <!-- News Channel Bottom Third Banner -->
-                <div class="card-bottom-banner">
-                    <div class="category-header">
-                        <span id="cardCategory" class="category-tag">জরুরি ত্রাণ সহায়তা</span>
-                        <span class="live-news-tag">মানবসেবা</span>
-                    </div>
-
-                    <div id="cardHeadline" class="headline-main">
-                        বন্যাদুর্গত এলাকার অসহায় মানুষদের মাঝে আল ফালাহ মানবসেবা ফাউন্ডেশনের উদ্যোগে খাদ্য সামগ্রী ও বিশুদ্ধ পানি বিতরণ।
-                    </div>
-                </div>
-
-                <div class="footer-accent-strip"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- JS Code -->
-    <script>
-        function updateCard() {
-            document.getElementById('cardOrgName').innerText = document.getElementById('orgNameInput').value || 'আল ফালাহ মানবসেবা ফাউন্ডেশন';
-            document.getElementById('cardCategory').innerText = document.getElementById('categoryInput').value || 'সংবাদ';
-            document.getElementById('cardDate').innerText = document.getElementById('dateInput').value || 'তারিখ';
-            document.getElementById('cardHeadline').innerText = document.getElementById('headlineInput').value || 'এখানে সংবাদের হেডলাইন থাকবে...';
-
-            const card = document.getElementById('photoCard');
-            const selectedTheme = document.getElementById('templateSelect').value;
-            card.className = 'photocard-container ' + selectedTheme;
-        }
-
-        function loadMainImage(event) {
-            const output = document.getElementById('cardMainImg');
-            if (event.target.files && event.target.files[0]) {
-                output.src = URL.createObjectURL(event.target.files[0]);
-            }
-        }
-
-        function loadLogoImage(event) {
-            const output = document.getElementById('cardLogo');
-            if (event.target.files && event.target.files[0]) {
-                output.src = URL.createObjectURL(event.target.files[0]);
-            }
-        }
-
-        function downloadPhotoCard() {
-            const card = document.getElementById('photoCard');
-
-            html2canvas(card, {
-                scale: 3, 
-                useCORS: true,
-                allowTaint: true,
-                logging: false
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Al_Falah_News_Card.png';
-                link.href = canvas.toDataURL('image/png', 1.0);
-                link.click();
-            });
-        }
-    </script>
+<header><div class="lg">CHATTALA <b>WIKI</b></div><small>ফটোকার্ড স্টুডিও • www.chattalawiki.com</small></header>
+<div class="wrap">
+ <div class="pv"><div class="box"><canvas id="cv"></canvas></div><button class="bt" id="dl">⬇ ফটোকার্ড ডাউনলোড (PNG)</button></div>
+ <div class="ct">
+  <div class="cd"><div class="seg2"><button class="on" data-m="news">📰 খবর</button><button data-m="quote">🗣 বক্তব্য</button></div></div><div class="cd"><h3>ক্যাটাগরি</h3><div class="chips" id="cats"></div><div class="rw2"><label style="margin:0">এই ক্যাটাগরির রঙ</label><input type="color" id="cc" value="#E8590C"></div><div class="rw2"><input type="text" id="nc" placeholder="নতুন ক্যাটাগরির নাম"><button class="mb" id="addc">+ যোগ</button></div></div>
+  <div class="cd"><h3>খবরের লেখা</h3>
+   <label id="hl_l">হেডলাইন</label><textarea id="head"></textarea>
+   <label>ফোকাস শব্দ (হাইলাইট হবে)</label><input type="text" id="focus"><div class="hint">কমা দিয়ে একাধিক শব্দ লিখুন, যেমন: ফ্লাইওভার, যানজট</div><div id="qf" style="display:none"><label>বক্তার নাম</label><input type="text" data-k="qname" placeholder="যেমন: মোঃ আব্দুল্লাহ"><label>পদবি</label><input type="text" data-k="qrole" placeholder="যেমন: মেয়র, চট্টগ্রাম সিটি করপোরেশন"></div>
+   <label>সোর্স</label><input type="text" id="src">
+   <label>তারিখ</label><input type="date" id="date"><label>অতিরিক্ত লেখা (স্কোর / তাপমাত্রা / শুভেচ্ছা / বক্তার নাম)</label><input type="text" data-k="extra"><div class="hint">ফেস্টিভ্যাল, শোক, স্কোর, আবহাওয়া ও উক্তি টেমপ্লেটে বড় করে দেখায়</div><label>ব্যাজ</label><select data-k="badge"><option value="">কোনোটি নয়</option><option>ব্রেকিং</option><option>এক্সক্লুসিভ</option><option>ভাইরাল</option><option>লাইভ</option><option>আপডেট</option></select></div>
+  <div class="cd"><h3>ছবি</h3>
+   <div class="up"><label class="f" for="file">📷 ছবি আপলোড<input id="file" type="file" accept="image/*" multiple hidden></label><button id="rm">মুছুন</button></div>
+   <label>জুম</label><input type="range" id="zoom" min="1" max="3" step=".05" value="1">
+   <div class="rg"><span>ডানে-বামে</span><input type="range" id="ox" min="-1" max="1" step=".02" value="0"></div>
+   <div class="rg"><span>ওপর-নিচ</span><input type="range" id="oy" min="-1" max="1" step=".02" value="0"></div><div class="hint">প্রিভিউতে ছবি টেনেও সরাতে পারবেন। কোলাজের জন্য একসাথে ৩টি পর্যন্ত ছবি বাছুন।</div><label>ছবির ফিল্টার</label><select data-k="filter"><option value="none">কোনোটি নয়</option><option value="brightness(.7)">গাঢ়</option><option value="brightness(1.25)">উজ্জ্বল</option><option value="blur(3px)">ব্লার</option><option value="grayscale(1)">ব্ল্যাক অ্যান্ড হোয়াইট</option><option value="sepia(.8)">সেপিয়া</option></select></div>
+  <div class="cd"><h3>লেখার স্টাইল</h3><label>ফন্ট</label><select data-k="fam"><option value='"Baloo Da 2"'>বোল্ড (ডিফল্ট)</option><option value='"Hind Siliguri"'>সাধারণ</option><option value="Atma">হাতের লেখা</option><option value='"Noto Serif Bengali"'>নিউজপেপার</option></select><label>হেডলাইনের সাইজ</label><input type="range" data-k="hs" min=".6" max="1.3" step=".05" value="1"><label>হাইলাইট স্টাইল</label><select data-k="hl"><option value="d">টেমপ্লেট অনুযায়ী</option><option value="b">বক্স</option><option value="c">রঙিন লেখা</option><option value="u">আন্ডারলাইন</option></select><div class="rw2"><label style="margin:0">হাইলাইট রঙ</label><input type="color" data-k="hcol" value="#FFD23F"><button class="mb" id="hcr">ডিফল্ট</button></div></div><div class="cd"><h3>ব্র্যান্ডিং</h3><label>লোগোর অবস্থান</label><select data-k="bpos"><option value="d">টেমপ্লেট অনুযায়ী</option><option value="tl">ওপরে-বামে</option><option value="tc">ওপরে-মাঝে</option><option value="tr">ওপরে-ডানে</option><option value="h">লুকান</option></select><label>লোগোর সাইজ</label><input type="range" data-k="bs" min=".6" max="1.6" step=".05" value="1"><label>সোশ্যাল আইকন</label><div class="ck"><label><input type="checkbox" data-ic="0" checked>Facebook</label><label><input type="checkbox" data-ic="1" checked>YouTube</label><label><input type="checkbox" data-ic="2" checked>Instagram</label><label><input type="checkbox" data-ic="3" checked>TikTok</label></div><label>হ্যান্ডেল (ওয়েবসাইটের পাশে)</label><input type="text" data-k="handle" placeholder="facebook.com/chattalawiki"></div><div class="cd"><h3>সাইজ</h3><div class="seg"><button class="on" data-w="1080" data-h="1080">১:১ স্কয়ার</button><button data-w="1080" data-h="1350">৪:৫ পোর্ট্রেট</button><button data-w="1080" data-h="1920">৯:১৬ স্টোরি</button><button data-w="1600" data-h="900">১৬:৯ কভার</button></div></div>
+  <div class="cd"><h3 id="th">টেমপ্লেট (২১টি)</h3><div class="tp" id="tp"></div><div class="tp" id="tq" style="display:none"></div></div>
+ </div>
+</div>
+<div id="modal"><div>ছবিতে লং-প্রেস করে সেভ করুন</div><img id="mi"><button onclick="modal.style.display='none'">বন্ধ করুন</button></div>
+<script>
+let W=1080,H=1080;const NV='#0B2545',OR='#FF6B2C';
+const CATS=[['লোকাল চাটগাঁ','#E8590C'],['ব্রেকিং','#D90429'],['খেলা','#15803D'],['বিনোদন','#9333EA'],['রাজনীতি','#1D4ED8'],['অর্থনীতি','#0F766E'],['আবহাওয়া','#0284C7'],['শিক্ষা','#B45309'],['স্বাস্থ্য','#DB2777'],['আন্তর্জাতিক','#475569'],['চাটগাঁইয়া মজা','#D97706']];
+const TN=['ক্লাসিক','ওভারলে','ব্রেকিং','স্প্লিট','ফ্রেম','সেন্টার কার্ড','ডায়াগনাল','মিনিমাল','টিকার','সার্কেল','ম্যাগাজিন','প্রিমিয়াম','ফেস্টিভ্যাল','শোকবার্তা','স্কোর','আবহাওয়া','উক্তি','ব্রেকিং ফ্ল্যাশ','ভাইরাল পপ','নিউজপেপার','কোলাজ'];
+const today=new Date(),iso=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+const S={cat:0,head:'চট্টগ্রামে নতুন ফ্লাইওভার উদ্বোধন, যানজট কমবে ৪০ শতাংশ',focus:'ফ্লাইওভার, যানজট',src:'স্থানীয় প্রতিবেদন',date:iso,tpl:0,zoom:1,ox:0,oy:0,photo:null,p2:null,p3:null,extra:'',badge:'',fam:'"Baloo Da 2"',hs:1,hl:'d',hcol:'',filter:'none',bpos:'d',bs:1,ic:[1,1,1,1],handle:'',mode:'news',tq:0,qname:'',qrole:''};
+const $=id=>document.getElementById(id),cv=$('cv');let ctx=cv.getContext('2d');
+const ac=()=>CATS[S.cat][1],cn=()=>CATS[S.cat][0];
+// নমুনা ছবি
+const PH=document.createElement('canvas');PH.width=1600;PH.height=1200;(()=>{const c=PH.getContext('2d');let g=c.createLinearGradient(0,0,0,1200);g.addColorStop(0,'#1b2a5a');g.addColorStop(.45,'#ff8a4c');g.addColorStop(.7,'#ffd9a0');g.addColorStop(1,'#0e3a5c');c.fillStyle=g;c.fillRect(0,0,1600,1200);c.fillStyle='#fff3c4';c.beginPath();c.arc(1050,640,130,0,7);c.fill();
+ c.fillStyle='#16284a';c.beginPath();c.moveTo(0,760);c.bezierCurveTo(300,520,500,700,760,640);c.bezierCurveTo(1000,580,1300,700,1600,560);c.lineTo(1600,820);c.lineTo(0,820);c.fill();
+ c.fillStyle='#0c1d38';c.beginPath();c.moveTo(0,800);c.bezierCurveTo(400,700,800,860,1600,740);c.lineTo(1600,1200);c.lineTo(0,1200);c.fill();
+ c.fillStyle='#050d1c';c.beginPath();c.moveTo(560,960);c.quadraticCurveTo(800,1060,1040,960);c.lineTo(980,990);c.quadraticCurveTo(800,1040,620,990);c.fill();c.beginPath();c.moveTo(690,960);c.quadraticCurveTo(800,860,910,960);c.fill()})();
+// হেল্পার
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+const fill=(c,x,y,w,h)=>{ctx.fillStyle=c;ctx.fillRect(x,y,w,h)};
+function vg(y0,y1,c0,c1){const g=ctx.createLinearGradient(0,y0,0,y1);g.addColorStop(0,c0);g.addColorStop(1,c1);ctx.fillStyle=g;ctx.fillRect(0,Math.min(y0,y1),W,Math.abs(y1-y0))}
+function photo(x,y,w,h,r=0,im2,fl){const im=im2||S.photo||PH;ctx.save();rr(x,y,w,h,r);ctx.clip();ctx.filter=fl||S.filter;const s=Math.max(w/im.width,h/im.height)*S.zoom,dw=im.width*s,dh=im.height*s;ctx.drawImage(im,x+(w-dw)/2-S.ox*(dw-w)/2,y+(h-dh)/2-S.oy*(dh-h)/2,dw,dh);ctx.restore()}
+const FN=(w,s)=>`${w} ${s}px "Baloo Da 2","Hind Siliguri",sans-serif`;
+function tag(x,y,bg,col,sz=34,c=false){ctx.font=FN(700,sz);const t=cn(),w=ctx.measureText(t).width+sz*1.3,h=sz*1.55,sx=c?x-w/2:x;ctx.fillStyle=bg;rr(sx,y,w,h,h/2);ctx.fill();ctx.fillStyle=col;ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(t,sx+sz*.65,y+h/2+2);return w}
+function brand(x,y,s,mc,rc,al='l'){if(S.bpos==='h')return;if(S.bpos!=='d'){const q={tl:[48,44,'l'],tr:[W-48,44,'r'],tc:[W/2,44,'c']}[S.bpos];x=q[0];y=q[1];al=q[2]}s*=S.bs;ctx.font=FN(800,s*.42);const tw=ctx.measureText('CHATTALA').width;ctx.font=FN(800,s*.36);const ww=ctx.measureText('WIKI').width+s*.34,tot=s*1.0+tw+10+ww;const sx=al==='r'?x-tot:al==='c'?x-tot/2:x;
+ ctx.save();ctx.translate(sx,y);ctx.scale(s/200,s/200);ctx.fillStyle=mc;ctx.fill(new Path2D('M30 42Q30 20 52 20H148Q170 20 170 42V128Q170 150 148 150H84L48 186V150Q30 148 30 128Z'));ctx.fillStyle=OR;ctx.beginPath();ctx.arc(140,58,13,0,7);ctx.fill();ctx.fill(new Path2D('M44 98H156Q146 126 100 126Q54 126 44 98Z'));ctx.fillStyle=rc;ctx.fill(new Path2D('M76 98Q100 56 124 98Z'));ctx.strokeStyle=rc;ctx.lineWidth=5;ctx.lineCap='round';ctx.stroke(new Path2D('M58 139q10-8 21 0t21 0t21 0t21 0'));ctx.restore();
+ ctx.font=FN(800,s*.42);ctx.fillStyle=mc;ctx.textAlign='left';ctx.textBaseline='middle';const cx=sx+s*1.0;ctx.fillText('CHATTALA',cx,y+s*.46);ctx.fillStyle=OR;rr(cx+tw+10,y+s*.46-s*.22,ww,s*.44,s*.12);ctx.fill();ctx.fillStyle='#fff';ctx.font=FN(800,s*.36);ctx.fillText('WIKI',cx+tw+10+s*.17,y+s*.46+2)}
+function icon(cx,cy,r,k,bg,fg){ctx.fillStyle=bg;ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.fill();ctx.fillStyle=fg;ctx.strokeStyle=fg;ctx.lineWidth=r*.12;ctx.textAlign='center';ctx.textBaseline='middle';
+ if(k==0){ctx.font='800 '+r*1.3+'px Arial';ctx.fillText('f',cx+r*.05,cy+r*.08)}
+ if(k==1){rr(cx-r*.5,cy-r*.35,r,r*.7,r*.2);ctx.fill();ctx.fillStyle=bg;ctx.beginPath();ctx.moveTo(cx-r*.12,cy-r*.17);ctx.lineTo(cx+r*.2,cy);ctx.lineTo(cx-r*.12,cy+r*.17);ctx.fill()}
+ if(k==2){rr(cx-r*.45,cy-r*.45,r*.9,r*.9,r*.28);ctx.stroke();ctx.beginPath();ctx.arc(cx,cy,r*.2,0,7);ctx.stroke();ctx.beginPath();ctx.arc(cx+r*.27,cy-r*.27,r*.05,0,7);ctx.fill()}
+ if(k==3){ctx.font='700 '+r*1.2+'px Arial';ctx.fillText('♪',cx,cy+r*.05)}}
+const lumc=c=>{const n=parseInt(c.slice(1),16);return(.299*(n>>16)+.587*(n>>8&255)+.114*(n&255))>150?'#0b1b33':'#fff'};const dfmt=()=>S.date?new Date(S.date+'T00:00').toLocaleDateString('bn-BD',{day:'numeric',month:'long',year:'numeric'}):'';
+function fit(t,w){while(t.length>3&&ctx.measureText(t).width>w)t=t.slice(0,-2);return t}
+function foot(x,y,w,col,fg,al='l'){const line=[dfmt(),S.src?'সূত্র: '+S.src:''].filter(Boolean).join('   •   ');ctx.fillStyle=col;ctx.font='600 28px "Hind Siliguri"';ctx.textBaseline='middle';const c=al==='c';ctx.textAlign=c?'center':'left';let s=line;while(s.length>3&&ctx.measureText(s).width>w)s=s.slice(0,-2);ctx.fillText(s,c?x+w/2:x,y+16);
+ const ic=[0,1,2,3].filter(i=>S.ic[i]),n=ic.length,wide=w>=700&&!c;ctx.font='700 30px "Hind Siliguri"';ctx.textAlign=c?'center':'left';ctx.fillText(fit('www.chattalawiki.com'+(S.handle?'  |  '+S.handle:''),wide?w-n*56-20:w),c?x+w/2:x,y+68);
+ const iy=wide?y+68:y+122,sx=wide?x+w-22-56*(n-1):c?x+w/2-28*(n-1):x+22;ic.forEach((k,i)=>icon(sx+i*56,iy,22,k,col,fg));return wide||!n?100:144}
+function head(x,y,w,maxH,o){const txt=S.head.trim()||'এখানে আপনার শিরোনাম লিখুন';const words=txt.split(/\s+/);const fl=S.focus.split(/[,،]+/).map(s=>s.trim()).filter(Boolean);const hl=S.hl==='d'?o.hl:S.hl,A=S.hcol||o.ac||ac(),hc=S.hcol?lumc(A):(o.hc||'#fff'),pad=hl==='b'?20:0;
+ const isF=t=>{t=t.replace(/[।,.!?"'“”‘’:;()\-–—]/g,'');return t&&fl.some(k=>t.includes(k))};let size=o.size*S.hs,lines;const fam=(o.fam&&S.fam==='"Baloo Da 2"')?o.fam:S.fam;
+ for(;;){ctx.font=`800 ${size}px ${fam},"Hind Siliguri",sans-serif`;const sp=ctx.measureText(' ').width;lines=[];let cur=[],cw=0;for(const t of words){const f=isF(t),ww=ctx.measureText(t).width+(f?pad:0);if(cur.length&&cw+sp+ww>w){lines.push({a:cur,w:cw});cur=[];cw=0}cw+=(cur.length?sp:0)+ww;cur.push({t,w:ww,f})}if(cur.length)lines.push({a:cur,w:cw});if(lines.length*size*o.lh<=maxH||size<=o.min*S.hs)break;size-=2}
+ const lh=size*o.lh,tot=lines.length*lh,off=o.va==='b'?maxH-tot:o.va==='m'?(maxH-tot)/2:0;ctx.textBaseline='middle';ctx.textAlign='left';
+ lines.forEach((L,i)=>{const ly=y+off+i*lh+lh/2;let wx=o.al==='c'?x+(w-L.w)/2:x;const sp=ctx.measureText(' ').width;L.a.forEach(t=>{if(t.f){if(hl==='b'){ctx.fillStyle=A;rr(wx,ly-size*.62,t.w,size*1.18,size*.16);ctx.fill();ctx.fillStyle=hc;ctx.fillText(t.t,wx+pad/2,ly)}else{ctx.fillStyle=A;ctx.fillText(t.t,wx,ly);if(hl==='u')ctx.fillRect(wx,ly+size*.52,t.w,Math.max(6,size*.08))}}else{ctx.fillStyle=o.col;ctx.fillText(t.t,wx,ly)}wx+=t.w+sp})})}
+// টেমপ্লেট
+function bdg(){if(!S.badge)return;const t=S.badge,vr=t==='ভাইরাল',col=vr?'#F59E0B':'#D90429',fg=vr?NV:'#fff';ctx.save();ctx.font=FN(800,40);const w=ctx.measureText(t).width+(t==='লাইভ'?90:60),h=66;ctx.translate(W-48-w/2,130+h/2);ctx.rotate(-.06);ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=20;ctx.fillStyle=col;rr(-w/2,-h/2,w,h,14);ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='#fff';ctx.lineWidth=4;ctx.stroke();ctx.fillStyle=fg;ctx.textAlign='center';ctx.textBaseline='middle';if(t==='লাইভ'){ctx.beginPath();ctx.arc(-w/2+34,0,10,0,7);ctx.fill();ctx.fillText(t,18,3)}else ctx.fillText(t,0,3);ctx.restore()}
+const TP=[
+()=>{const p=H*.58;photo(0,0,W,p);vg(0,220,'rgba(0,0,0,.55)','rgba(0,0,0,0)');fill(NV,0,p,W,H-p);brand(44,40,64,'#fff',NV);tag(54,p-28,ac(),'#fff');head(54,p+50,W-108,H-p-200,{size:72,min:36,col:'#fff',hl:'b',lh:1.28});foot(54,H-124,W-108,'#b8c4d6',NV)},
+()=>{photo(0,0,W,H);vg(H*.3,H,'rgba(5,10,25,0)','rgba(5,10,25,.95)');vg(0,200,'rgba(0,0,0,.5)','rgba(0,0,0,0)');tag(48,48,ac(),'#fff');brand(W-48,44,60,'#fff',NV,'r');head(56,H*.45,W-112,H*.55-190,{size:86,min:40,col:'#fff',hl:'b',lh:1.25,va:'b'});foot(56,H-130,W-112,'#e2e8f0','#0b1220')},
+()=>{photo(0,0,W,H);vg(H*.45,H,'rgba(0,0,0,0)','rgba(0,0,0,.85)');fill(ac(),0,0,W,120);ctx.fillStyle='#fff';ctx.font=FN(800,54);ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(cn(),48,62);ctx.font='600 30px "Hind Siliguri"';ctx.textAlign='right';ctx.fillText(dfmt(),W-48,62);const y=H*.46,h=H*.34;ctx.save();rr(44,y,W-88,h,32);ctx.fillStyle='#fff';ctx.fill();ctx.clip();fill(ac(),44,y,16,h);ctx.restore();head(92,y+26,W-168,h-52,{size:68,min:34,col:'#0b1b33',hl:'c',lh:1.3,va:'m'});foot(56,H-124,W-112,'#fff',NV)},
+()=>{const pw=W*.46;photo(0,0,pw,H);fill(NV,pw,0,W-pw,H);const x=pw+44,w=W-pw-88;tag(x,52,ac(),'#fff',32);head(x,140,w,H-140-200,{size:62,min:32,col:'#fff',hl:'b',lh:1.3,va:'m'});foot(x,H-170,w,'#cbd5e1',NV);brand(44,44,56,'#fff',NV)},
+()=>{fill('#FFF6E6',0,0,W,H);ctx.strokeStyle=ac();ctx.lineWidth=5;rr(24,24,W-48,H-48,30);ctx.stroke();brand(W/2,48,58,NV,'#fff','c');const py=140,ph=H*.44;photo(64,py,W-128,ph,34);tag(88,py+ph-28,ac(),'#fff',32);const hy=py+ph+56;head(64,hy,W-128,H-hy-170,{size:70,min:36,col:NV,hl:'u',lh:1.28});fill(NV,64,H-146,W-128,3);foot(64,H-122,W-128,NV,'#FFF6E6')},
+()=>{photo(0,0,W,H);fill('rgba(5,10,25,.55)',0,0,W,H);brand(W/2,48,58,'#fff',NV,'c');const y=H*.25,h=H*.46;ctx.save();rr(64,y,W-128,h,44);ctx.fillStyle='#fff';ctx.fill();ctx.clip();fill(ac(),64,y,W-128,18);ctx.restore();tag(W/2,y-28,ac(),'#fff',34,true);head(110,y+56,W-220,h-90,{size:70,min:34,col:'#0b1b33',hl:'c',lh:1.3,va:'m',al:'c'});foot(64,H-160,W-128,'#fff','#111','c')},
+()=>{photo(0,0,W,H);vg(0,200,'rgba(0,0,0,.5)','rgba(0,0,0,0)');const a=H*.52,b=H*.4;ctx.fillStyle=ac();ctx.beginPath();ctx.moveTo(0,a-30);ctx.lineTo(W,b-30);ctx.lineTo(W,b);ctx.lineTo(0,a);ctx.fill();ctx.fillStyle=NV;ctx.beginPath();ctx.moveTo(0,a);ctx.lineTo(W,b);ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.fill();tag(48,48,ac(),'#fff');brand(W-48,44,60,'#fff',NV,'r');head(56,H*.575,W-112,H*.27,{size:74,min:36,col:'#fff',hl:'b',lh:1.26,va:'m'});foot(56,H-124,W-112,'#b8c4d6',NV)},
+()=>{fill('#fff',0,0,W,H);brand(48,40,60,NV,'#fff');const ph=H*.46;photo(48,136,W-96,ph,22);tag(48,136+ph+24,ac(),'#fff',30);const hy=136+ph+104;head(48,hy,W-96,H-hy-160,{size:70,min:36,col:'#0b1220',hl:'u',lh:1.28});fill('#e2e8f0',48,H-148,W-96,3);foot(48,H-124,W-96,'#334155','#fff')},
+()=>{photo(0,0,W,H);vg(H*.5,H,'rgba(0,0,0,0)','rgba(0,0,0,.4)');vg(0,200,'rgba(0,0,0,.5)','rgba(0,0,0,0)');brand(48,44,60,'#fff',NV);const by=H*.6,bh=H*.24;fill(ac(),0,by-70,W*.55,70);ctx.fillStyle='#fff';ctx.font=FN(800,44);ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(cn(),44,by-33);fill(NV,0,by,W,bh);head(50,by+14,W-100,bh-28,{size:66,min:32,col:'#fff',hl:'b',ac:'#FFD23F',hc:NV,lh:1.22,va:'m'});const sy=by+bh;fill(ac(),0,sy,W,H-sy);foot(50,sy+(H-sy-100)/2,W-100,'#fff',ac())},
+()=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,NV);g.addColorStop(1,ac());ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(255,255,255,.06)';for(let i=0;i<4;i++){ctx.beginPath();ctx.arc(W/2,H*.27,H*.17+60+i*80,0,7);ctx.fill()}const R=H*.17,cy=H*.27;photo(W/2-R,cy-R,2*R,2*R,R);ctx.strokeStyle='#fff';ctx.lineWidth=10;ctx.beginPath();ctx.arc(W/2,cy,R+8,0,7);ctx.stroke();tag(W/2,cy+R+30,OR,'#fff',32,true);const hy=cy+R+110;head(70,hy,W-140,H-hy-170,{size:64,min:32,col:'#fff',hl:'u',ac:'#FFD23F',lh:1.28,va:'m',al:'c'});foot(64,H-154,W-128,'#fff',NV,'c');brand(W/2,36,48,'#fff',NV,'c')},
+()=>{photo(0,0,W,H);vg(0,H,'rgba(0,0,0,.35)','rgba(0,0,0,.88)');ctx.font=FN(800,250);const m=ctx.measureText(cn()).width,sz=250*Math.min(1,(W-96)/m);ctx.font=FN(800,sz);ctx.strokeStyle='rgba(255,255,255,.85)';ctx.lineWidth=3;ctx.textAlign='left';ctx.textBaseline='top';ctx.strokeText(cn(),48,40);fill(ac(),56,H*.5,14,H*.3);head(94,H*.5,W-150,H*.3,{size:78,min:38,col:'#fff',hl:'c',ac:'#FFD23F',lh:1.25,va:'m'});brand(56,H*.5-100,58,'#fff',NV);foot(56,H-130,W-112,'#e2e8f0','#0b1220')},
+()=>{fill('#080d1a',0,0,W,H);const g=ctx.createRadialGradient(W/2,H*.3,40,W/2,H*.3,H*.75);g.addColorStop(0,ac()+'66');g.addColorStop(1,'rgba(8,13,26,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);const ph=H*.5;ctx.save();ctx.shadowColor=ac();ctx.shadowBlur=60;rr(60,60,W-120,ph,44);ctx.fillStyle=ac();ctx.fill();ctx.restore();photo(60,60,W-120,ph,44);tag(90,60+ph-28,ac(),'#fff',32);const hy=60+ph+52;head(70,hy,W-140,H-hy-170,{size:70,min:36,col:'#fff',hl:'u',ac:'#FFD23F',lh:1.28});foot(70,H-124,W-140,'#cbd5e1','#080d1a')},
+()=>{const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#3b0764');g.addColorStop(1,ac());ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(255,210,63,.35)';for(let i=0;i<46;i++){ctx.beginPath();ctx.arc((i*379)%W,(i*613)%H,4+(i%5)*3,0,7);ctx.fill()}ctx.fillStyle='rgba(255,210,63,.6)';ctx.font='64px Arial';ctx.textAlign='center';ctx.textBaseline='middle';[[.1,.08],[.9,.12],[.07,.5],[.94,.46]].forEach(p=>ctx.fillText('✦',W*p[0],H*p[1]));brand(W/2,40,54,'#fff',NV,'c');const t=S.extra||'শুভেচ্ছা';ctx.font=FN(800,150);const m=ctx.measureText(t).width,sz=150*Math.min(1,(W-120)/m);ctx.font=FN(800,sz);ctx.fillStyle='#FFD23F';ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=24;ctx.textAlign='center';ctx.fillText(t,W/2,H*.2);ctx.shadowBlur=0;const py=H*.3,ph=H*.3;photo(120,py,W-240,ph,40);ctx.strokeStyle='#FFD23F';ctx.lineWidth=8;rr(120,py,W-240,ph,40);ctx.stroke();const hy=py+ph+40;head(80,hy,W-160,H-hy-170,{size:64,min:32,col:'#fff',hl:'u',ac:'#FFD23F',lh:1.28,va:'m',al:'c'});foot(64,H-154,W-128,'#fff','#3b0764','c')},
+()=>{photo(0,0,W,H,0,null,'grayscale(1) brightness(.75)');fill('rgba(0,0,0,.5)',0,0,W,H);ctx.strokeStyle='rgba(255,255,255,.55)';ctx.lineWidth=3;rr(36,36,W-72,H-72,18);ctx.stroke();const cx=W/2,cy=H*.12;ctx.fillStyle='#FFE08A';ctx.beginPath();ctx.ellipse(cx,cy,12,22,0,0,7);ctx.fill();ctx.fillStyle='#f5ead2';ctx.fillRect(cx-14,cy+28,28,70);tag(cx,H*.3,'rgba(255,255,255,.14)','#fff',34,true);ctx.font=FN(800,92);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(S.extra||'গভীর শোক',cx,H*.4);const hy=H*.47;head(90,hy,W-180,H-hy-190,{size:66,min:32,col:'#e5e7eb',hl:'u',ac:'#fff',lh:1.3,va:'m',al:'c'});foot(64,H-160,W-128,'#d1d5db','#111','c')},
+()=>{const hh=H*.45;photo(0,0,W,hh);vg(hh*.4,hh,'rgba(10,42,26,0)','#0a2a1a');fill('#0a2a1a',0,hh,W,H-hh);fill(ac(),0,hh-6,W,6);tag(48,48,ac(),'#fff');brand(W-48,44,56,'#fff',NV,'r');const t=S.extra||'২ – ১';ctx.font=FN(800,230);const m=ctx.measureText(t).width,sz=230*Math.min(1,(W-100)/m);ctx.font=FN(800,sz);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(t,W/2,hh+H*.1);const hy=hh+H*.2;head(70,hy,W-140,H-hy-170,{size:60,min:30,col:'#fff',hl:'b',lh:1.28,va:'m',al:'c'});foot(64,H-154,W-128,'#d1fae5','#0a2a1a','c')},
+()=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0ea5e9');g.addColorStop(1,'#1e3a8a');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);const r=ctx.createRadialGradient(W*.8,H*.17,10,W*.8,H*.17,260);r.addColorStop(0,'rgba(255,224,102,1)');r.addColorStop(.35,'rgba(255,224,102,.9)');r.addColorStop(1,'rgba(255,224,102,0)');ctx.fillStyle=r;ctx.fillRect(0,0,W,H*.5);ctx.fillStyle='rgba(255,255,255,.85)';[[.62,.2,150],[.72,.26,110],[.5,.27,100]].forEach(c=>{ctx.beginPath();ctx.ellipse(W*c[0],H*c[1],c[2],c[2]*.45,0,0,7);ctx.fill()});tag(48,48,ac(),'#fff');brand(W-48,44,54,'#fff',NV,'r');ctx.font=FN(800,260);ctx.fillStyle='#fff';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(S.extra||'৩২°C',60,H*.36);const hy=H*.5;head(60,hy,W-120,H-hy-170,{size:70,min:34,col:'#fff',hl:'b',hc:'#0b2a5a',ac:'#FFD23F',lh:1.28,va:'m'});foot(60,H-130,W-120,'#e0f2fe','#1e3a8a')},
+()=>{fill('#FFF6E6',0,0,W,H);ctx.fillStyle=ac();ctx.font='900 380px Georgia,serif';ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText('“',48,-60);brand(W-48,44,54,NV,'#fff','r');head(80,H*.2,W-160,H*.42,{size:74,min:34,col:NV,hl:'c',lh:1.3,va:'m',fam:'"Noto Serif Bengali"'});const R=84,py=H*.66;photo(80,py,R*2,R*2,R);ctx.strokeStyle=ac();ctx.lineWidth=6;ctx.beginPath();ctx.arc(80+R,py+R,R+3,0,7);ctx.stroke();ctx.fillStyle=NV;ctx.font=FN(800,46);ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(S.extra||'বক্তার নাম',80+R*2+28,py+R-16);tag(80+R*2+28,py+R+14,ac(),'#fff',26);foot(80,H-124,W-160,'#334155','#fff')},
+()=>{photo(0,0,W,H*.52);vg(0,200,'rgba(0,0,0,.5)','rgba(0,0,0,0)');fill('#0b1220',0,H*.52,W,H*.48);fill('#D90429',0,H*.52-10,W,100);ctx.fillStyle='#fff';ctx.font=FN(800,58);ctx.textAlign='left';ctx.textBaseline='middle';ctx.beginPath();ctx.arc(70,H*.52+40,14,0,7);ctx.fill();ctx.fillText('ব্রেকিং নিউজ',100,H*.52+42);ctx.font='600 30px "Hind Siliguri"';ctx.textAlign='right';ctx.fillText(cn(),W-48,H*.52+42);brand(48,44,58,'#fff',NV);const hy=H*.52+110;head(54,hy,W-108,H-hy-160,{size:72,min:34,col:'#fff',hl:'b',ac:'#FFD23F',hc:NV,lh:1.28,va:'m'});foot(54,H-124,W-108,'#cbd5e1',NV)},
+()=>{fill('#FFD23F',0,0,W,H);ctx.fillStyle='rgba(0,0,0,.07)';for(let y=20;y<H;y+=44)for(let x=(y/44%2)*22;x<W;x+=44){ctx.beginPath();ctx.arc(x,y,5,0,7);ctx.fill()}ctx.save();ctx.translate(W/2,H*.36);ctx.rotate(-.045);ctx.fillStyle='#111';rr(-W*.41+10,-H*.27+12,W*.82,H*.4,26);ctx.fill();photo(-W*.41,-H*.27,W*.82,H*.4,26);ctx.strokeStyle='#111';ctx.lineWidth=8;rr(-W*.41,-H*.27,W*.82,H*.4,26);ctx.stroke();ctx.restore();tag(56,H*.04,'#D90429','#fff',40);const hy=H*.6;head(60,hy,W-120,H-hy-160,{size:84,min:36,col:'#111',hl:'b',ac:'#fff',hc:'#111',lh:1.22,va:'m'});foot(60,H-124,W-120,'#111','#FFD23F')},
+()=>{fill('#EFE6D2',0,0,W,H);ctx.fillStyle='#111';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='800 76px "Noto Serif Bengali",Georgia,serif';ctx.fillText('CHATTALA WIKI',W/2,84);fill('#111',48,132,W-96,4);fill('#111',48,142,W-96,2);ctx.font='600 26px "Hind Siliguri"';ctx.fillText(dfmt()+'  •  '+cn(),W/2,176);fill('#111',48,204,W-96,2);const py=226,ph=H*.36;photo(48,py,W-96,ph,0,null,'grayscale(1) contrast(1.1)');ctx.strokeStyle='#111';ctx.lineWidth=5;ctx.strokeRect(48,py,W-96,ph);const hy=py+ph+30;head(48,hy,W-96,H-hy-170,{size:72,min:34,col:'#111',hl:'u',ac:ac(),lh:1.26,va:'t',fam:'"Noto Serif Bengali"'});fill('#111',48,H-150,W-96,2);foot(48,H-126,W-96,'#222','#EFE6D2')},
+()=>{fill(NV,0,0,W,H);const g=12,hh=H*.5,lw=W*.6;photo(0,0,lw,hh);const rw=W-lw-g,rh=(hh-g)/2;photo(lw+g,0,rw,rh,0,S.p2);photo(lw+g,rh+g,rw,rh,0,S.p3||S.p2);vg(0,160,'rgba(0,0,0,.5)','rgba(0,0,0,0)');brand(44,40,56,'#fff',NV);tag(48,hh-28,ac(),'#fff',34);const hy=hh+50;head(54,hy,W-108,H-hy-170,{size:72,min:34,col:'#fff',hl:'b',lh:1.28,va:'m'});foot(54,H-124,W-108,'#b8c4d6',NV)}
+];
+const qm=(x,y,sz,c)=>{ctx.fillStyle=c;ctx.font='900 '+sz+'px Georgia,serif';ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText('\u201c',x,y)};
+function spk(x,y,w,nc,rc,al='l'){const n=S.qname||'বক্তার নাম',r=S.qrole||'পদবি';ctx.textBaseline='middle';ctx.textAlign=al==='c'?'center':'left';const tx=al==='c'?x+w/2:x;ctx.font=FN(800,52);ctx.fillStyle=nc;ctx.fillText(fit(n,w),tx,y+26);ctx.font='600 32px "Hind Siliguri"';ctx.fillStyle=rc;ctx.fillText(fit(r,w),tx,y+78)}
+const ring=(cx,cy,r,c,w)=>{ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.stroke()};
+const QT=[
+()=>{fill(NV,0,0,W,H);const g=ctx.createRadialGradient(W*.8,0,10,W*.8,0,H);g.addColorStop(0,ac()+'66');g.addColorStop(1,'rgba(11,37,69,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);brand(48,40,56,'#fff',NV);qm(56,H*.06,300,ac());const R=105,py=H-R*2-160;head(70,H*.2,W-140,py-H*.2-30,{size:104,min:36,col:'#fff',hl:'b',lh:1.22,va:'m'});photo(70,py,R*2,R*2,R);ring(70+R,py+R,R+5,ac(),8);spk(70+R*2+34,py+R-52,W-(70+R*2+34)-70,'#fff','#b8c4d6');foot(70,H-124,W-140,'#8da2c0',NV)},
+()=>{fill(NV,0,0,W,H);const px=W*.46;photo(px,0,W-px,H);const g=ctx.createLinearGradient(px,0,px+W*.2,0);g.addColorStop(0,NV);g.addColorStop(1,'rgba(11,37,69,0)');ctx.fillStyle=g;ctx.fillRect(px,0,W*.2,H);brand(44,40,52,'#fff',NV);qm(40,H*.09,240,ac());head(56,H*.2,px-76,H*.42,{size:80,min:32,col:'#fff',hl:'b',lh:1.22,va:'m'});fill(ac(),56,H*.66,90,8);spk(56,H*.68,px-76,'#fff','#b8c4d6');foot(56,H-165,px-70,'#8da2c0',NV)},
+()=>{fill('#FFF6E6',0,0,W,H);qm(W-340,H*.0,380,ac()+'33');brand(48,40,54,NV,'#fff');const R=96;photo(60,150,R*2,R*2,R);ring(60+R,150+R,R+5,ac(),7);spk(60+R*2+30,150+R-52,W-(60+R*2+30)-60,NV,'#475569');const hy=150+R*2+40;head(60,hy,W-120,H-hy-170,{size:96,min:34,col:NV,hl:'u',lh:1.25,va:'m',fam:'"Noto Serif Bengali"'});fill(ac(),60,H-148,W-120,4);foot(60,H-124,W-120,'#334155','#FFF6E6')},
+()=>{photo(0,0,W,H);vg(H*.2,H,'rgba(5,10,25,0)','rgba(5,10,25,.96)');vg(0,180,'rgba(0,0,0,.5)','rgba(0,0,0,0)');brand(48,40,56,'#fff',NV);qm(50,H*.28,260,'rgba(255,255,255,.28)');head(60,H*.34,W-120,H*.34,{size:98,min:36,col:'#fff',hl:'b',lh:1.22,va:'b'});const ny=H*.7+10,nm=S.qname||'বক্তার নাম';ctx.font=FN(800,50);const nw=Math.min(ctx.measureText(nm).width+60,W-120);ctx.fillStyle=ac();rr(60,ny,nw,76,38);ctx.fill();ctx.fillStyle='#fff';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(fit(nm,W-180),90,ny+40);ctx.font='600 34px "Hind Siliguri"';ctx.fillStyle='#e2e8f0';ctx.fillText(fit(S.qrole||'পদবি',W-120),64,ny+112);foot(60,H-124,W-120,'#e2e8f0','#0b1220')},
+()=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,ac());g.addColorStop(1,NV);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(255,255,255,.06)';for(let i=0;i<4;i++){ctx.beginPath();ctx.arc(W/2,H*.2,H*.13+40+i*70,0,7);ctx.fill()}const R=H*.12,cy=H*.2;photo(W/2-R,cy-R,2*R,2*R,R);ring(W/2,cy,R+7,'#fff',9);brand(W/2,22,44,'#fff',NV,'c');head(70,cy+R+40,W-140,H*.3,{size:82,min:32,col:'#fff',hl:'u',ac:'#FFD23F',lh:1.25,va:'m',al:'c'});spk(70,H*.7,W-140,'#fff','#e2e8f0','c');foot(64,H-154,W-128,'#fff',NV,'c')},
+()=>{fill('#fff',0,0,W,H);fill(ac(),0,0,W,120);ctx.fillStyle='#fff';ctx.font=FN(800,56);ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText('বক্তব্য',48,62);ctx.font='600 30px "Hind Siliguri"';ctx.textAlign='right';ctx.fillText(dfmt(),W-48,62);const ph=H*.46;photo(48,160,W*.34,ph,28);const x2=48+W*.34+34,w2=W-x2-48;qm(x2-6,140,170,ac());head(x2,230,w2,ph-80,{size:70,min:30,col:'#0b1b33',hl:'c',lh:1.22,va:'m'});const by=ph+190;ctx.fillStyle=NV;rr(48,by,W-96,150,24);ctx.fill();spk(84,by+22,W-168,'#fff','#b8c4d6');foot(48,H-124,W-96,'#334155','#fff')}
+];
+function draw(){cv.width=W;cv.height=H;ctx=cv.getContext('2d');(S.mode==='quote'?QT[S.tq]:TP[S.tpl])();bdg()}
+const tps=[];function thumbs(){const off=document.createElement('canvas');off.width=W;off.height=H;const m=ctx;ctx=off.getContext('2d');(S.mode==='quote'?QT:TP).forEach((t,i)=>{ctx.clearRect(0,0,W,H);t();bdg();const c=(S.mode==='quote'?tqs:tps)[i];c.width=240;c.height=240*H/W;c.getContext('2d').drawImage(off,0,0,c.width,c.height)});ctx=m}
+let tm;const go=()=>{draw();clearTimeout(tm);tm=setTimeout(thumbs,350)};
+// UI
+const mkc=(c,i)=>{const b=document.createElement('button');b.textContent=c[0];b.onclick=()=>{S.cat=i;$('cc').value=CATS[i][1];[...$('cats').children].forEach((x,j)=>{x.classList.toggle('on',j===i);x.style.background=j===i?CATS[j][1]:''});go()};$('cats').appendChild(b)};CATS.forEach(mkc);
+TN.forEach((n,i)=>{const b=document.createElement('button');const c=document.createElement('canvas');tps.push(c);b.append(c);const s=document.createElement('span');s.textContent=(i+1)+'. '+n;b.append(s);b.onclick=()=>{S.tpl=i;[...$('tp').children].forEach((x,j)=>x.classList.toggle('on',j===i));go();scrollTo({top:0,behavior:'smooth'})};$('tp').appendChild(b)});
+$('cats').children[0].click();$('tp').children[0].classList.add('on');
+const tqs=[];['ক্লাসিক কোট','পোর্ট্রেট স্প্লিট','এডিটোরিয়াল','ফটো ওভারলে','সার্কেল','ব্যানার'].forEach((n,i)=>{const b=document.createElement('button'),c=document.createElement('canvas'),sp=document.createElement('span');tqs.push(c);sp.textContent=(i+1)+'. '+n;b.append(c,sp);b.onclick=()=>{S.tq=i;[...$('tq').children].forEach((x,j)=>x.classList.toggle('on',j===i));go();scrollTo({top:0,behavior:'smooth'})};$('tq').appendChild(b)});$('tq').children[0].classList.add('on');
+const NS_='চট্টগ্রামে নতুন ফ্লাইওভার উদ্বোধন, যানজট কমবে ৪০ শতাংশ',QS_='চট্টগ্রামের উন্নয়নে সবাইকে একসাথে কাজ করতে হবে।';
+document.querySelectorAll('.seg2 button').forEach(b=>b.onclick=()=>{const q=b.dataset.m==='quote';S.mode=b.dataset.m;document.querySelectorAll('.seg2 button').forEach(x=>x.classList.toggle('on',x===b));$('qf').style.display=q?'block':'none';$('tp').style.display=q?'none':'grid';$('tq').style.display=q?'grid':'none';$('hl_l').textContent=q?'বক্তব্যের মূল অংশ (বড় করে দেখাবে)':'হেডলাইন';$('th').textContent=q?'টেমপ্লেট (৬টি)':'টেমপ্লেট (২১টি)';if(q&&S.head===NS_){S.head=QS_;S.focus='একসাথে'}else if(!q&&S.head===QS_){S.head=NS_;S.focus='ফ্লাইওভার, যানজট'}$('head').value=S.head;$('focus').value=S.focus;go()});
+$('head').value=S.head;$('focus').value=S.focus;$('src').value=S.src;$('date').value=S.date;
+[['head','head'],['focus','focus'],['src','src'],['date','date']].forEach(([i,k])=>$(i).oninput=e=>{S[k]=e.target.value;go()});
+['zoom','ox','oy'].forEach(k=>$(k).oninput=e=>{S[k]=+e.target.value;go()});
+$('file').onchange=e=>{[...e.target.files].slice(0,3).forEach((f,i)=>{const im=new Image();im.onload=()=>{S[['photo','p2','p3'][i]]=im;go()};im.src=URL.createObjectURL(f)})};
+$('rm').onclick=()=>{S.photo=S.p2=S.p3=null;go()};document.querySelectorAll('[data-k]').forEach(e=>e.oninput=()=>{const k=e.dataset.k;S[k]=e.type==='range'?+e.value:e.value;if(k==='fam')document.fonts.load('800 40px '+e.value,'চট্টগ্রাম').then(go);else go()});document.querySelectorAll('[data-ic]').forEach(e=>e.onchange=()=>{S.ic[+e.dataset.ic]=e.checked?1:0;go()});$('hcr').onclick=()=>{S.hcol='';go()};$('cc').oninput=e=>{CATS[S.cat][1]=e.target.value;$('cats').children[S.cat].style.background=e.target.value;go()};$('addc').onclick=()=>{const v=$('nc').value.trim();if(!v)return;CATS.push([v,$('cc').value]);mkc(CATS[CATS.length-1],CATS.length-1);$('cats').lastChild.click();$('nc').value=''};let dr=null;cv.onpointerdown=e=>{dr={x:e.clientX,y:e.clientY,ox:S.ox,oy:S.oy};cv.setPointerCapture(e.pointerId)};cv.onpointermove=e=>{if(!dr)return;const k=W/cv.getBoundingClientRect().width;S.ox=Math.max(-1,Math.min(1,dr.ox-(e.clientX-dr.x)*k/(W*.4)));S.oy=Math.max(-1,Math.min(1,dr.oy-(e.clientY-dr.y)*k/(H*.4)));$('ox').value=S.ox;$('oy').value=S.oy;draw()};cv.onpointerup=()=>{dr=null;go()};
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{W=+b.dataset.w;H=+b.dataset.h;document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));go()});
+$('dl').onclick=()=>{draw();cv.toBlob(async b=>{const name='chattala-wiki-'+Date.now()+'.png';try{const d=window.claude&&await claude.use('downloads');if(d){await d.save({filename:name,data:b});return}}catch(e){if(e&&e.code==='declined')return}
+ const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();$('mi').src=u;setTimeout(()=>{if(!document.hidden)$('modal').style.display='flex'},400)},'image/png')};
+Promise.all([document.fonts.load('800 40px "Baloo Da 2"'),document.fonts.load('700 30px "Hind Siliguri"'),document.fonts.load('600 28px "Hind Siliguri"'),document.fonts.load('800 40px "Hind Siliguri"','চট্টগ্রাম')]).catch(()=>{}).finally(()=>{go();document.fonts.ready.then(go)});
+</script>
 </body>
 </html>
