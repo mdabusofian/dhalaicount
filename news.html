@@ -1,570 +1,1598 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আল ফালাহ মানবসেবা ফাউন্ডেশন - প্রিমিয়াম ফটোকার্ড জেনারেটর</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>সিভি বানাও · প্রিমিয়াম CV Maker</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ULTRA MODERN SAAS — GLASSMORPHISM + DARK/LIGHT + GRADIENT MESH
+   ============================================================ */
+:root{
+  --bg-base:#f5f7fb;
+  --surface:rgba(255,255,255,.72);
+  --surface-solid:#ffffff;
+  --surface-2:rgba(255,255,255,.55);
+  --glass-border:rgba(255,255,255,.85);
+  --glass-shadow:0 8px 32px rgba(31,38,135,.10);
+  --glass-blur:22px;
+  --text-primary:#0b1220;
+  --text-secondary:#475569;
+  --text-muted:#94a3b8;
+  --brand-1:#6366f1;
+  --brand-2:#8b5cf6;
+  --brand-3:#06b6d4;
+  --brand-4:#10b981;
+  --brand-5:#f59e0b;
+  --grad-primary:linear-gradient(135deg,#6366f1 0%,#8b5cf6 55%,#06b6d4 100%);
+  --grad-success:linear-gradient(135deg,#10b981,#06b6d4);
+  --grad-gold:linear-gradient(135deg,#f59e0b,#fbbf24);
+  --border-subtle:rgba(15,23,42,.08);
+  --border-medium:rgba(15,23,42,.14);
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:24px; --r-xl:32px;
+  --shadow-sm:0 2px 8px rgba(15,23,42,.06);
+  --shadow-md:0 12px 32px rgba(15,23,42,.10);
+  --shadow-lg:0 24px 56px rgba(15,23,42,.14);
+  --shadow-glow:0 0 40px rgba(99,102,241,.35);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --tt:0.25s var(--ease);
+  --font-body:'Hind Siliguri','Inter',system-ui,-apple-system,sans-serif;
+  --font-display:'Inter','Hind Siliguri',system-ui,sans-serif;
+}
+html[data-theme="dark"]{
+  --bg-base:#0a0a12;
+  --surface:rgba(22,22,32,.68);
+  --surface-solid:#16161f;
+  --surface-2:rgba(30,30,42,.55);
+  --glass-border:rgba(255,255,255,.08);
+  --glass-shadow:0 8px 32px rgba(0,0,0,.45);
+  --text-primary:#f1f5f9;
+  --text-secondary:#cbd5e1;
+  --text-muted:#64748b;
+  --border-subtle:rgba(255,255,255,.06);
+  --border-medium:rgba(255,255,255,.12);
+  --shadow-md:0 12px 32px rgba(0,0,0,.5);
+  --shadow-lg:0 24px 56px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:140px}
+body{
+  margin:0;min-height:100vh;
+  background:var(--bg-base);
+  color:var(--text-primary);
+  font:400 15.5px/1.6 var(--font-body);
+  -webkit-font-smoothing:antialiased;
+  transition:background .5s var(--ease),color .5s var(--ease);
+  overflow-x:hidden;position:relative;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(900px 500px at 10% 5%,rgba(99,102,241,.22),transparent 60%),
+    radial-gradient(800px 500px at 90% 15%,rgba(139,92,246,.20),transparent 60%),
+    radial-gradient(700px 500px at 50% 100%,rgba(6,182,212,.18),transparent 65%),
+    radial-gradient(600px 400px at 80% 90%,rgba(16,185,129,.15),transparent 60%);
+  animation:meshFloat 22s ease-in-out infinite alternate;
+}
+html[data-theme="dark"] body::before{
+  background:
+    radial-gradient(900px 500px at 10% 5%,rgba(99,102,241,.30),transparent 60%),
+    radial-gradient(800px 500px at 90% 15%,rgba(139,92,246,.28),transparent 60%),
+    radial-gradient(700px 500px at 50% 100%,rgba(6,182,212,.20),transparent 65%),
+    radial-gradient(600px 400px at 80% 90%,rgba(16,185,129,.18),transparent 60%);
+}
+@keyframes meshFloat{
+  0%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-20px,30px) scale(1.06)}
+  100%{transform:translate(20px,-20px) scale(.98)}
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  opacity:.025;mix-blend-mode:overlay;
+}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;margin:0}
+a{color:var(--brand-1);text-decoration:none;transition:color var(--tt)}
+a:hover{color:var(--brand-2)}
+:focus-visible{outline:2px solid var(--brand-1);outline-offset:3px;border-radius:8px}
+::selection{background:rgba(99,102,241,.28)}
 
-    <!-- Google Fonts: Anek Bangla for Premium News Typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- html2canvas Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+/* ============ GLASS PRIMITIVE ============ */
+.glass{
+  background:var(--surface);
+  backdrop-filter:blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(180%);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+  border-radius:var(--r-lg);
+  transition:transform var(--tt),box-shadow var(--tt),background var(--tt),border-color var(--tt);
+}
 
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --border-color: #334155;
-        }
+/* ============ HEADER ============ */
+.hdw{
+  position:sticky;top:0;z-index:100;
+  padding:calc(env(safe-area-inset-top,0px) + 14px) 18px 14px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--bg-base) 88%,transparent),transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+.bar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  max-width:1160px;margin:0 auto;padding:12px 20px;
+  background:var(--surface);
+  backdrop-filter:blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(180%);
+  border:1px solid var(--glass-border);
+  border-radius:var(--r-lg);
+  box-shadow:var(--glass-shadow);
+  animation:slideDown .6s var(--ease-spring) both;
+}
+@keyframes slideDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:none}}
+.bl{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text-primary);min-width:0}
+.bl svg{width:44px;height:44px;flex:none;filter:drop-shadow(0 6px 14px rgba(99,102,241,.4));transition:transform var(--tt)}
+.bl:hover svg{transform:rotate(-6deg) scale(1.05)}
+.bl b{display:block;font-size:18px;line-height:1.1;font-weight:700;color:var(--text-primary)}
+.bl small{display:block;color:var(--text-muted);font-size:12.5px;margin-top:2px;font-weight:500}
+.hn{display:flex;gap:6px;align-items:center;flex:none}
+.hn a{
+  color:var(--text-secondary);font-size:14.5px;font-weight:500;
+  padding:9px 14px;border-radius:var(--r-sm);white-space:nowrap;
+  transition:background var(--tt),color var(--tt),transform var(--tt);
+}
+.hn a:hover{color:var(--text-primary);background:var(--surface-2);transform:translateY(-1px)}
+.hn a.active{background:var(--surface-2);color:var(--brand-1);font-weight:600}
+.theme-btn{
+  width:42px;height:42px;border-radius:var(--r-sm);
+  display:grid;place-items:center;
+  background:var(--surface-2);border:1px solid var(--border-subtle);
+  color:var(--text-primary);font-size:18px;
+  transition:transform var(--tt),background var(--tt);
+}
+.theme-btn:hover{transform:rotate(20deg) scale(1.08);background:var(--brand-1);color:#fff}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Anek Bangla', sans-serif;
-        }
+/* ============ STEP PROGRESS ============ */
+.stp{
+  display:flex;gap:0;max-width:1160px;margin:12px auto 0;
+  padding:10px 16px;overflow-x:auto;scrollbar-width:none;
+  background:var(--surface);backdrop-filter:blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(180%);
+  border:1px solid var(--glass-border);border-radius:var(--r-lg);
+  box-shadow:var(--glass-shadow);
+}
+.stp::-webkit-scrollbar{display:none}
+.sd{
+  flex:1;min-width:70px;position:relative;border:0;background:none;padding:8px 0 0;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--text-muted);font:500 12px var(--font-body);white-space:nowrap;
+  transition:color var(--tt)
+}
+.sd i{
+  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  background:var(--surface-2);border:2px solid var(--border-subtle);
+  font-style:normal;font-weight:700;font-size:14px;position:relative;z-index:1;
+  transition:all .4s var(--ease-spring)
+}
+.sd::before{
+  content:"";position:absolute;top:27px;right:50%;width:100%;height:2px;
+  background:var(--border-subtle)
+}
+.sd:first-child::before{display:none}
+.sd.done i{background:var(--grad-success);border-color:transparent;color:#fff;box-shadow:0 6px 18px rgba(16,185,129,.4)}
+.sd.done::before,.sd.on::before{background:var(--grad-primary)}
+.sd.on{color:var(--text-primary);font-weight:700}
+.sd.on i{
+  background:var(--grad-primary);border-color:transparent;color:#fff;
+  box-shadow:0 0 0 6px rgba(99,102,241,.18),0 10px 24px rgba(99,102,241,.4);
+  transform:scale(1.1)
+}
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
-            padding: 20px 10px;
-        }
+/* ============ MAIN ============ */
+main{max-width:1160px;margin:0 auto;padding:0 18px 160px;position:relative}
+.sh{padding:32px 4px 8px;animation:slideUp .5s var(--ease) both}
+.sh small{
+  display:inline-block;color:var(--brand-1);font-weight:700;font-size:12px;
+  letter-spacing:.8px;text-transform:uppercase;
+  background:rgba(99,102,241,.10);padding:6px 14px;border-radius:999px;
+  border:1px solid rgba(99,102,241,.16)
+}
+.sh h2{font-size:34px;line-height:1.15;font-weight:800;margin:14px 0 6px;letter-spacing:-.5px}
+.sh p{margin:0;color:var(--text-secondary);font-size:16px}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
-        /* Top Bar */
-        .app-header {
-            text-align: center;
-            max-width: 900px;
-            margin: 0 auto 30px auto;
-            padding: 10px;
-        }
+/* ============ CARDS ============ */
+.card{
+  background:var(--surface);
+  backdrop-filter:blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(180%);
+  border:1px solid var(--glass-border);
+  border-radius:var(--r-lg);
+  padding:24px 22px;margin-top:18px;
+  box-shadow:var(--glass-shadow);
+  animation:cardIn .45s var(--ease) both;
+  transition:transform var(--tt),box-shadow var(--tt),border-color var(--tt)
+}
+.card:hover{box-shadow:var(--shadow-md);border-color:var(--border-medium)}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.card h2{
+  position:relative;font-size:17.5px;margin:0 0 16px;padding:0 0 12px 16px;
+  border-bottom:1px solid var(--border-subtle);font-weight:700
+}
+.card h2::before{
+  content:"";position:absolute;left:0;top:4px;width:5px;height:18px;border-radius:4px;
+  background:var(--grad-primary)
+}
 
-        .app-header h1 {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #60a5fa, #a7f3d0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
-        }
+/* ============ FORM ============ */
+label{display:block;font-size:13px;font-weight:600;color:var(--text-secondary);margin:14px 0 7px;letter-spacing:.1px}
+input,textarea,select{
+  width:100%;padding:13px 15px;
+  border:1.5px solid var(--border-subtle);
+  border-radius:var(--r-sm);
+  background:var(--surface-2);
+  color:var(--text-primary);
+  transition:border-color var(--tt),box-shadow var(--tt),background var(--tt);
+  -webkit-appearance:none;appearance:none
+}
+input::placeholder,textarea::placeholder{color:var(--text-muted)}
+select{
+  background-image:linear-gradient(45deg,transparent 50%,var(--text-muted) 50%),linear-gradient(135deg,var(--text-muted) 50%,transparent 50%);
+  background-position:calc(100% - 20px) 55%,calc(100% - 15px) 55%;
+  background-size:5px 5px;background-repeat:no-repeat;padding-right:40px
+}
+input:focus,textarea:focus,select:focus{
+  outline:0;border-color:var(--brand-1);background:var(--surface-solid);
+  box-shadow:0 0 0 4px rgba(99,102,241,.14)
+}
+textarea{min-height:100px;resize:vertical;line-height:1.65}
+input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--brand-1);cursor:pointer}
+input[type=file]{padding:12px;font-size:14px;background:var(--surface-solid);border-style:dashed}
+input[type=file]::file-selector-button{
+  padding:8px 16px;border-radius:8px;border:0;
+  background:var(--grad-primary);color:#fff;
+  font-weight:600;font-size:13px;margin-right:12px;cursor:pointer;transition:opacity var(--tt)
+}
+input[type=file]::file-selector-button:hover{opacity:.85}
 
-        .app-header p {
-            color: #94a3b8;
-            font-size: 15px;
-        }
+.fl{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.f{grid-column:span 1;min-width:0}
+.f.full{grid-column:1/-1}
+@media(max-width:560px){.fl{grid-template-columns:1fr}.f{grid-column:1/-1}}
 
-        /* Main Layout Grid */
-        .main-wrapper {
-            max-width: 1250px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 420px 1fr;
-            gap: 25px;
-            align-items: start;
-        }
+.row{
+  position:relative;
+  border:1px solid var(--border-subtle);
+  background:var(--surface-2);
+  border-radius:var(--r-md);
+  padding:16px 16px 14px;margin-top:16px;
+  transition:border-color var(--tt),box-shadow var(--tt)
+}
+.row:hover{border-color:var(--border-medium);box-shadow:var(--shadow-sm)}
+.err{display:block;color:#ef4444;font-size:12.5px;font-weight:500;margin-top:6px}
+input.bad,textarea.bad,select.bad{border-color:#ef4444!important;box-shadow:0 0 0 4px rgba(239,68,68,.12)!important}
 
-        @media (max-width: 992px) {
-            .main-wrapper {
-                grid-template-columns: 1fr;
-            }
-        }
+/* ============ BUTTONS ============ */
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:16px 24px;border:0;border-radius:var(--r-md);
+  background:var(--grad-primary);color:#fff;font-weight:700;font-size:16px;
+  margin-top:18px;
+  box-shadow:0 12px 28px rgba(99,102,241,.35);
+  transition:transform var(--tt),box-shadow var(--tt);
+  letter-spacing:.2px;position:relative;overflow:hidden
+}
+.btn::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.3),transparent 70%);
+  transform:translateX(-100%);transition:transform .8s var(--ease)
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(99,102,241,.45)}
+.btn:hover::before{transform:translateX(100%)}
+.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:.55;transform:none;cursor:not-allowed;box-shadow:none}
+#dl{background:var(--grad-gold);color:#1a1400;box-shadow:0 12px 28px rgba(245,158,11,.4)}
+#dl:hover{box-shadow:0 18px 40px rgba(245,158,11,.55)}
 
-        /* Form Panel (Mobile Friendly UI) */
-        .form-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
+.sm{
+  padding:11px 18px;border-radius:var(--r-sm);
+  border:1.5px solid var(--border-subtle);
+  background:var(--surface-solid);color:var(--text-primary);
+  margin-top:10px;font-weight:600;font-size:14px;
+  transition:all var(--tt);display:inline-flex;align-items:center;justify-content:center;gap:6px
+}
+.sm:hover{border-color:var(--brand-1);color:var(--brand-1);transform:translateY(-1px)}
+.row .sm:last-child{color:#ef4444;border-color:rgba(239,68,68,.3)}
+.row .sm:last-child:hover{background:rgba(239,68,68,.08)}
 
-        .form-card-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #38bdf8;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-        }
+/* ============ CHIPS ============ */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{
+  font-size:13px;padding:7px 15px;border-radius:999px;
+  border:1px solid var(--border-subtle);color:var(--text-secondary);
+  background:var(--surface-2);font-weight:500;transition:all var(--tt)
+}
+.chip.ok{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#059669;font-weight:600}
 
-        .form-group {
-            margin-bottom: 16px;
-        }
+/* ============ GALLERY ============ */
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:18px}
+.gi{
+  position:relative;border:2px solid var(--border-subtle);border-radius:var(--r-md);
+  background:var(--surface-solid);padding:0;overflow:hidden;
+  box-shadow:var(--shadow-sm);
+  transition:transform .3s var(--ease-spring),box-shadow var(--tt),border-color var(--tt);
+  text-align:left
+}
+.gi:hover{transform:translateY(-6px) scale(1.02);box-shadow:var(--shadow-lg);border-color:var(--brand-1)}
+.gi.on{border-color:var(--brand-1);box-shadow:0 0 0 4px rgba(99,102,241,.22),var(--shadow-lg)}
+.gi.on::after{
+  content:"✓";position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;
+  background:var(--grad-primary);color:#fff;display:grid;place-items:center;
+  font-weight:700;font-size:14px;box-shadow:0 6px 16px rgba(99,102,241,.5);
+  animation:pop .35s var(--ease-spring)
+}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.th{width:100%;aspect-ratio:146/206;overflow:hidden;position:relative;pointer-events:none;background:#f7faf9}
+.th .cv{width:600px;min-width:0;transform:scale(.243);transform-origin:0 0;position:absolute;left:0;top:0}
+.gi span{display:block;font-size:13.5px;font-weight:600;padding:10px 8px;border-top:1px solid var(--border-subtle);text-align:center;color:var(--text-primary)}
 
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #cbd5e1;
-        }
+/* ============ PREVIEW ============ */
+#pvw{
+  overflow:hidden;border:1px solid var(--border-subtle);border-radius:var(--r-md);
+  background:var(--surface-2);padding:16px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5)
+}
+#pv{margin:0 auto}
+#pv .cv{box-shadow:0 24px 60px rgba(5,38,28,.18);border-radius:4px;background:#fff}
 
-        .form-group input, 
-        .form-group textarea, 
-        .form-group select {
-            width: 100%;
-            padding: 12px 14px;
-            background: #0f172a;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: #ffffff;
-            font-size: 15px;
-            outline: none;
-            transition: all 0.3s ease;
-        }
+/* ============ FOOTER BAR ============ */
+.foot{
+  position:fixed;left:0;right:0;bottom:0;z-index:90;
+  display:flex;gap:14px;justify-content:center;align-items:center;
+  padding:14px 20px calc(14px + env(safe-area-inset-bottom,0px));
+  background:var(--surface);
+  backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);
+  border-top:1px solid var(--glass-border);
+  box-shadow:0 -14px 40px rgba(15,23,42,.08)
+}
+.foot button{
+  flex:1;max-width:360px;padding:15px 20px;border-radius:var(--r-md);
+  font-weight:700;font-size:15.5px;
+  transition:transform var(--tt),box-shadow var(--tt)
+}
+.foot button:hover{transform:translateY(-2px)}
+.foot .ghost{background:var(--surface-solid);border:1.5px solid var(--border-subtle);color:var(--text-primary)}
+.foot .nx{
+  border:0;color:#fff;background:var(--grad-primary);
+  box-shadow:0 12px 28px rgba(99,102,241,.4)
+}
+.foot button:disabled{opacity:.5;transform:none;cursor:not-allowed}
 
-        .form-group input:focus, 
-        .form-group textarea:focus, 
-        .form-group select:focus {
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
-        }
+/* ============ SITE FOOTER ============ */
+.cvfoot{
+  position:relative;overflow:hidden;margin-top:64px;border-radius:var(--r-xl);
+  background:linear-gradient(165deg,#0b1220,#050812);
+  color:#94a3b8;padding:48px 36px 26px;
+  display:grid;grid-template-columns:1.3fr 1fr 1.2fr;gap:32px;
+  font-size:14.5px;border:1px solid rgba(255,255,255,.06)
+}
+.cvfoot::before{
+  content:"";position:absolute;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(99,102,241,.25),transparent 65%);
+  right:-120px;top:-150px;pointer-events:none
+}
+.cvfoot>*{position:relative}
+.cvfoot h4{color:#fff;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;margin:0 0 16px;font-weight:700}
+.cvfoot p{margin:0;line-height:1.7;color:#94a3b8}
+.cvfoot a{display:block;color:#cbd5e1;text-decoration:none;padding:5px 0;transition:color var(--tt),transform var(--tt);font-size:14.5px}
+.cvfoot a:hover{color:#a5b4fc;transform:translateX(4px)}
+.cvfoot .fbot{
+  grid-column:1/-1;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  border-top:1px solid rgba(255,255,255,.08);padding-top:20px;font-size:13.5px;color:#64748b
+}
+.cvfoot .fbot b{color:#fff;letter-spacing:.4px}
+.dev{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(255,255,255,.3);transition:var(--tt)}
+.dev:hover{color:#a5b4fc;border-color:#a5b4fc}
 
-        .file-upload-btn {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: #334155;
-            color: #fff;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: 0.2s;
-            text-align: center;
-        }
+/* ============ FORMATS ============ */
+.fmts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+.fm{
+  display:flex;flex-direction:column;align-items:flex-start;gap:3px;
+  padding:14px;border:1.5px solid var(--border-subtle);border-radius:var(--r-md);
+  background:var(--surface-solid);color:var(--text-primary);text-align:left;
+  font-weight:700;font-size:15px;transition:all var(--tt)
+}
+.fm small{font-size:11.5px;font-weight:500;color:var(--text-muted);line-height:1.35}
+.fm:hover{border-color:var(--brand-1);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.fm.on{border-color:var(--brand-1);background:linear-gradient(180deg,rgba(99,102,241,.08),transparent);box-shadow:0 0 0 4px rgba(99,102,241,.14)}
+@media(max-width:560px){.fmts{grid-template-columns:1fr 1fr}}
 
-        .file-upload-btn:hover {
-            background: #475569;
-        }
+/* ============ ATS ============ */
+.atsnote{font-size:14px;color:var(--text-muted);margin:0 0 12px}
+#atsOut{margin-top:18px}
+.ats-top{
+  display:flex;gap:20px;align-items:center;padding:20px;border-radius:var(--r-md);
+  background:linear-gradient(135deg,rgba(16,185,129,.08),transparent);
+  border:1px solid rgba(16,185,129,.2)
+}
+.ats-ring{width:100px;height:100px;border-radius:50%;flex:none;display:grid;place-items:center;position:relative}
+.ats-ring::before{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:var(--ring,conic-gradient(var(--brand-1) 0,#e6efea 0));
+  mask:radial-gradient(farthest-side,transparent 64%,#000 66%);
+  -webkit-mask:radial-gradient(farthest-side,transparent 64%,#000 66%)
+}
+.ats-ring b{font-size:28px;position:relative;color:var(--text-primary)}
+.ats-ring small{position:absolute;bottom:22px;font-size:10px;color:var(--text-muted);font-weight:600}
+.ats-msg{font-weight:700;font-size:17px;margin:0 0 4px}
+.ats-msg+p{margin:0;font-size:13.5px;color:var(--text-muted)}
+.ats-list{list-style:none;margin:16px 0 0;padding:0}
+.ats-list li{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--border-subtle);font-size:14.5px}
+.ats-list li:first-child{border-top:0}
+.ats-dot{width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:13px;font-weight:700;color:#fff;margin-top:1px}
+.ats-dot.ok{background:var(--grad-success)}
+.ats-dot.part{background:var(--grad-gold);color:#1a1400}
+.ats-dot.no{background:#ef4444}
+.ats-tip{display:block;color:var(--text-muted);font-size:13px;margin-top:3px}
+.ats-kw{margin-top:16px;font-size:14px}
+.ats-disc{
+  font-size:12.5px;color:var(--text-muted);margin:16px 0 0;padding:12px 14px;
+  background:var(--surface-2);border-radius:var(--r-sm);border:1px dashed var(--border-subtle)
+}
 
-        .file-upload-btn input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
+/* ============ TOAST ============ */
+#svToast{
+  position:fixed;top:calc(env(safe-area-inset-top,0px) + 20px);left:50%;
+  transform:translate(-50%,-200%);
+  background:var(--grad-success);color:#fff;padding:12px 22px;
+  border-radius:var(--r-md);font-weight:700;font-size:14px;
+  box-shadow:0 18px 40px rgba(16,185,129,.45);
+  z-index:200;opacity:0;pointer-events:none;
+  transition:transform .4s var(--ease-spring),opacity .4s
+}
+#svToast.on{transform:translate(-50%,0);opacity:1}
 
-        .btn-download {
-            width: 100%;
-            background: linear-gradient(135deg, #0284c7, #2563eb);
-            color: #ffffff;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
-            margin-top: 20px;
-        }
+/* ============ CONTROL BAR ============ */
+.ctl{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ctl .sm{margin-top:0;min-height:42px;padding:9px 14px;font-size:13.5px}
+.ctl .sm:disabled{opacity:.4;cursor:not-allowed}
 
-        .btn-download:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.6);
-        }
+/* ============ A4 PAGES ============ */
+.pgbox{
+  position:relative;width:794px;height:1123px;overflow:hidden;background:#fff;
+  margin:0 auto 26px;box-shadow:0 24px 60px rgba(5,38,28,.18);border-radius:4px;display:block
+}
+.pgbox>.cv{
+  height:1123px;min-height:0;display:flex;flex-direction:column;
+  box-sizing:border-box;overflow:hidden
+}
+.pgbox.p2>.cv{height:1067px}
+.pgbox .runhd{
+  position:relative;height:56px;flex:none;
+  display:flex;justify-content:space-between;align-items:center;padding:0 28px;
+  background:#f4f7f6;border-bottom:2px solid #d6e2dc;font-size:13px;color:#334155;z-index:2
+}
+.pgbox .runhd b{font-size:14px;color:#0f172a}
+.cv.nohdr .hd{display:none!important}
+.measure{position:absolute!important;left:-10000px!important;top:0!important;height:auto!important;margin:0!important;box-shadow:none!important}
+.measure>.cv{min-height:0!important;height:auto!important;overflow:visible!important}
+.pgbox>.cv>.cols{flex:1 1 auto;min-height:0;align-items:stretch}
+.pgbox>.cv>.cols>aside{align-self:stretch}
+.pgbox>.cv>.cols>.mn{min-height:0}
 
-        /* Preview Panel */
-        .preview-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: sticky;
-            top: 20px;
-        }
+/* ============ NAV ROW ============ */
+.navrow{
+  display:flex;gap:14px;justify-content:space-between;
+  margin-top:22px;padding-top:18px;border-top:1px dashed var(--border-subtle)
+}
+.nvb{
+  flex:1;max-width:280px;min-height:54px;border-radius:var(--r-md);
+  font:700 15px var(--font-body);padding:14px 20px;cursor:pointer;
+  transition:transform var(--tt),box-shadow var(--tt)
+}
+.nvb:hover{transform:translateY(-2px)}
+.nvb.ghost{background:var(--surface-solid);border:1.5px solid var(--border-subtle);color:var(--text-primary)}
+.nvb.ghost:hover{border-color:var(--brand-1)}
+.nvb.nxt{border:0;color:#fff;background:var(--grad-primary);box-shadow:0 10px 24px rgba(99,102,241,.35)}
 
-        .preview-title {
-            font-size: 14px;
-            color: #94a3b8;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* ------------------------------------------------------------- */
-        /* PHOTO CARD PREVIEW FRAME (1:1 Square 1080x1080 Scaled Down)   */
-        /* ------------------------------------------------------------- */
-        .photocard-container {
-            width: 540px;
-            height: 540px;
-            background-color: #000;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        /* Full Background Image Layer with Blur Backdrop */
-        .card-bg-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-        }
-
-        /* Top Gradient Overlay */
-        .top-gradient {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 120px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
-            z-index: 2;
-        }
-
-        /* Bottom Heavy Gradient Overlay for Text Clarity */
-        .bottom-gradient {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 320px;
-            background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0) 100%);
-            z-index: 2;
-        }
-
-        /* Card Top Bar Header */
-        .card-top-bar {
-            position: relative;
-            z-index: 3;
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand-box {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand-logo-img {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #ffffff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        }
-
-        .brand-title-text {
-            color: #ffffff;
-            font-size: 19px;
-            font-weight: 800;
-            letter-spacing: 0.3px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-
-        .date-badge {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.3);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* News Content Area (Bottom Section) */
-        .card-content-area {
-            position: relative;
-            z-index: 3;
-            padding: 20px 22px 24px 22px;
-        }
-
-        /* Category Shape Tag */
-        .category-tag-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .category-tag {
-            font-size: 14px;
-            font-weight: 800;
-            color: #ffffff;
-            padding: 4px 14px;
-            text-transform: uppercase;
-            clip-path: polygon(0 0, 100% 0, 92% 100%, 0% 100%);
-            display: inline-block;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .news-badge {
-            background: #ffffff;
-            color: #000;
-            font-size: 12px;
-            font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        /* Highilghted Main Headline */
-        .headline-main {
-            color: #ffffff;
-            font-size: 24px;
-            font-weight: 800;
-            line-height: 1.38;
-            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.9);
-            margin-bottom: 14px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        /* Footer Accent Strip */
-        .footer-strip {
-            height: 6px;
-            width: 100%;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 4;
-        }
-
-
-        /* ------------------------------------------------------------- */
-        /* 5 PREMIUM COLOR TEMPLATES DESIGN                              */
-        /* ------------------------------------------------------------- */
-
-        /* Template 1: Breaking Red (Somoy News Style) */
-        .theme-red .category-tag { background: linear-gradient(135deg, #dc2626, #991b1b); }
-        .theme-red .footer-strip { background: linear-gradient(90deg, #ef4444, #f87171, #ef4444); }
-        .theme-red .brand-title-text { color: #ffffff; }
-
-        /* Template 2: Royal Blue (Jamuna TV Style) */
-        .theme-blue .category-tag { background: linear-gradient(135deg, #2563eb, #1e3a8a); }
-        .theme-blue .footer-strip { background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6); }
-
-        /* Template 3: Royal Gold (Premium Awards Style) */
-        .theme-gold .category-tag { background: linear-gradient(135deg, #d97706, #78350f); }
-        .theme-gold .footer-strip { background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b); }
-
-        /* Template 4: Emerald Green (Islamic/Humanity Style) */
-        .theme-green .category-tag { background: linear-gradient(135deg, #16a34a, #14532d); }
-        .theme-green .footer-strip { background: linear-gradient(90deg, #22c55e, #4ade80, #22c55e); }
-
-        /* Template 5: Dark Premium (Midnight Style) */
-        .theme-dark .category-tag { background: linear-gradient(135deg, #475569, #0f172a); border: 1px solid #64748b; }
-        .theme-dark .footer-strip { background: linear-gradient(90deg, #94a3b8, #cbd5e1, #94a3b8); }
-
-        /* Responsive preview scale for mobile devices */
-        @media (max-width: 580px) {
-            .photocard-container {
-                width: 340px;
-                height: 340px;
-            }
-
-            .brand-title-text { font-size: 14px; }
-            .brand-logo-img { width: 32px; height: 32px; }
-            .date-badge { font-size: 10px; padding: 2px 8px; }
-            .headline-main { font-size: 16px; line-height: 1.35; }
-            .category-tag { font-size: 11px; padding: 3px 10px; }
-            .news-badge { font-size: 9px; }
-            .card-content-area { padding: 12px 14px 16px 14px; }
-        }
-    </style>
+/* ============ RESPONSIVE ============ */
+@media(max-width:768px){
+  .hn a:not(.active){display:none}
+  .bl small{display:none}
+  .sh h2{font-size:26px}
+  .card{padding:20px 16px;border-radius:var(--r-md)}
+  .sd{min-width:58px}
+  .cvfoot{grid-template-columns:1fr;padding:36px 24px 22px;gap:24px}
+  .foot{padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px));gap:10px}
+  .foot button{padding:13px 12px;font-size:15px}
+  main{padding:0 14px 150px}
+  .stp{padding:8px 10px}
+  .hdw{padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 10px}
+  .bar{padding:10px 14px}
+}
+@media(max-width:480px){
+  .sd span{display:none}
+  .sd i{width:32px;height:32px}
+  .sd::before{top:24px}
+  input,select,textarea{font-size:16px;min-height:52px}
+  textarea{min-height:110px}
+  .btn{min-height:54px;font-size:16px}
+  .g{grid-template-columns:repeat(2,1fr);gap:12px}
+  #pvw{padding:10px}
+  .ats-top{flex-direction:column;text-align:center;gap:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+<style id="cvcss"></style>
+<link rel="icon" href="favicon.png" type="image/png">
+<meta name="description" content="প্রিমিয়াম ফ্রি সিভি মেকার বাংলাদেশ। A4 PDF, একাধিক টেমপ্লেট, ডার্ক মোড, ATS চেক।">
 </head>
 <body>
 
-    <!-- App Header -->
-    <div class="app-header">
-        <h1><i class="fa-solid fa-newspaper"></i> আল ফালাহ মানবসেবা ফাউন্ডেশন</h1>
-        <p>প্রফেশনাল নিউজ ফটোকার্ড জেনারেটর (গিটহাব রেডি)</p>
+<div class="hdw">
+  <header class="bar">
+    <a class="bl" href="index.html" aria-label="হোম">
+      <svg viewBox="0 0 64 64">
+        <defs>
+          <linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#6366f1"/>
+            <stop offset="50%" stop-color="#8b5cf6"/>
+            <stop offset="100%" stop-color="#06b6d4"/>
+          </linearGradient>
+        </defs>
+        <rect width="64" height="64" rx="16" fill="url(#lg1)"/>
+        <path d="M20 12h17l9 9v29a2 2 0 0 1-2 2H20a2 2 0 0 1-2-2V14a2 2 0 0 1 2-2z" fill="#fff"/>
+        <rect x="23" y="27" width="16" height="2.5" rx="1.2" fill="#6366f1"/>
+        <rect x="23" y="33" width="12" height="2.5" rx="1.2" fill="#6366f1"/>
+        <circle cx="45" cy="45" r="10" fill="#fbbf24" stroke="#fff" stroke-width="2.5"/>
+        <path d="M40 45l3.5 3.5L50 41" stroke="#1a1400" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <b>সিভি বানাও</b>
+        <small>প্রিমিয়াম CV Maker</small>
+      </div>
+    </a>
+    <nav class="hn">
+      <a href="index.html">হোম</a>
+      <a href="guides.html">গাইড</a>
+      <a href="#" class="active">সিভি বানান</a>
+      <button class="theme-btn" id="themeBtn" aria-label="ডার্ক মোড টগল" title="ডার্ক মোড">🌙</button>
+    </nav>
+  </header>
+  <nav class="stp" id="stp" aria-label="ধাপ"></nav>
+</div>
+
+<main>
+  <div id="sh"></div>
+
+  <section id="v1"><div id="form"></div></section>
+  <section id="v2" hidden>
+    <div class="card">
+      <h2>একাধিক ভিন্ন ডিজাইনের টেমপ্লেট</h2>
+      <div class="g" id="gal"></div>
+    </div>
+  </section>
+  <section id="v3" hidden>
+    <div class="card">
+      <h2>ডাউনলোড ও প্রিভিউ</h2>
+      <div id="pvw"><div id="pv"></div></div>
+      <div class="fmts" id="fmts" role="group">
+        <button class="fm on" data-f="pdf">PDF<small>প্রিন্ট ও আবেদন</small></button>
+        <button class="fm" data-f="doc">Word<small>এডিট করতে (.doc)</small></button>
+        <button class="fm" data-f="png">PNG<small>ছবি, স্বচ্ছ</small></button>
+        <button class="fm" data-f="jpg">JPG<small>ছবি, হালকা</small></button>
+      </div>
+      <button class="btn" id="dl">PDF ডাউনলোড করুন (A4)</button>
+      <button class="sm" id="pr" style="width:100%">বিকল্প: প্রিন্ট করে PDF সেভ করুন</button>
     </div>
 
-    <!-- Main Content Container -->
-    <div class="main-wrapper">
-        
-        <!-- Controls & Input Form Panel -->
-        <div class="form-card">
-            <div class="form-card-title">
-                <i class="fa-solid fa-sliders"></i> কাস্টমাইজেশন প্যানেল
-            </div>
-
-            <div class="form-group">
-                <label for="templateSelect"><i class="fa-solid fa-palette"></i> নিউজ কালার থিম থিম</label>
-                <select id="templateSelect" onchange="updateCard()">
-                    <option value="theme-red">১. ব্রেকিং রেড (Breaking Red)</option>
-                    <option value="theme-blue">২. রয়েল নিউজ ব্লু (Royal News Blue)</option>
-                    <option value="theme-gold">৩. ক্লাসিক রয়েল গোল্ড (Royal Gold)</option>
-                    <option value="theme-green" selected>৪. হিউম্যানিটি গ্রীন (Emerald Green)</option>
-                    <option value="theme-dark">৫. ডার্ক নাইট এডিটরস চয়েস (Dark Premium)</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="orgNameInput"><i class="fa-solid fa-heart-pulse"></i> ফাউন্ডেশনের নাম</label>
-                <input type="text" id="orgNameInput" value="আল ফালাহ মানবসেবা ফাউন্ডেশন" oninput="updateCard()">
-            </div>
-
-            <div class="form-group">
-                <label for="categoryInput"><i class="fa-solid fa-tag"></i> সংবাদ ক্যাটাগরি / বিষয়</label>
-                <input type="text" id="categoryInput" value="জরুরি ত্রাণ সহায়তা" oninput="updateCard()">
-            </div>
-
-            <div class="form-group">
-                <label for="dateInput"><i class="fa-regular fa-calendar-check"></i> তারিখ</label>
-                <input type="text" id="dateInput" value="১৬ সেপ্টেম্বর, ২০২৬" oninput="updateCard()">
-            </div>
-
-            <div class="form-group">
-                <label for="headlineInput"><i class="fa-solid fa-heading"></i> সংবাদের মূল বিষয় / হেডলাইন</label>
-                <textarea id="headlineInput" rows="3" oninput="updateCard()">বন্যাদুর্গত এলাকার অসহায় মানুষদের মাঝে আল ফালাহ মানবসেবা ফাউন্ডেশনের উদ্যোগে খাদ্য সামগ্রী ও বিশুদ্ধ পানি বিতরণ।</textarea>
-            </div>
-
-            <div class="form-group">
-                <label><i class="fa-solid fa-image"></i> মূল ছবি বেছে নিন (High Res Photo)</label>
-                <div class="file-upload-btn">
-                    <i class="fa-solid fa-cloud-arrow-up"></i> ফটো আপলোড করুন
-                    <input type="file" id="mainImageInput" accept="image/*" onchange="loadMainImage(event)">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label><i class="fa-solid fa-shield-halved"></i> ফাউন্ডেশন লোগো (ঐচ্ছিক)</label>
-                <div class="file-upload-btn" style="background: #1e293b; border: 1px dashed #475569;">
-                    <i class="fa-solid fa-circle-user"></i> লোগো বেছে নিন
-                    <input type="file" id="logoInput" accept="image/*" onchange="loadLogoImage(event)">
-                </div>
-            </div>
-
-            <button class="btn-download" onclick="downloadPhotoCard()">
-                <i class="fa-solid fa-download"></i> HD ফটোকার্ড ডাউনলোড
-            </button>
-        </div>
-
-        <!-- Real-Time PhotoCard Canvas Preview -->
-        <div class="preview-wrapper">
-            <div class="preview-title">
-                <i class="fa-solid fa-eye"></i> লাইভ নিউজ ফটোকার্ড প্রিভিউ (১:১ স্কয়ার)
-            </div>
-
-            <div id="photoCard" class="photocard-container theme-green">
-                <!-- Main Highlighted Background Image -->
-                <img id="cardMainImg" class="card-bg-image" src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1000&auto=format&fit=crop" alt="News Image">
-
-                <!-- Gradients for Text Readability -->
-                <div class="top-gradient"></div>
-                <div class="bottom-gradient"></div>
-
-                <!-- Top Header Bar -->
-                <div class="card-top-bar">
-                    <div class="brand-box">
-                        <img id="cardLogo" class="brand-logo-img" src="https://via.placeholder.com/100/10b981/ffffff?text=AF" alt="Logo">
-                        <span id="cardOrgName" class="brand-title-text">আল ফালাহ মানবসেবা ফাউন্ডেশন</span>
-                    </div>
-                    <div class="date-badge">
-                        <i class="fa-regular fa-clock"></i> <span id="cardDate">১৬ সেপ্টেম্বর, ২০২৬</span>
-                    </div>
-                </div>
-
-                <!-- Bottom News Details Bar -->
-                <div class="card-content-area">
-                    <div class="category-tag-wrapper">
-                        <span id="cardCategory" class="category-tag">জরুরি ত্রাণ সহায়তা</span>
-                        <span class="news-badge">মানবসেবা</span>
-                    </div>
-                    
-                    <div id="cardHeadline" class="headline-main">
-                        বন্যাদুর্গত এলাকার অসহায় মানুষদের মাঝে আল ফালাহ মানবসেবা ফাউন্ডেশনের উদ্যোগে খাদ্য সামগ্রী ও বিশুদ্ধ পানি বিতরণ।
-                    </div>
-                </div>
-
-                <!-- Accent Line Strip at Bottom -->
-                <div class="footer-strip"></div>
-            </div>
-        </div>
-
+    <div class="card" id="bkCard">
+      <h2>তথ্য ব্যাকআপ</h2>
+      <p class="atsnote">সব তথ্য একটা ফাইলে সেভ করে রাখুন। ব্রাউজার ডেটা মুছে গেলেও ফাইল থেকে ফিরিয়ে আনা যাবে।</p>
+      <button class="sm" id="bkSave" type="button">ব্যাকআপ (.json) ডাউনলোড</button>
+      <label class="sm" for="bkFile" style="cursor:pointer;margin-top:10px;display:inline-flex">ব্যাকআপ থেকে ফেরত আনুন</label>
+      <input type="file" id="bkFile" accept="application/json,.json" hidden>
+      <p class="ats-disc" id="bkMsg">ফাইলে ছবি ও স্বাক্ষরও থাকে — নিরাপদ জায়গায় রাখুন।</p>
     </div>
 
-    <!-- JavaScript Engine -->
-    <script>
-        // Update Live Card Input Data
-        function updateCard() {
-            document.getElementById('cardOrgName').innerText = document.getElementById('orgNameInput').value || 'আল ফালাহ মানবসেবা ফাউন্ডেশন';
-            document.getElementById('cardCategory').innerText = document.getElementById('categoryInput').value || 'সংবাদ';
-            document.getElementById('cardDate').innerText = document.getElementById('dateInput').value || 'তারিখ';
-            document.getElementById('cardHeadline').innerText = document.getElementById('headlineInput').value || 'এখানে সংবাদের হেডলাইন থাকবে...';
+    <div class="card" id="atsCard">
+      <h2>ATS-ফ্রেন্ডলি চেক</h2>
+      <p class="atsnote">আপনার সিভি সাধারণ স্ক্রিনিং নিয়মে কেমন দাঁড়ায় দেখুন।</p>
+      <label for="jd">চাকরির বিবরণ (ঐচ্ছিক)</label>
+      <textarea id="jd" placeholder="চাকরির বিজ্ঞপ্তি এখানে পেস্ট করুন"></textarea>
+      <button class="btn" id="atsBtn" type="button">সিভি চেক করুন</button>
+      <div id="atsOut"></div>
+    </div>
 
-            // Change Theme Dynamic Classes
-            const card = document.getElementById('photoCard');
-            const selectedTheme = document.getElementById('templateSelect').value;
-            card.className = 'photocard-container ' + selectedTheme;
-        }
+    <div class="card" id="clCard">
+      <h2>কভার লেটার</h2>
+      <p class="atsnote">সিভির তথ্য দিয়ে খসড়া তৈরি হয়।</p>
+      <div class="fl">
+        <div class="f"><label for="clCo">কোম্পানির নাম (ঐচ্ছিক)</label><input id="clCo" placeholder="যেমন ABC Ltd."></div>
+        <div class="f"><label for="clStyle">লেখার ধরন</label>
+          <select id="clStyle">
+            <option value="formal">আনুষ্ঠানিক</option>
+            <option value="friendly">বন্ধুত্বপূর্ণ</option>
+            <option value="short">সংক্ষিপ্ত</option>
+            <option value="detailed">বিস্তারিত</option>
+          </select>
+        </div>
+        <div class="f"><label for="clLang">ভাষা</label>
+          <select id="clLang"><option value="en">English</option><option value="bn">বাংলা</option></select>
+        </div>
+      </div>
+      <button class="btn" id="clBtn" type="button">কভার লেটার বানান</button>
+      <textarea id="clOut" style="min-height:300px;margin-top:16px" placeholder="খসড়া এখানে আসবে"></textarea>
+      <label>ডাউনলোড</label>
+      <div class="fmts" style="grid-template-columns:1fr 1fr 1fr">
+        <button class="sm" id="clPdf" type="button">PDF</button>
+        <button class="sm" id="clDoc" type="button">Word</button>
+        <button class="sm" id="clTxt" type="button">টেক্সট</button>
+      </div>
+      <button class="sm" id="clCopy" type="button" style="width:100%">কপি করুন</button>
+    </div>
 
-        // Upload and Preview Main Highlight Photo
-        function loadMainImage(event) {
-            const output = document.getElementById('cardMainImg');
-            if (event.target.files && event.target.files[0]) {
-                output.src = URL.createObjectURL(event.target.files[0]);
-            }
-        }
+    <div class="card">
+      <h2>সিভিতে যা যা যুক্ত হয়েছে</h2>
+      <div class="chips" id="chk"></div>
+    </div>
+    <div id="pro"></div>
+  </section>
 
-        // Upload and Preview Logo
-        function loadLogoImage(event) {
-            const output = document.getElementById('cardLogo');
-            if (event.target.files && event.target.files[0]) {
-                output.src = URL.createObjectURL(event.target.files[0]);
-            }
-        }
+  <footer class="cvfoot">
+    <div>
+      <h4>সিভি বানাও</h4>
+      <p>বাংলাদেশি চাকরিপ্রার্থীদের জন্য প্রিমিয়াম ফ্রি সিভি বানানোর টুল।</p>
+    </div>
+    <div>
+      <h4>মেনু</h4>
+      <a href="index.html">হোম</a>
+      <a href="cv.html">সিভি বানান</a>
+      <a href="guides.html">গাইড</a>
+      <a href="about.html">আমাদের সম্পর্কে</a>
+    </div>
+    <div>
+      <h4>যোগাযোগ</h4>
+      <a href="mailto:cvbuilderbd@gmail.com">cvbuilderbd@gmail.com</a>
+      <a href="tel:+8801600169597">01600-169597</a>
+      <a href="https://www.facebook.com/cvbuilderbd" target="_blank" rel="noopener">Facebook</a>
+    </div>
+    <div class="fbot">
+      <span>© 2026 সিভি বানাও। সর্বস্বত্ব সংরক্ষিত।</span>
+      <span>বিল্ডার: <a class="dev" href="https://www.facebook.com/mdsofian68" target="_blank" rel="noopener"><b>MD ABU SUFIAN</b></a></span>
+    </div>
+  </footer>
+</main>
 
-        // High Quality PNG Export Function
-        function downloadPhotoCard() {
-            const card = document.getElementById('photoCard');
+<div class="foot">
+  <button class="ghost" id="bk">← আগের ধাপ</button>
+  <button class="nx" id="nx">পরের ধাপ →</button>
+</div>
 
-            // Temporary scale reset for crisp HD 1080p render
-            html2canvas(card, {
-                scale: 3, 
-                useCORS: true,
-                allowTaint: true,
-                logging: false
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'Al_Falah_News_Card.png';
-                link.href = canvas.toDataURL('image/png', 1.0);
-                link.click();
-            });
-        }
-    </script>
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+var THEME_KEY="cv-theme";
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme",t);
+  var b=document.getElementById("themeBtn");
+  if(b)b.textContent=t==="dark"?"☀️":"🌙";
+  try{localStorage.setItem(THEME_KEY,t)}catch(e){}
+}
+(function(){
+  var saved="light";
+  try{saved=localStorage.getItem(THEME_KEY)||"light"}catch(e){}
+  if(!saved){saved=window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"}
+  applyTheme(saved);
+  var b=document.getElementById("themeBtn");
+  if(b)b.onclick=function(){
+    var cur=document.documentElement.getAttribute("data-theme");
+    applyTheme(cur==="dark"?"light":"dark");
+  };
+})();
+
+/* ============================================================
+   DATA
+   ============================================================ */
+var KEY="cv-bd-v1",D={
+  name:"",post:"",phone:"",email:"",addr:"",obj:"",
+  father:"",mother:"",dob:"",nid:"",nat:"Bangladeshi",rel:"Islam",mar:"Single",
+  perm:"",photo:"",skills:"",
+  lang:[{n:"Bangla",l:"Native"},{n:"English",l:"Fluent"}],
+  cert:[],cust:[],refs:"",
+  edu:[{lv:"SSC"},{lv:"HSC"},{lv:"Honours"}],
+  exp:[],gender:"",blood:"",hob:"",sig:"",t:0,pro:false
+};
+try{var rs=localStorage.getItem(KEY);if(rs)Object.assign(D,JSON.parse(rs))}catch(e){}
+D.cert=D.cert||[];D.lang=D.lang||[];D.cust=D.cust||[];
+D.exp=(D.exp||[]).map(function(e){return e.co!==undefined?e:{co:e.o||"",pos:e.p||"",sd:"",ed:"",cur:false,resp:e.x||""}});
+if(D.edu.some(function(e){return !e.lv}))D.edu=[{lv:"SSC"},{lv:"HSC"},{lv:"Honours"}];
+
+var _svT=null;
+function flashSaved(){
+  var t=document.getElementById("svToast");
+  if(!t){t=document.createElement("div");t.id="svToast";t.setAttribute("role","status");document.body.appendChild(t)}
+  t.textContent="✓ সেভ হয়েছে";t.classList.add("on");
+  clearTimeout(_svT);_svT=setTimeout(function(){t.classList.remove("on")},1200);
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(D));flashSaved()}catch(e){}}
+
+var $=function(i){return document.getElementById(i)};
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function nl(s){return esc(s).replace(/\n/g,"<br>")}
+function ul(s){var a=String(s||"").split("\n").map(function(x){return x.trim()}).filter(Boolean);return a.length?'<ul style="margin:0;padding-left:18px">'+a.map(function(x){return"<li>"+esc(x)+"</li>"}).join("")+"</ul>":""}
+
+/* ============================================================
+   CV STYLES
+   ============================================================ */
+var CVCSS='.cv{background:#fff;color:#1f2937;font:12.5px/1.55 Arial,"Hind Siliguri",sans-serif;max-width:794px;margin:0 auto;overflow:hidden}.cv *{box-sizing:border-box}.cv h1{margin:0;font-size:26px;line-height:1.2;color:var(--a)}.cv .po{font-size:14px;color:#475569;margin-top:2px}.cv .ct{margin-top:6px}.cv .hd{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:26px 28px 10px}.cv .hd img{width:92px;height:112px;object-fit:cover;flex:none}.cv .bd{padding:0 28px 22px}.cv .s{margin-top:14px}.cv h2{margin:0 0 6px;font-size:13.5px;color:var(--a)}.cv .it{margin-bottom:6px}.cv .it b{display:block}.cv .it span{color:#475569}.cv .kv{display:grid;grid-template-columns:36% 1fr;gap:6px;padding:1px 0}.cv .kv small{font-size:12px;font-weight:700}.cv ul{margin:0;padding-left:18px}.cv table{border-collapse:collapse;width:100%}.cv td,.cv th{border:1px solid #cbd5e1;padding:4px 6px;text-align:left;font-size:12px}.cv th{background:var(--t)}.cv .dec{margin-top:16px;font-size:12px}.cv .sg{display:flex;justify-content:space-between;margin-top:26px}.cv .wm{padding:0 0 12px;text-align:center;color:#9ca3af;font-size:10.5px}'
++'.cv.classic .hd{margin:0 28px;padding:26px 0 10px;border-bottom:2px solid var(--a)}.cv.classic .bd{padding-top:2px}.cv.classic h2{background:var(--a);color:#fff;padding:3px 8px}'
++'.cv.serif .hd{flex-direction:column;align-items:center;text-align:center;margin:26px 28px 0;padding:12px 0;border-top:3px double var(--a);border-bottom:3px double var(--a)}.cv.serif .hd img{order:-1;border-radius:50%;width:96px;height:96px}.cv.serif .ct{display:flex;flex-wrap:wrap;gap:2px 14px;justify-content:center}.cv.serif h2{text-align:center;text-transform:uppercase;letter-spacing:3px;font-size:12px;border-bottom:1px solid #cbd5e1;padding-bottom:3px}'
++'.cv.split .hd{background:var(--a);color:#fff;align-items:center}.cv.split h1,.cv.split .po{color:#fff}.cv.split .hd img{border:3px solid #fff}.cv.split h2{border-left:4px solid var(--a);padding-left:8px;background:var(--t)}'
++'.cv.tl .hd{margin:26px 28px 0;padding:2px 0 2px 14px;border-left:8px solid var(--a);align-items:center}.cv.tl .hd img{border-radius:50%;width:96px;height:96px}.cv.tl h2{text-transform:uppercase;letter-spacing:1.5px;font-size:12.5px;border-bottom:1px solid #cbd5e1;padding-bottom:3px}.cv.tl .it{position:relative;margin:0 0 0 5px;padding:0 0 8px 16px;border-left:2px solid var(--a)}.cv.tl .it::before{content:"";position:absolute;left:-6px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--a)}'
++'.cv.lab .hd{margin:26px 28px 6px;padding:4px 0 4px 14px;border-left:8px solid var(--a)}.cv.lab h1{color:#111}.cv.lab .s{display:grid;grid-template-columns:27% 1fr;gap:12px;border-top:1px solid #e2e8f0;padding-top:10px}.cv.lab h2{text-transform:uppercase;letter-spacing:1px;font-size:11.5px}.cv.lab .dec{border-top:1px solid #e2e8f0;padding-top:10px}'
++'.cv.left .cols,.cv.right .cols{display:flex;align-items:stretch}.cv.left aside,.cv.right aside{width:34%;padding:24px 18px;flex:none}.cv.left .mn,.cv.right .mn{flex:1;min-width:0;padding:6px 22px 18px}.cv.left aside img,.cv.right aside img{display:block;width:108px;height:108px;border-radius:50%;margin:0 auto 14px;object-fit:cover}.cv.left .mn .hd,.cv.right .mn .hd{padding:22px 0 4px}.cv aside .kv{grid-template-columns:1fr;gap:0;margin-bottom:5px}.cv aside h2{text-transform:uppercase;font-size:12px;letter-spacing:1px;padding-bottom:3px;border-bottom:1px solid currentColor}.cv .mn h2{border-bottom:2px solid var(--a);padding-bottom:2px}.cv.left aside{background:var(--a);color:#fff}.cv.left aside h2{color:#fff}.cv.left aside img{border:3px solid #fff}.cv.right .cols{flex-direction:row-reverse}.cv.right aside{background:var(--t)}'
++'.cv.banner .hd.band{background:var(--a);color:#fff;align-items:center;justify-content:flex-start;gap:18px}.cv.banner h1,.cv.banner .po{color:#fff}.cv.banner .hd img{border-radius:50%;width:100px;height:100px;border:3px solid #fff}.cv.banner .cols{display:flex}.cv.banner .mn{flex:1;min-width:0;padding:6px 20px 16px 28px}.cv.banner aside{width:33%;background:var(--t);padding:6px 18px 16px;flex:none}.cv.banner h2{border-left:4px solid var(--a);padding-left:8px}'
++'.cv.cards{background:#f1f5f9}.cv.cards .hd{margin:18px 20px 12px;padding:18px;background:#fff;border-radius:10px;border-top:5px solid var(--a);align-items:center}.cv.cards .hd img{border-radius:10px}.cv.cards .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px 18px}.cv.cards .s{margin:0;background:#fff;border-radius:10px;padding:10px 12px;border:1px solid #e2e8f0}.cv.cards .s.full{grid-column:1/-1}.cv.cards h2{display:inline-block;background:var(--t);padding:2px 10px;border-radius:12px}.cv.cards .kv{grid-template-columns:44% 1fr}'
++'.cv.duo .hd{background:var(--t);border-bottom:3px solid var(--a);padding:24px 28px}.cv.duo .cols{display:flex;gap:22px;padding:0 28px}.cv.duo .cols>div{flex:1;min-width:0}.cv.duo h2{border-bottom:1.5px solid var(--a);padding-bottom:2px}.cv.duo .kv{grid-template-columns:46% 1fr}';
+
+var TP=[
+  ["Classic Navy","classic","#0f3d6e","Arial,sans-serif","lin"],
+  ["Sidebar Emerald","left","#0b6b4f","Calibri,Arial,sans-serif","sl"],
+  ["Right Panel Slate","right","#334155","Arial,sans-serif","sl"],
+  ["Banner Indigo","banner","#3730a3","'Trebuchet MS',Arial,sans-serif","bn"],
+  ["Timeline Teal","tl","#0f766e","Calibri,Arial,sans-serif","lin"],
+  ["Elegant Serif","serif","#7f1d1d","Georgia,serif","lin"],
+  ["Split Crimson","split","#9f1239","'Segoe UI',Arial,sans-serif","lin"],
+  ["Minimal Label","lab","#111827","Arial,sans-serif","lin"],
+  ["Cards Sky","cards","#0369a1","'Segoe UI',Arial,sans-serif","cd"],
+  ["Duo Violet","duo","#6d28d9","Calibri,Arial,sans-serif","du"],
+  ["Sidebar Charcoal","left","#1f2937","Arial,sans-serif","sl"],
+  ["Banner Amber","banner","#b45309","Arial,sans-serif","bn"],
+  ["Classic Royal Blue","classic","#1e40af","Arial,sans-serif","lin"],
+  ["Classic Forest","cline","#166534","Georgia,serif","lin"],
+  ["Classic Charcoal","cboxed","#374151","'Times New Roman',serif","lin"],
+  ["Classic Bronze","cdark","#92400e","Georgia,serif","lin"],
+  ["Classic Plum","ribbon","#6b21a8","Arial,sans-serif","lin"],
+  ["Modern Teal Ribbon","ribbon","#0d9488","Calibri,Arial,sans-serif","lin"],
+  ["Sidebar Rose","left","#be185d","Calibri,Arial,sans-serif","sl"],
+  ["Minimal Grey","lab","#475569","Arial,sans-serif","lin"]
+];
+TP.forEach(function(t,i){CVCSS+=".cv.t"+i+"{--a:"+t[2]+";--t:"+t[2]+"1a;font-family:"+t[3]+"}"});
+
+CVCSS+='.cv.cline .hd{text-align:center;flex-direction:column;align-items:center;border-top:3px double var(--a);border-bottom:3px double var(--a);margin:26px 28px 0;padding:16px 0}.cv.cline h1{color:var(--a)}.cv.cline h2{text-transform:uppercase;letter-spacing:2px;font-size:12px;text-align:center;border-bottom:1px solid #cbd5e1;padding-bottom:3px;color:var(--a)}.cv.cline .hd img{order:-1;border-radius:50%;width:92px;height:92px}.cv.cline .ct{display:flex;flex-wrap:wrap;gap:2px 14px;justify-content:center}';
+CVCSS+='.cv.cboxed h2{display:inline-block;border:1.5px solid var(--a);color:var(--a);padding:3px 10px;border-radius:4px;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-top:16px}.cv.cboxed .hd{border-bottom:1px solid var(--a);padding-bottom:12px}';
+CVCSS+='.cv.cdark .hd{background:var(--a);color:#fff;margin:0;padding:26px 28px}.cv.cdark h1,.cv.cdark .po,.cv.cdark .ct{color:#fff}.cv.cdark .hd img{border:3px solid #fff}.cv.cdark h2{color:var(--a);text-transform:uppercase;letter-spacing:1px;font-size:12.5px;border-bottom:2px solid var(--a);padding-bottom:4px}';
+CVCSS+='.cv.ribbon .hd{background:linear-gradient(90deg,var(--a),var(--t));color:#fff;margin:0;padding:26px 28px}.cv.ribbon h1,.cv.ribbon .po,.cv.ribbon .ct{color:#fff}.cv.ribbon .hd img{border:3px solid #fff}.cv.ribbon h2{color:var(--a);border-left:5px solid var(--a);padding-left:8px;border-bottom:0;font-size:14px}';
+CVCSS+='.cv img.sig{width:auto;height:54px;max-width:200px;object-fit:contain;border:0;margin:0 0 -8px;display:inline-block;vertical-align:bottom}';
+$("cvcss").textContent=CVCSS;
+
+var PF=null,COL=null;
+var CANON=["Contact","Career Objective","Education","Experience","Certifications","Skills","Personal Details","Languages","Interests","References","Declaration"];
+function sec(t,b,c){if(!b)return"";if(COL)COL.push(t);if(PF&&PF.indexOf(t)<0)return"";return '<section class="s '+(c||"")+'"><h2>'+t+'</h2><div class="b">'+b+"</div></section>"}
+function decGate(){if(COL)COL.push("Declaration");return !PF||PF.indexOf("Declaration")>-1}
+
+function cv(ti){
+  var d=D;ti=ti==null?(D.t||0):ti;
+  var t=TP[ti],K=t[4],tb=/classic|split|cline|cboxed|cdark|ribbon/.test(t[1]);
+  var edu=eduList(),exp=d.exp.filter(function(e){return e.pos||e.co});
+  var pd=[["Father's Name",d.father],["Mother's Name",d.mother],["Date of Birth",d.dob],["NID No.",d.nid],["Nationality",d.nat],["Religion",d.rel],["Marital Status",d.mar],["Gender",d.gender],["Blood Group",d.blood],["Permanent Address",d.perm]].filter(function(r){return r[1]}).concat(d.cust.filter(function(c){return c.k&&c.v}).map(function(c){return[c.k,c.v]}));
+  var ct=[d.addr&&"Address: "+esc(d.addr),d.phone&&"Mobile: "+esc(d.phone),d.email&&"Email: "+esc(d.email)].filter(Boolean).map(function(x){return"<div>"+x+"</div>"}).join("");
+  var img=d.photo?'<img src="'+d.photo+'" alt="">':"",po=d.post?'<div class="po">'+esc(d.post)+"</div>":"";
+  var h1="<h1>"+esc(d.name||"Your Name")+"</h1>"+po,nm='<div class="nm">'+h1+"</div>",nmc='<div class="nm">'+h1+'<div class="ct">'+ct+"</div></div>";
+  var B={
+    ct:ct&&sec("Contact",ct),
+    obj:sec("Career Objective",d.obj&&nl(d.obj),"full"),
+    edu:sec("Education",edu.length&&(tb?'<table><tr><th>Exam</th><th>Institute</th><th>Result</th><th>Year</th></tr>'+edu.map(function(e){return"<tr><td>"+esc(e.d)+"</td><td>"+esc(e.i)+"</td><td>"+esc(e.r)+"</td><td>"+esc(e.y)+"</td></tr>"}).join("")+"</table>":edu.map(function(e){return'<div class="it"><b>'+esc(e.d)+(e.r?" · "+esc(e.r):"")+"</b><span>"+esc(e.i)+(e.y?" ("+esc(e.y)+")":"")+"</span></div>"}).join("")),"full"),
+    exp:sec("Experience",exp.length&&expHTML(exp),"full"),
+    trn:sec("Certifications",certHTML()),
+    sk:sec("Skills",ul(d.skills)),
+    pd:sec("Personal Details",pd.length&&pd.map(function(r){return'<div class="kv"><small>'+esc(r[0])+"</small><span>"+esc(r[1])+"</span></div>"}).join("")),
+    lg:sec("Languages",langHTML()),
+    hb:sec("Interests",ul(d.hob)),
+    rf:sec("References",d.refs&&nl(d.refs),"full"),
+    dc:decGate()?'<div class="dec"><b>Declaration:</b> I do hereby declare that all the information stated above is true and correct to the best of my knowledge.</div><div class="sg"><span>Date: __________</span><span>Signature: '+sigHTML()+'</span></div>':""
+  };
+  var o,hd='<header class="hd">'+nmc+img+"</header>";
+  if(K==="lin")o=hd+'<div class="bd">'+B.obj+B.edu+B.exp+B.trn+B.sk+B.pd+B.lg+B.hb+B.rf+B.dc+"</div>";
+  else if(K==="sl")o='<div class="cols"><aside>'+img+B.ct+B.sk+B.lg+B.hb+B.pd+B.trn+'</aside><div class="mn"><header class="hd">'+nm+"</header>"+B.obj+B.edu+B.exp+B.rf+B.dc+"</div></div>";
+  else if(K==="bn")o='<header class="hd band">'+img+nm+'</header><div class="cols"><div class="mn">'+B.obj+B.exp+B.edu+B.rf+B.dc+"</div><aside>"+B.ct+B.sk+B.lg+B.hb+B.pd+B.trn+"</aside></div>";
+  else if(K==="cd")o=hd+'<div class="grid">'+B.obj+B.edu+B.exp+B.sk+B.lg+B.hb+B.trn+B.pd+B.rf+'<div class="s full">'+B.dc+"</div></div>";
+  else o=hd+'<div class="cols"><div>'+B.obj+B.edu+B.trn+B.sk+"</div><div>"+B.exp+B.pd+B.lg+B.hb+B.rf+'</div></div><div class="bd">'+B.dc+"</div>";
+  return '<div class="cv t'+ti+" "+t[1]+'">'+o+(d.pro?"":'<div class="wm">Created with CV Banao</div>')+"</div>";
+}
+
+function fit(){
+  var w=$("pvw").clientWidth;if(!w)return;
+  var k=Math.min(1,w/794),p=$("pv");
+  p.style.width="794px";p.style.transformOrigin="0 0";p.style.transform="scale("+k+")";
+  $("pvw").style.height=p.offsetHeight*k+"px";
+}
+window.addEventListener("resize",fit);
+
+/* ============================================================
+   VALIDATION
+   ============================================================ */
+var RULES={
+  name:function(v){v=v.trim();return !v?"নাম লিখুন":(v.length<2?"নাম খুব ছোট":"")},
+  phone:function(v){v=v.trim();if(!v)return"মোবাইল নম্বর লিখুন";return /^01[3-9]\d{8}$/.test(v.replace(/[\s-]/g,"").replace(/^\+?880/,"0"))?"":"সঠিক মোবাইল নম্বর দিন, যেমন 01XXXXXXXXX"},
+  email:function(v){v=v.trim();if(!v)return"ইমেইল লিখুন";return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)?"":"সঠিক ইমেইল দিন"}
+};
+var REQ=["name","phone","email"];
+function checkField(k){
+  var el=document.querySelector('[data-k="'+k+'"]');if(!el||!RULES[k])return true;
+  var msg=RULES[k](D[k]||"");var box=el.parentNode;
+  var e=box.querySelector(".err");
+  if(!e){e=document.createElement("small");e.className="err";box.appendChild(e)}
+  e.textContent=msg;el.classList.toggle("bad",!!msg);return !msg;
+}
+function validateInfo(){
+  var ok=true,first=null;
+  REQ.forEach(function(k){
+    var el=document.querySelector('[data-k="'+k+'"]');
+    if(el)el.dataset.touched=1;
+    if(!checkField(k)){ok=false;if(!first)first=document.querySelector('[data-k="'+k+'"]')}
+  });
+  if(!ok&&first){first.focus();first.scrollIntoView({behavior:"smooth",block:"center"})}
+  return ok;
+}
+
+/* ============================================================
+   PAGES
+   ============================================================ */
+var PH=1123,PM=24;
+function runHd(){return '<div class="runhd"><b>'+esc(D.name||"")+'</b><span>'+esc(D.post||"")+'</span></div>'}
+function pageWrap(h,idx){return '<div class="pgbox'+(idx?" p2":"")+'">'+(idx?runHd():"")+(idx?h.replace('class="cv ','class="cv nohdr '):h)+"</div>"}
+function pagesFor(ti){
+  COL=[];PF=null;cv(ti);
+  var names=COL.filter(function(x,i,a){return a.indexOf(x)===i});COL=null;
+  names.sort(function(a,b){return CANON.indexOf(a)-CANON.indexOf(b)});
+  if(!names.length)return[pageWrap(cv(ti),0)];
+  var m=document.createElement("div");m.style.cssText="position:absolute;left:-10000px;top:0;width:794px";document.body.appendChild(m);
+  function fits(list,idx){
+    PF=list;var h=cv(ti);PF=null;
+    m.className="pgbox measure"+(idx?" p2":"");
+    m.innerHTML=(idx?runHd():"")+(idx?h.replace('class="cv ','class="cv nohdr '):h);
+    var c=m.querySelector(".cv");
+    return c.offsetHeight<=PH-PM-(idx?56:0);
+  }
+  var groups=[],cur2=[];
+  names.forEach(function(n){
+    var test=cur2.concat([n]);
+    if(!cur2.length||fits(test,groups.length))cur2=test;
+    else{groups.push(cur2);cur2=[n]}
+  });
+  if(cur2.length)groups.push(cur2);
+  m.remove();
+  return groups.map(function(g,i){PF=g;var h=cv(ti);PF=null;return pageWrap(h,i)});
+}
+function prev(){if(cur!==5)return;$("pv").innerHTML=pagesFor(D.t||0).join("");fit()}
+
+/* ============================================================
+   FORM BUILD
+   ============================================================ */
+var G=[
+  ["ব্যক্তিগত তথ্য"],["name","পুরো নাম (ইংরেজিতে)"],["post","কোন পদের জন্য আবেদন"],
+  ["phone","মোবাইল নম্বর",0,1],["email","ইমেইল",0,1],["addr","বর্তমান ঠিকানা"],["#ph"],
+  ["ক্যারিয়ার অবজেক্টিভ"],["obj","২-৩ লাইনে লিখুন",1],
+  ["#edu"],["#exp"],["#cert"],
+  ["দক্ষতা ও শখ"],["skills","দক্ষতা (প্রতি লাইনে একটি)",1],["hob","শখ/আগ্রহ (প্রতি লাইনে একটি)",1],["#lang"],
+  ["ব্যক্তিগত বিবরণ"],["father","পিতার নাম",0,1],["mother","মাতার নাম",0,1],
+  ["dob","জন্ম তারিখ (15 May 2000)",0,1],["nid","NID নম্বর",0,1],["nat","জাতীয়তা",0,1],
+  ["rel","ধর্ম",0,1],["mar","বৈবাহিক অবস্থা",0,1],
+  ["gender","লিঙ্গ",2,1,["Male","Female","Other"]],
+  ["blood","রক্তের গ্রুপ",2,1,["A+","A-","B+","B-","AB+","AB-","O+","O-"]],
+  ["perm","স্থায়ী ঠিকানা"],
+  ["#cust"],["#sig"],
+  ["রেফারেন্স"],["refs","নাম, পদ, প্রতিষ্ঠান ও মোবাইল",1]
+];
+
+var f=$("form"),card=null,fl=null;
+G.forEach(function(g){
+  var k=g[0];
+  if(g.length===1&&k.charAt(0)!=="#"){
+    card=document.createElement("div");card.className="card";
+    card.innerHTML="<h2>"+k+"</h2>";
+    fl=document.createElement("div");fl.className="fl";
+    card.appendChild(fl);f.appendChild(card);return;
+  }
+  if(k==="#ph"){fl.insertAdjacentHTML("beforeend",'<div class="f full"><label>পাসপোর্ট সাইজ ছবি</label><input type="file" id="ph" accept="image/*"></div>');return}
+  if(["#edu","#exp","#cert","#lang","#cust","#sig"].indexOf(k)>-1){
+    card=document.createElement("div");card.className="card";card.id=k.slice(1);f.appendChild(card);return;
+  }
+  var w=document.createElement("div");w.className="f"+(g[3]?"":" full");
+  var l=document.createElement("label");l.textContent=g[1];
+  var i=document.createElement(g[2]===2?"select":g[2]?"textarea":"input");
+  if(g[2]===2)i.innerHTML='<option value="">বাছুন</option>'+g[4].map(function(o){return"<option>"+o+"</option>"}).join("");
+  i.value=D[k]||"";i.dataset.k=k;
+  i.oninput=function(){D[k]=i.value;save();prev();if(i.dataset.touched)checkField(k)};
+  i.onblur=function(){i.dataset.touched=1;checkField(k)};
+  w.appendChild(l);w.appendChild(i);fl.appendChild(w);
+});
+
+/* ============================================================
+   EDUCATION
+   ============================================================ */
+var LV={"SSC":"s","Dakhil":"s","HSC":"h","Alim":"h","Honours":"u","Degree (Pass)":"u","Masters":"m"};
+var BRD=["Dhaka Board","Chattogram Board","Rajshahi Board","Cumilla Board","Jashore Board","Barishal Board","Sylhet Board","Dinajpur Board","Mymensingh Board","Bangladesh Madrasah Education Board","BTEB"];
+var GRP=["Science","Business Studies","Humanities","General"];
+var EX={"Honours":["B.Sc (Hons)","B.A (Hons)","B.S.S (Hons)","B.B.S (Hons)","B.Com (Hons)","B.B.A","B.Sc in Engineering","B.Sc in Agriculture","B.Pharm (Hons)","LL.B (Hons)","B.Ed (Hons)","B.Arch","B.Sc in Nursing","MBBS","BDS","DVM"],"Degree (Pass)":["B.A (Pass)","B.Sc (Pass)","B.Com (Pass)","B.S.S (Pass)","B.B.S (Pass)"],"Masters":["M.A","M.Sc","M.S.S","M.B.S","M.Com","M.B.A","EMBA","M.Sc in Engineering","LL.M","M.Ed","M.Pharm","MPH","M.Phil"]};
+var UNI=["National University","University of Dhaka","University of Rajshahi","University of Chittagong","Jahangirnagar University","Khulna University","Islamic University, Kushtia","BUET","CUET","KUET","RUET","DUET","Bangladesh Agricultural University","SUST","Jagannath University","Comilla University","Begum Rokeya University","Patuakhali Science & Technology University","HSTU","MBSTU","Noakhali Science & Technology University","Bangladesh University of Professionals","Bangladesh Open University","Islamic Arabic University","North South University","BRAC University","IUB","AIUB","East West University","Daffodil International University","United International University","AUST","Southeast University","Stamford University Bangladesh","Eastern University","Northern University Bangladesh","Green University of Bangladesh","ULAB","BUBT","Presidency University","Uttara University","Metropolitan University","Dhaka International University","Other"];
+var SUBJ=["Computer Science & Engineering","Electrical & Electronic Engineering","Civil Engineering","Mechanical Engineering","Textile Engineering","ICT","Accounting","Management","Marketing","Finance","Finance & Banking","Business Administration","Economics","English","Bangla","Political Science","Sociology","Social Work","History","Islamic Studies","Philosophy","Law","Physics","Chemistry","Mathematics","Statistics","Botany","Zoology","Biochemistry","Pharmacy","Public Health","Geography","Agriculture"];
+var YRS=[];for(var yy=new Date().getFullYear()+1;yy>=1985;yy--)YRS.push(String(yy));
+
+function ed(x){return String(x).replace(/[০-৯]/g,function(d){return "০১২৩৪৫৬৭৮৯".indexOf(d)}).replace(/[^0-9.]/g,"")}
+function rk(e){return {s:1,h:2,u:3,m:4}[LV[e.lv]||"s"]}
+function ev(e){
+  var t=LV[e.lv]||"s",u=t==="u"||t==="m";
+  var bn=e.bd==="Other"?e.bx:e.bd;
+  var g=e.gr?(e.gr==="General"?"General":e.gr+" Group"):"";
+  var x=e.ex||e.lv||"";
+  return {
+    d:u?x+(e.gr?(/\sin\s/.test(x)?" ("+e.gr+")":" in "+e.gr):""):(e.lv||"")+(g?" ("+g+")":""),
+    i:[e.ins,bn].filter(Boolean).join(", "),
+    r:e.r?(u?"CGPA "+e.r+" (out of 4.00)":"GPA "+e.r+" (out of 5.00)"):"",
+    y:e.y||""
+  };
+}
+function eduList(){return D.edu.filter(function(e){return e.bd||e.bx||e.ins||e.gr||e.ex||e.r||e.y}).sort(function(a,b){return rk(b)-rk(a)}).map(ev)}
+
+function renderEdu(){
+  if(!$("dl-subj")){var dl=document.createElement("datalist");dl.id="dl-subj";dl.innerHTML=SUBJ.map(function(o){return'<option value="'+o+'">'}).join("");document.body.appendChild(dl)}
+  var c=$("edu");c.innerHTML="<h2>শিক্ষাগত যোগ্যতা</h2>";
+  D.edu.forEach(function(row,n){
+    var t=LV[row.lv]||"s",u=t==="u"||t==="m",mx=u?4:5;
+    var box=document.createElement("div"),fl=document.createElement("div");
+    box.className="row";fl.className="fl";box.appendChild(fl);
+    function add(lb,el,full){var w=document.createElement("div"),l=document.createElement("label");w.className="f"+(full?" full":"");l.textContent=lb;w.appendChild(l);w.appendChild(el);fl.appendChild(w)}
+    function sel(opts,key,ph,re){var s=document.createElement("select");s.innerHTML='<option value="">'+ph+"</option>"+opts.map(function(o){return"<option"+(o===row[key]?" selected":"")+">"+o+"</option>"}).join("");s.onchange=function(){row[key]=s.value;if(key==="lv"){row.ex="";row.gr=""}save();prev();if(re)renderEdu()};return s}
+    function inp(key,ph,list,mode){
+      var i=document.createElement("input");i.value=row[key]||"";i.placeholder=ph||"";
+      if(list)i.setAttribute("list",list);if(mode)i.inputMode=mode;
+      i.oninput=function(){if(mode)i.value=ed(i.value);row[key]=i.value;save();prev()};
+      if(mode)i.onblur=function(){var v=parseFloat(i.value);if(v>mx){i.value=mx.toFixed(2);row[key]=i.value;save();prev()}};
+      return i;
+    }
+    add("পরীক্ষা",sel(Object.keys(LV),"lv","পরীক্ষা বাছুন",1),1);
+    if(!u){
+      add("বোর্ড",sel(BRD,"bd","বোর্ড বাছুন"));
+      add("গ্রুপ / বিভাগ",sel(GRP,"gr","গ্রুপ বাছুন"));
+      add("প্রতিষ্ঠানের নাম",inp("ins","স্কুল/কলেজ/মাদ্রাসা"),1);
+    }else{
+      add("পরীক্ষার নাম",sel(EX[row.lv]||[],"ex","ডিগ্রি বাছুন"),1);
+      add("বিভাগ / সাবজেক্ট",inp("gr","যেমন Computer Science","dl-subj"),1);
+      add("বিশ্ববিদ্যালয়",sel(UNI,"bd","বিশ্ববিদ্যালয় বাছুন",1),1);
+      if(row.bd==="Other")add("বিশ্ববিদ্যালয়ের নাম",inp("bx",""),1);
+      add("কলেজ/ইনস্টিটিউট",inp("ins","প্রতিষ্ঠানের নাম"),1);
+    }
+    add("পাসের সাল",sel(YRS,"y","সাল বাছুন"));
+    add(u?"সিজিপিএ (৪.০০)":"জিপিএ (৫.০০)",inp("r",u?"3.75":"5.00",null,"decimal"));
+    box.appendChild(ctrlBar(D.edu,n,renderEdu));
+    c.appendChild(box);
+  });
+  var a=document.createElement("button");a.className="sm";a.textContent="+ শিক্ষাগত যোগ্যতা যোগ করুন";
+  a.onclick=function(){D.edu.push({lv:"Masters"});save();renderEdu()};
+  c.appendChild(a);
+}
+
+/* ============================================================
+   CV SECTION HTML HELPERS
+   ============================================================ */
+function expHTML(L){return L.map(function(e){var w=[dt(e.sd),e.cur?"Present":dt(e.ed)].filter(Boolean).join(" – ");return'<div class="it"><b>'+esc(e.pos)+(e.co?", "+esc(e.co):"")+"</b>"+(w?"<span>"+esc(w)+"</span>":"")+(e.resp?ul(e.resp):"")+"</div>"}).join("")}
+function certHTML(){return D.cert.filter(function(c){return c.n}).map(function(c){return'<div class="it"><b>'+esc(c.n)+"</b><span>"+[esc(c.i),c.y?"("+esc(c.y)+")":""].filter(Boolean).join(" ")+"</span></div>"}).join("")}
+function langHTML(){return D.lang.filter(function(l){return l.n}).map(function(l){var nm=l.n==="Other"?(l.on||"Other"):l.n;return'<div class="kv"><small>'+esc(nm)+"</small><span>"+esc(l.l||"")+"</span></div>"}).join("")}
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function dt(v){if(!v)return"";var q=String(v).split("-");return q.length>1?MON[+q[1]-1]+" "+q[0]:q[0]}
+var LANGS=["Bangla","English","Hindi","Urdu","Arabic","French","German","Spanish","Japanese","Chinese","Korean","Other"];
+var LVL=["Native","Fluent","Conversational","Beginner"];
+
+function fld(fl,lb,el,full){var w=document.createElement("div"),l=document.createElement("label");w.className="f"+(full?" full":"");l.textContent=lb;w.appendChild(l);w.appendChild(el);fl.appendChild(w)}
+function inpE(row,key,ph,type){var i=document.createElement("input");i.type=type||"text";i.value=row[key]||"";i.placeholder=ph||"";i.oninput=i.onchange=function(){row[key]=i.value;save();prev()};return i}
+function selE(opts,row,key,ph,cb){var s=document.createElement("select");s.innerHTML='<option value="">'+ph+"</option>"+opts.map(function(o){return'<option value="'+o+'"'+(o===row[key]?" selected":"")+">"+o+"</option>"}).join("");s.onchange=function(){row[key]=s.value;save();prev();if(cb)cb()};return s}
+function delBtn(list,n,re){var x=document.createElement("button");x.className="sm";x.textContent="মুছুন";x.onclick=function(){list.splice(n,1);save();re();prev()};return x}
+function addBtn(t,fn){var a=document.createElement("button");a.className="sm";a.textContent=t;a.onclick=fn;return a}
+
+function ctrlBar(list,n,re){
+  var w=document.createElement("div");w.className="ctl";
+  function mk(txt,fn,dis){
+    var x=document.createElement("button");x.type="button";x.className="sm";x.textContent=txt;x.disabled=!!dis;
+    x.onclick=function(){fn();save();re();prev()};return x;
+  }
+  w.appendChild(mk("↑ উপরে",function(){var t=list[n];list.splice(n,1);list.splice(n-1,0,t)},n===0));
+  w.appendChild(mk("↓ নিচে",function(){var t=list[n];list.splice(n,1);list.splice(n+1,0,t)},n===list.length-1));
+  w.appendChild(mk("কপি",function(){list.splice(n+1,0,JSON.parse(JSON.stringify(list[n])))}));
+  w.appendChild(mk("মুছুন",function(){list.splice(n,1)}));
+  return w;
+}
+
+/* ============================================================
+   BULLET HINT
+   ============================================================ */
+function bulletHint(t){
+  var L=String(t||"").split("\n").map(function(x){return x.trim()}).filter(Boolean);
+  if(!L.length)return"";
+  var weak=L.filter(function(b){return ATS_VERBS.indexOf(b.split(/\s+/)[0].toLowerCase().replace(/[^a-z]/g,""))<0}).length;
+  var nonum=L.filter(function(b){return !/\d|%/.test(b)}).length;
+  var m=[];
+  if(weak)m.push(weak+"টি বুলেট কর্ম-শব্দ দিয়ে শুরু হয়নি");
+  if(nonum)m.push(nonum+"টি বুলেটে সংখ্যা নেই");
+  return m.length?"⚠ "+m.join(" · "):"✓ বুলেট শক্তিশালী";
+}
+
+/* ============================================================
+   EXPERIENCE / CERT / LANG / CUSTOM / SIGN
+   ============================================================ */
+function renderExp(){
+  var c=$("exp");c.innerHTML="<h2>কাজের অভিজ্ঞতা</h2>";
+  D.exp.forEach(function(row,n){
+    var box=document.createElement("div"),fl=document.createElement("div");
+    box.className="row";fl.className="fl";box.appendChild(fl);
+    fld(fl,"কোম্পানির নাম",inpE(row,"co","যেমন: ABC Ltd."));
+    fld(fl,"পদবি",inpE(row,"pos","যেমন: Accounts Officer"));
+    fld(fl,"শুরুর তারিখ",inpE(row,"sd","","month"));
+    var ed2=inpE(row,"ed","","month");ed2.disabled=!!row.cur;if(row.cur)ed2.value="";
+    fld(fl,"শেষের তারিখ",ed2);
+    var lb=document.createElement("label");lb.style.cssText="display:flex;align-items:center;gap:8px;font-size:14px;grid-column:1/-1;margin:6px 0 0";
+    var ck=document.createElement("input");ck.type="checkbox";ck.checked=!!row.cur;ck.style.cssText="width:18px;height:18px;margin:0";
+    ck.onchange=function(){row.cur=ck.checked;if(row.cur)row.ed="";save();renderExp();prev()};
+    lb.appendChild(ck);lb.appendChild(document.createTextNode(" বর্তমানে এখানে কাজ করছি"));fl.appendChild(lb);
+    var ta=document.createElement("textarea");ta.value=row.resp||"";ta.placeholder="প্রতি লাইনে একটি দায়িত্ব";
+    var hint=document.createElement("small");hint.style.cssText="grid-column:1/-1;display:block;font-size:12.5px;margin-top:6px;line-height:1.5;color:#8a6d00";
+    hint.textContent=bulletHint(ta.value);
+    ta.oninput=function(){row.resp=ta.value;save();prev();hint.textContent=bulletHint(ta.value)};
+    fld(fl,"দায়িত্ব ও কাজ",ta,1);fl.appendChild(hint);
+    box.appendChild(ctrlBar(D.exp,n,renderExp));c.appendChild(box);
+  });
+  c.appendChild(addBtn("+ অভিজ্ঞতা যোগ করুন",function(){D.exp.push({co:"",pos:"",sd:"",ed:"",cur:false,resp:""});save();renderExp()}));
+}
+
+function renderCert(){
+  var c=$("cert");c.innerHTML="<h2>সার্টিফিকেশন</h2>";
+  D.cert.forEach(function(row,n){
+    var box=document.createElement("div"),fl=document.createElement("div");
+    box.className="row";fl.className="fl";box.appendChild(fl);
+    fld(fl,"সার্টিফিকেট/কোর্সের নাম",inpE(row,"n","যেমন: Certified Accountant"),1);
+    fld(fl,"প্রতিষ্ঠান / প্রদানকারী",inpE(row,"i","যেমন: ICMAB"));
+    fld(fl,"সাল",selE(YRS,row,"y","সাল বাছুন"));
+    box.appendChild(delBtn(D.cert,n,renderCert));c.appendChild(box);
+  });
+  c.appendChild(addBtn("+ সার্টিফিকেশন যোগ করুন",function(){D.cert.push({n:"",i:"",y:""});save();renderCert()}));
+}
+
+function renderLang(){
+  var c=$("lang");c.innerHTML="<h2>ভাষা</h2>";
+  D.lang.forEach(function(row,n){
+    var box=document.createElement("div"),fl=document.createElement("div");
+    box.className="row";fl.className="fl";box.appendChild(fl);
+    fld(fl,"ভাষা",selE(LANGS,row,"n","ভাষা বাছুন",renderLang));
+    if(row.n==="Other")fld(fl,"ভাষার নাম লিখুন",inpE(row,"on","যেমন: Italian"));
+    fld(fl,"দক্ষতার স্তর",selE(LVL,row,"l","স্তর বাছুন"));
+    box.appendChild(delBtn(D.lang,n,renderLang));c.appendChild(box);
+  });
+  c.appendChild(addBtn("+ ভাষা যোগ করুন",function(){D.lang.push({n:"",l:""});save();renderLang()}));
+}
+
+function renderCust(){
+  var c=$("cust");c.innerHTML="<h2>কাস্টম তথ্য</h2><p style='font-size:13px;color:var(--text-muted);margin:0 0 6px'>যেমন: ড্রাইভিং লাইসেন্স — আছে</p>";
+  D.cust.forEach(function(row,n){
+    var box=document.createElement("div"),fl=document.createElement("div");
+    box.className="row";fl.className="fl";box.appendChild(fl);
+    fld(fl,"তথ্যের নাম",inpE(row,"k","যেমন: ড্রাইভিং লাইসেন্স"));
+    fld(fl,"তথ্য",inpE(row,"v","যেমন: আছে"));
+    box.appendChild(delBtn(D.cust,n,renderCust));c.appendChild(box);
+  });
+  c.appendChild(addBtn("+ কাস্টম তথ্য যোগ করুন",function(){D.cust.push({k:"",v:""});save();renderCust()}));
+}
+
+renderEdu();renderExp();renderCert();renderLang();renderCust();renderSig();
+
+$("ph").onchange=function(){
+  var fl=this.files[0];if(!fl)return;
+  var fr=new FileReader();
+  fr.onload=function(){
+    var im=new Image();
+    im.onload=function(){
+      var c=document.createElement("canvas"),s=Math.min(1,300/Math.max(im.width,im.height));
+      c.width=im.width*s;c.height=im.height*s;
+      c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+      D.photo=c.toDataURL("image/jpeg",.85);save();prev();
+    };im.src=fr.result;
+  };fr.readAsDataURL(fl);
+};
+
+/* ============================================================
+   SIGNATURE
+   ============================================================ */
+function sigHTML(){return D.sig?'<img class="sig" src="'+D.sig+'" alt="স্বাক্ষর">':"__________"}
+function renderSig(){
+  var c=$("sig");if(!c)return;
+  c.innerHTML="<h2>স্বাক্ষর</h2><p class='atsnote'>PNG/JPG, সর্বোচ্চ ২ MB।</p>";
+  var row=document.createElement("div");row.className="row";
+  if(D.sig){
+    var im=document.createElement("img");im.src=D.sig;im.alt="স্বাক্ষর";
+    im.style.cssText="max-height:90px;max-width:260px;display:block;background:#fff;border:1px solid var(--border-subtle);border-radius:12px;padding:8px;margin-bottom:10px";
+    row.appendChild(im);
+    var rm=document.createElement("button");rm.className="sm";rm.textContent="স্বাক্ষর মুছুন";
+    rm.onclick=function(){D.sig="";save();renderSig();prev()};row.appendChild(rm);
+  }
+  var inp=document.createElement("input");inp.type="file";inp.accept="image/png,image/jpeg";inp.id="sigIn";
+  inp.onchange=function(){
+    var f=inp.files&&inp.files[0];if(!f)return;
+    if(f.size>2*1024*1024){alert("ছবির আকার ২ MB-এর বেশি হতে পারবে না");inp.value="";return}
+    var fr=new FileReader();
+    fr.onload=function(){
+      var im=new Image();
+      im.onload=function(){
+        var sc=Math.min(1,600/im.width),cv=document.createElement("canvas");
+        cv.width=Math.round(im.width*sc);cv.height=Math.round(im.height*sc);
+        cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);
+        D.sig=cv.toDataURL("image/png");save();renderSig();prev();
+      };im.src=fr.result;
+    };fr.readAsDataURL(f);
+  };
+  row.appendChild(inp);c.appendChild(row);
+}
+
+/* ============================================================
+   LIBRARY LOADING + PDF/DOC/IMG
+   ============================================================ */
+function lib(u){return new Promise(function(ok,no){var e=document.createElement("script");e.src=u;e.onload=ok;e.onerror=no;document.head.appendChild(e)})}
+var H2C_URL="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+var JSPDF_URL="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+async function loadLibs(){
+  if(!window.html2canvas)await lib(H2C_URL);
+  if(!window.jspdf)await lib(JSPDF_URL);
+  if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+}
+function pageBox(h){var b=document.createElement("div");b.style.cssText="position:absolute;left:-10000px;top:0;width:794px;background:#fff";b.innerHTML=h;document.body.appendChild(b);return b}
+
+async function mkpdf(){
+  await loadLibs();
+  var pages=pagesFor(D.t||0),pdf=new window.jspdf.jsPDF({unit:"mm",format:"a4"});
+  for(var i=0;i<pages.length;i++){
+    var b=pageBox(pages[i]);
+    try{
+      var c=await html2canvas(b.firstElementChild,{scale:2,backgroundColor:"#fff",useCORS:true,windowWidth:794,width:794,height:1123});
+      if(i)pdf.addPage();
+      pdf.addImage(c.toDataURL("image/jpeg",.92),"JPEG",0,0,210,297);
+    }finally{b.remove()}
+  }
+  return pdf.output("blob");
+}
+
+async function mkimg(type){
+  await loadLibs();
+  var pages=pagesFor(D.t||0),out=[];
+  for(var i=0;i<pages.length;i++){
+    var b=pageBox(pages[i]);
+    try{
+      var c=await html2canvas(b.firstElementChild,{scale:2,backgroundColor:"#fff",useCORS:true,windowWidth:794,width:794,height:1123});
+      out.push(await new Promise(function(ok,no){c.toBlob(function(x){x?ok(x):no(new Error("img"))},type,.92)}));
+    }finally{b.remove()}
+  }
+  return out;
+}
+
+var INL=["color","background-color","background-image","font-family","font-size","font-weight","font-style","line-height","text-align","text-transform","letter-spacing","border-top","border-bottom","border-left","border-right","border-radius","padding-top","padding-right","padding-bottom","padding-left","margin-top","margin-right","margin-bottom","margin-left","width","display","vertical-align"];
+function inlineStyles(src,dst){
+  var cs=getComputedStyle(src),st=[];
+  INL.forEach(function(p){var v=cs.getPropertyValue(p);if(!v)return;if(p==="display"){if(/flex|grid/.test(v))v="block";else if(v==="inline-flex")v="inline-block"}st.push(p+":"+v)});
+  if(dst.setAttribute)dst.setAttribute("style",st.join(";"));
+  for(var i=0;i<src.children.length&&i<dst.children.length;i++)inlineStyles(src.children[i],dst.children[i]);
+}
+function mkdoc(){
+  var pages=pagesFor(D.t||0),html="";
+  pages.forEach(function(p){
+    var b=pageBox(p);
+    try{inlineStyles(b.firstElementChild,b.firstElementChild);html+='<div style="page-break-after:always">'+b.innerHTML+"</div>"}
+    finally{b.remove()}
+  });
+  var h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><style>@page{size:A4;margin:12mm}body{margin:0;font-family:Arial,sans-serif}</style></head><body>'+html+"</body></html>";
+  return new Blob(["\ufeff",h],{type:"application/msword"});
+}
+
+/* ============================================================
+   DOWNLOAD
+   ============================================================ */
+var FMT="pdf",EXT={pdf:"pdf",doc:"doc",png:"png",jpg:"jpg"};
+var LBL={pdf:"PDF ডাউনলোড করুন (A4)",doc:"Word ডাউনলোড (.doc)",png:"PNG ডাউনলোড",jpg:"JPG ডাউনলোড"};
+function setFmt(f){
+  FMT=f;
+  document.querySelectorAll(".fm").forEach(function(x){x.classList.toggle("on",x.dataset.f===f)});
+  $("dl").textContent=LBL[f];
+}
+document.querySelectorAll(".fm").forEach(function(x){x.onclick=function(){setFmt(x.dataset.f)}});
+
+async function makeFile(f){
+  if(f==="pdf")return mkpdf();
+  if(f==="doc")return mkdoc();
+  return mkimg(f==="png"?"image/png":"image/jpeg");
+}
+
+$("dl").onclick=async function(){
+  if(!validateInfo()){step(0);return}
+  var b=$("dl"),t=b.textContent,base="CV-"+(D.name||"my").replace(/[^\w]+/g,"-");
+  b.disabled=true;b.textContent="ফাইল তৈরি হচ্ছে…";
+  try{
+    var res=await makeFile(FMT);
+    var items=Array.isArray(res)
+      ? res.map(function(x,i){return{b:x,n:base+"-"+(i+1)+"."+EXT[FMT]}})
+      : [{b:res,n:base+"."+EXT[FMT]}];
+    for(var k=0;k<items.length;k++){
+      var it=items[k];
+      var a=document.createElement("a");
+      a.href=URL.createObjectURL(it.b);a.download=it.n;
+      document.body.appendChild(a);a.click();a.remove();
+      await new Promise(function(r){setTimeout(r,400)});
+    }
+  }catch(e){alert("ফাইল তৈরি করা যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।")}
+  b.disabled=false;b.textContent=t;
+};
+
+/* ============================================================
+   ATS
+   ============================================================ */
+var ATS_VERBS=["managed","led","developed","prepared","processed","handled","coordinated","improved","reduced","increased","designed","implemented","supervised","analyzed","analysed","maintained","organized","organised","achieved","delivered","created","built","established","planned","operated","assisted","trained","monitored","ensured","launched","negotiated","completed","researched","resolved","streamlined","contributed","drafted","reviewed","updated","introduced","supported","executed","optimized","optimised","secured","collaborated"];
+var ATS_STOP=["and","the","with","for","you","your","will","are","our","has","have","this","that","from","not","job","role","work","able","must","can","who","all","any","new","per","also","such","their","they","other","year","years","experience","skills","skill","good","strong","knowledge","required","preferred","candidate","position","company","team","ability","using","include","including","make","made","into","over","about","more","than","through","within","across","looking","join","seeking","responsibilities","requirements","qualification","salary","apply","date","deadline"];
+function atsText(){
+  var parts=[];
+  ["name","post","phone","email","addr","obj","father","mother","dob","nid","nat","rel","mar","perm","skills","hob","refs"].forEach(function(k){parts.push(D[k]||"")});
+  D.edu.forEach(function(e){parts.push(e.lv,e.bd,e.bx,e.gr,e.ins,e.ex,e.r,e.y)});
+  D.exp.forEach(function(e){parts.push(e.co,e.pos,e.resp)});
+  D.cert.forEach(function(c){parts.push(c.n,c.i,c.y)});
+  D.lang.forEach(function(l){parts.push(l.n,l.on,l.l)});
+  D.cust.forEach(function(c){parts.push(c.k,c.v)});
+  return parts.filter(Boolean).join("\n");
+}
+function atsTerms(jd,n){
+  var words=(jd.toLowerCase().match(/[a-z][a-z+#.\-]{2,}/g)||[]);
+  var cnt={};
+  words.forEach(function(w){w=w.replace(/[.\-]+$/,"");if(w.length<3||ATS_STOP.indexOf(w)>-1)return;cnt[w]=(cnt[w]||0)+1});
+  return Object.keys(cnt).sort(function(a,b){return cnt[b]-cnt[a]||b.length-a.length}).slice(0,n);
+}
+function atsCheck(jd){
+  var items=[],wsum=0,got=0;
+  function add(label,w,p,tip){p=Math.max(0,Math.min(1,p));items.push({label:label,p:p,tip:p>=1?"":tip});wsum+=w;got+=w*p}
+  var phoneOk=/^01[3-9]\d{8}$/.test((D.phone||"").replace(/[\s-]/g,"").replace(/^\+?880/,"0"));
+  var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((D.email||"").trim());
+  add("নাম, সঠিক মোবাইল ও ইমেইল",15,((D.name||"").trim().length>=2?1:0)*.4+(phoneOk?1:0)*.3+(emailOk?1:0)*.3,"নাম, সঠিক মোবাইল (01XXXXXXXXX) ও ইমেইল দিন");
+  add("বর্তমান ঠিকানা",5,(D.addr||"").trim()?1:0,"বর্তমান ঠিকানা যোগ করুন");
+  var eduL=eduList(),expL=D.exp.filter(function(e){return e.pos||e.co});
+  add("শিক্ষাগত যোগ্যতা",12,eduL.length?1:0,"কমপক্ষে একটি শিক্ষাগত যোগ্যতা যোগ করুন");
+  add("কাজের অভিজ্ঞতা/প্রকল্প",12,expL.length?1:0,"ইন্টার্নশিপ বা প্রজেক্ট যোগ করুন");
+  add("দক্ষতার তালিকা",8,(D.skills||"").trim()?1:0,"প্রতি লাইনে একটি দক্ষতা লিখুন");
+  var withRes=eduL.filter(function(e){return e.r});
+  add("জিপিএ/সিজিপিএ স্কেলসহ",8,withRes.length?withRes.filter(function(e){return /out of/i.test(e.r)}).length/withRes.length:0,"GPA-র পাশে স্কেল লিখুন");
+  var bullets=[];expL.forEach(function(e){(e.resp||"").split("\n").forEach(function(b){if(b.trim())bullets.push(b.trim())})});
+  if(bullets.length){
+    var verbs=bullets.filter(function(b){return ATS_VERBS.indexOf(b.split(/\s+/)[0].toLowerCase().replace(/[^a-z]/g,""))>-1}).length/bullets.length;
+    add("কর্ম-শব্দ দিয়ে বুলেট শুরু",10,verbs/.6,"প্রতিটি বুলেট Managed, Prepared দিয়ে শুরু করুন");
+    var meas=bullets.filter(function(b){return /\d|%/.test(b)}).length/bullets.length;
+    add("সংখ্যা বা % দিয়ে পরিমাপ",10,meas/.3,"কিছু বুলেটে সংখ্যা যোগ করুন");
+    var bcOk=expL.every(function(e){var n=(e.resp||"").split("\n").filter(function(x){return x.trim()}).length;return n>=2&&n<=6});
+    add("প্রতি অভিজ্ঞতায় ২–৬ বুলেট",5,bcOk?1:0,"২ থেকে ৬টি বুলেট রাখুন");
+  }
+  var len=atsText().length;
+  add("সিভির দৈর্ঘ্য উপযুক্ত",5,(len>=350&&len<=4000)?1:(len<350?len/350:0.5),len<350?"আরও তথ্য যোগ করুন":"সিভি অনেক বড়");
+  var kind=TP[D.t||0][1];
+  add("একক কলামের ATS-বান্ধব টেমপ্লেট",10,["classic","tl","serif","lab","cline","cboxed","cdark","ribbon"].indexOf(kind)>-1?1:0,"সাইডবার বা কার্ড টেমপ্লেট ATS-এ কম পড়া যায়");
+  var kw=null;
+  if(jd&&jd.trim()){
+    var terms=atsTerms(jd,25),txt=atsText().toLowerCase();
+    var have=terms.filter(function(t){return txt.indexOf(t)>-1});
+    var missing=terms.filter(function(t){return have.indexOf(t)<0}).slice(0,12);
+    kw={total:terms.length,have:have.length,missing:missing};
+    add("চাকরির শব্দের সাথে মিল",15,terms.length?have.length/(terms.length*.5):0,"গুরুত্বপূর্ণ শব্দ স্বাভাবিকভাবে যোগ করুন");
+  }
+  return {score:wsum?Math.round(got/wsum*100):0,items:items,kw:kw};
+}
+function atsRender(r){
+  var msg=r.score>=80?"খুব ভালো · ATS-ফ্রেন্ডলি":(r.score>=60?"ভালো · উন্নতির সুযোগ":"উন্নতির সাজেশন দেখুন");
+  var h='<div class="ats-top"><div class="ats-ring" style="--ring:conic-gradient(var(--brand-1) '+(r.score*3.6)+'deg,#e6efea 0)"><b>'+r.score+'</b><small>/১০০</small></div><div><p class="ats-msg">ATS স্কোর</p><p>'+msg+'</p></div></div>';
+  h+='<ul class="ats-list">';
+  r.items.forEach(function(it){
+    var cls=it.p>=1?"ok":(it.p>0?"part":"no");
+    var mark=it.p>=1?"✓":(it.p>0?"!":"✕");
+    h+='<li><span class="ats-dot '+cls+'">'+mark+'</span><div>'+esc(it.label)+(it.tip?'<span class="ats-tip">'+esc(it.tip)+'</span>':'')+'</div></li>';
+  });
+  h+='</ul>';
+  if(r.kw){
+    h+='<div class="ats-kw"><b>শব্দ মিল: '+r.kw.have+' / '+r.kw.total+'</b>';
+    if(r.kw.missing.length)h+='<div class="chips">'+r.kw.missing.map(function(m){return'<span class="chip">'+esc(m)+'</span>'}).join("")+'</div><small style="color:var(--text-muted)">উপরের শব্দগুলো সিভিতে পাওয়া যায়নি।</small>';
+    h+='</div>';
+  }
+  h+='<p class="ats-disc">সাজেশনমূলক রিপোর্ট — কোনো নিয়োগের নিশ্চয়তা নয়।</p>';
+  return h;
+}
+(function(){
+  var btn=document.getElementById("atsBtn");
+  if(btn)btn.onclick=function(){
+    var r=atsCheck(document.getElementById("jd").value||"");
+    document.getElementById("atsOut").innerHTML=atsRender(r);
+    document.getElementById("atsOut").scrollIntoView({behavior:"smooth",block:"nearest"});
+  };
+})();
+
+/* ============================================================
+   COVER LETTER
+   ============================================================ */
+function clCapFirst(t){t=(t||"").trim();return t.charAt(0).toLowerCase()+t.slice(1).replace(/\.$/,"")}
+function clLetterCtx(jd,o){
+  var name=(D.name||"").trim()||"[আপনার নাম]",post=(D.post||"").trim()||"[পদের নাম]";
+  var coc=((o.company||"").trim()).replace(/\.+$/,"");
+  var phone=(D.phone||"").trim()||"[মোবাইল]",email=(D.email||"").trim()||"[ইমেইল]";
+  var eduL=eduList(),e0=eduL[0]||null;
+  var skills=(D.skills||"").split("\n").map(function(x){return x.trim()}).filter(Boolean);
+  var jdl=(jd||"").toLowerCase();
+  var matched=skills.filter(function(sk){return sk.toLowerCase().split(/[^a-z0-9+#]+/).some(function(w){return w.length>=3&&jdl.indexOf(w)>-1})});
+  var exps=D.exp.filter(function(e){return e.pos||e.co}).map(function(e){return{pos:e.pos||"",co:e.co||"",b:(e.resp||"").split("\n").map(function(x){return x.trim()}).filter(Boolean)}});
+  var certs=D.cert.map(function(c){return c.n}).filter(Boolean);
+  return{name:name,post:post,coc:coc,phone:phone,email:email,deg:e0&&e0.d?e0.d:"",inst:e0&&e0.i?e0.i:"",skills:skills,matched:matched,exps:exps,exp:exps[0]||null,certs:certs,style:o.style||"formal",lang:o.lang||"en"};
+}
+function clEn(C){
+  var P=[],g=C.coc?"Dear Hiring Team at "+C.coc+",":"Dear Hiring Manager,",at=C.coc?" at "+C.coc:"";
+  var deg=C.deg?C.deg+(C.inst?" from "+C.inst:""):"";
+  var sk=(C.matched.length?C.matched:C.skills).slice(0,4).join(", ");
+  var b0=C.exp&&C.exp.b[0]?clCapFirst(C.exp.b[0]):"";
+  var b1=C.exp&&C.exp.b[1]?clCapFirst(C.exp.b[1]):"";
+  var contact="You can reach me at "+C.phone+" or "+C.email+".";
+  if(C.style==="short"){
+    P.push(g);
+    P.push("I am applying for the "+C.post+" position"+at+". I am "+C.name+(deg?", with a "+deg:"")+(b0?", and I have experience where I "+b0:(sk?", with skills in "+sk:""))+".");
+    P.push("Thank you for your consideration. "+contact);
+    P.push("Sincerely,\n"+C.name);
+    return P.join("\n\n");
+  }
+  if(C.style==="friendly"){
+    P.push(C.coc?"Hello "+C.coc+" team,":"Hello,");
+    P.push("I'm excited to apply for the "+C.post+" role"+at+"! I'm "+C.name+(deg?", with "+deg:"")+", and I would love to bring my skills to your team.");
+    if(C.exp)P.push("In my role as "+(C.exp.pos||"a professional")+(C.exp.co?" at "+C.exp.co:"")+", "+(b0?"I "+b0:"I handled my day-to-day responsibilities")+"."+(b1?" I also "+b1+".":""));
+    if(sk)P.push("My strengths include "+sk+", which I believe fit what you are looking for.");
+    P.push("I'd love the chance to talk more. "+contact);
+    P.push("Warm regards,\n"+C.name);
+    return P.join("\n\n");
+  }
+  if(C.style==="detailed"){
+    P.push(g);
+    P.push("I am writing to apply for the "+C.post+" position"+at+". I am "+C.name+(deg?", with "+deg:"")+", and I am eager to contribute to your team.");
+    C.exps.forEach(function(e){
+      var bl=e.b.slice(0,4).map(clCapFirst);
+      var line="As "+(e.pos||"a professional")+(e.co?" at "+e.co:"")+", I "+(bl.length?bl[0]:"handled my responsibilities");
+      if(bl.length>1)line+="; I also "+bl.slice(1).join(", and I also ");
+      P.push(line+".");
+    });
+    if(C.certs.length)P.push("I have also completed: "+C.certs.join(", ")+".");
+    if(C.skills.length)P.push("My key skills include "+C.skills.slice(0,6).join(", ")+".");
+    P.push("Thank you for considering my application. "+contact);
+    P.push("Sincerely,\n"+C.name);
+    return P.join("\n\n");
+  }
+  P.push(g);
+  P.push("I am writing to apply for the "+C.post+" position"+at+". I am "+C.name+(deg?", with "+deg:"")+", and I am eager to contribute my skills to your team.");
+  if(C.exp){
+    var p2="In my role as "+(C.exp.pos||"a professional")+(C.exp.co?" at "+C.exp.co:"")+", I "+(b0?b0:"handled my day-to-day responsibilities")+".";
+    if(b1)p2+=" I also "+b1+".";
+    P.push(p2);
+  }else P.push("Although I am early in my career, I have built a strong foundation through academic work and practical projects.");
+  var p3="";
+  if(C.matched.length)p3="My key skills, including "+C.matched.slice(0,4).join(", ")+", match the requirements you described.";
+  else if(C.skills.length)p3="My core skills include "+C.skills.slice(0,4).join(", ")+".";
+  if(p3)P.push(p3);
+  P.push("Thank you for considering my application. I would welcome the opportunity to discuss how I can contribute to "+(C.coc||"your organisation")+". "+contact);
+  P.push("Sincerely,\n"+C.name);
+  return P.join("\n\n");
+}
+function clBn(C){
+  var P=[],g="প্রিয় "+(C.coc?C.coc+" কর্তৃপক্ষ":"নিয়োগকর্তা")+",";
+  var at=C.coc?" "+C.coc+"-এ":"";
+  var deg=C.deg?C.deg+(C.inst?", "+C.inst:""):"";
+  var sk=(C.matched.length?C.matched:C.skills).slice(0,4).join(", ");
+  var b0=C.exp&&C.exp.b[0]?C.exp.b[0]:"";
+  var contact="যোগাযোগ: "+C.phone+", "+C.email+"।";
+  if(C.style==="short"){
+    P.push(g);
+    P.push("আমি "+C.post+" পদে আবেদন করতে চাই"+at+"। আমি "+C.name+(deg?", "+deg+" সম্পন্ন করেছি":"")+(sk?" এবং আমার দক্ষতা "+sk+"।":"।"));
+    P.push("আমার আবেদন বিবেচনার জন্য ধন্যবাদ। "+contact);
+    P.push("বিনীত,\n"+C.name);
+    return P.join("\n\n");
+  }
+  P.push(g);
+  P.push("আমি বিনীতভাবে "+C.post+" পদে আবেদন করতে চাই"+at+"। আমার নাম "+C.name+(deg?", শিক্ষাগত যোগ্যতা "+deg:"")+"।");
+  if(C.exp)P.push("আমার অভিজ্ঞতায় "+(C.exp.pos?C.exp.pos+" হিসেবে":"")+(C.exp.co?" "+C.exp.co+"-এ":"")+" কাজ করার সময় "+(b0?b0+"।":"দায়িত্বগুলো সুষ্ঠুভাবে পালন করেছি।"));
+  if(sk)P.push("আমার দক্ষতার মধ্যে "+sk+" আপনার বিজ্ঞপ্তির সাথে মিলে যায়।");
+  P.push("আমার আবেদনটি বিবেচনার জন্য ধন্যবাদ। "+contact);
+  P.push("বিনীত,\n"+C.name);
+  return P.join("\n\n");
+}
+function coverLetter(jd,o){var C=clLetterCtx(jd,o);return C.lang==="bn"?clBn(C):clEn(C)}
+function letterHTML(txt){return txt.split(/\n\s*\n/).map(function(p){return'<p style="margin:0 0 14px">'+esc(p).replace(/\n/g,"<br>")+"</p>"}).join("")}
+function saveBlob(blob,name){var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){a.remove()},500)}
+
+async function mkLetterPdf(txt){
+  await loadLibs();
+  var b=pageBox('<div style="width:794px;box-sizing:border-box;padding:64px 68px;background:#fff;font-family:\'Hind Siliguri\',Arial,sans-serif;font-size:15px;line-height:1.75;color:#111">'+letterHTML(txt)+"</div>");
+  var c;
+  try{c=await html2canvas(b.firstElementChild,{scale:2,backgroundColor:"#fff",useCORS:true,windowWidth:794})}
+  finally{b.remove()}
+  var pdf=new window.jspdf.jsPDF({unit:"mm",format:"a4"}),PHc=1123*2,W=c.width,n=Math.max(1,Math.ceil(c.height/PHc));
+  for(var i=0;i<n;i++){
+    var sl=document.createElement("canvas");sl.width=W;sl.height=PHc;
+    var cx=sl.getContext("2d");cx.fillStyle="#fff";cx.fillRect(0,0,W,PHc);
+    var h=Math.min(PHc,c.height-i*PHc);cx.drawImage(c,0,i*PHc,W,h,0,0,W,h);
+    if(i)pdf.addPage();pdf.addImage(sl.toDataURL("image/jpeg",.92),"JPEG",0,0,210,297);
+  }
+  return pdf.output("blob");
+}
+function mkLetterDoc(txt){
+  var h='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><style>@page{size:A4;margin:25mm}body{font-family:Arial,sans-serif;font-size:11pt;line-height:1.6}p{margin:0 0 10pt}</style></head><body>'+letterHTML(txt)+"</body></html>";
+  return new Blob(["\ufeff",h],{type:"application/msword"});
+}
+(function(){
+  var gen=document.getElementById("clBtn");if(!gen)return;
+  function build(){
+    var o={company:document.getElementById("clCo").value,style:document.getElementById("clStyle").value,lang:document.getElementById("clLang").value};
+    var jd=document.getElementById("jd")?document.getElementById("jd").value:"";
+    var out=document.getElementById("clOut");
+    out.value=coverLetter(jd,o);out.dataset.gen="1";
+  }
+  gen.onclick=build;
+  ["clStyle","clLang"].forEach(function(id){
+    var el=document.getElementById(id);
+    el.onchange=function(){if(document.getElementById("clOut").dataset.gen)build()};
+  });
+  document.getElementById("clCopy").onclick=function(){
+    var t=document.getElementById("clOut");t.select();
+    try{navigator.clipboard.writeText(t.value)}catch(e){document.execCommand("copy")}
+  };
+  async function dl(kind){
+    var txt=document.getElementById("clOut").value;
+    if(!txt.trim()){alert("আগে কভার লেটার বানান");return}
+    var base="Cover-Letter-"+((D.name||"my").replace(/[^\w]+/g,"-"));
+    try{
+      if(kind==="pdf")saveBlob(await mkLetterPdf(txt),base+".pdf");
+      else if(kind==="doc")saveBlob(mkLetterDoc(txt),base+".doc");
+      else saveBlob(new Blob(["\ufeff"+txt],{type:"text/plain;charset=utf-8"}),base+".txt");
+    }catch(e){alert("ফাইল তৈরি করা যায়নি।")}
+  }
+  document.getElementById("clPdf").onclick=function(){dl("pdf")};
+  document.getElementById("clDoc").onclick=function(){dl("doc")};
+  document.getElementById("clTxt").onclick=function(){dl("txt")};
+})();
+
+/* ============================================================
+   BACKUP
+   ============================================================ */
+(function(){
+  var sv=document.getElementById("bkSave"),fi=document.getElementById("bkFile"),msg=document.getElementById("bkMsg");
+  if(!sv||!fi)return;
+  sv.onclick=function(){
+    var blob=new Blob([JSON.stringify({app:"cvbanao",v:1,savedAt:new Date().toISOString(),data:D},null,1)],{type:"application/json"});
+    saveBlob(blob,"cvbanao-backup-"+((D.name||"my").replace(/[^\w]+/g,"-"))+".json");
+    msg.textContent="ব্যাকআপ ফাইল তৈরি হয়েছে।";
+  };
+  fi.onchange=function(){
+    var f=fi.files&&fi.files[0];if(!f)return;
+    var r=new FileReader();
+    r.onload=function(){
+      var obj=null;
+      try{obj=JSON.parse(r.result)}catch(e){}
+      if(!obj||obj.app!=="cvbanao"||!obj.data){msg.textContent="এই ফাইলটি সিভি বানাও-এর ব্যাকআপ নয়।";fi.value="";return}
+      if(!confirm("বর্তমান তথ্য মুছে ব্যাকআপের তথ্য বসাবেন?")){fi.value="";return}
+      try{localStorage.setItem(KEY,JSON.stringify(obj.data));location.reload()}catch(e){msg.textContent="ফেরত আনা যায়নি।"}
+    };
+    r.readAsText(f);
+  };
+})();
+
+/* ============================================================
+   PRO / GALLERY / PRINT / CHECKLIST
+   ============================================================ */
+function pro(){D.pro=true;$("pro").innerHTML=""}
+function gal(){
+  var g=$("gal");g.innerHTML="";
+  TP.forEach(function(t,i){
+    var b=document.createElement("button");
+    b.className="gi"+(D.t===i?" on":"");
+    b.innerHTML='<div class="th">'+cv(i)+"</div><span>"+t[0]+"</span>";
+    b.onclick=function(){D.t=i;save();prev();gal()};
+    g.appendChild(b);
+  });
+}
+$("pr").onclick=function(){
+  if(!validateInfo()){step(0);return}
+  var fr=document.createElement("iframe");
+  fr.style.cssText="position:fixed;right:0;bottom:0;width:0;height:0;border:0";
+  document.body.appendChild(fr);
+  var d=fr.contentWindow.document;
+  d.open();
+  d.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>CV</title><style>@page{size:A4;margin:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}body{margin:0}.it,.kv,tr{break-inside:avoid}.pgbox{margin:0!important;box-shadow:none!important;page-break-after:always}.pgbox:last-child{page-break-after:auto}'+CVCSS+'</style></head><body>'+pagesFor(D.t||0).join("")+"</body></html>");
+  d.close();
+  setTimeout(function(){
+    try{fr.contentWindow.focus();fr.contentWindow.print()}catch(e){alert("এই ভিউতে প্রিন্ট করা যাচ্ছে না")}
+    setTimeout(function(){fr.remove()},60000);
+  },500);
+};
+function chk(){
+  var ex=D.exp.some(function(e){return e.pos||e.co});
+  var L=[["নাম",D.name],["পদ",D.post],["মোবাইল",D.phone],["ইমেইল",D.email],["ঠিকানা",D.addr],["ছবি",D.photo],["অবজেক্টিভ",D.obj],["শিক্ষা",eduList().length],["অভিজ্ঞতা",ex],["সার্টিফিকেশন",D.cert.length],["ভাষা",D.lang.length],["দক্ষতা",D.skills],["শখ",D.hob],["ব্যক্তিগত",D.father||D.mother||D.nid||D.dob],["কাস্টম",D.cust.length],["রেফারেন্স",D.refs]];
+  $("chk").innerHTML=L.map(function(x){return'<span class="chip'+(x[1]?" ok":"")+'">'+(x[1]?"✓ ":"○ ")+x[0]+"</span>"}).join("");
+}
+
+/* ============================================================
+   STEPS
+   ============================================================ */
+var ST=[
+  ["পরিচয়","ব্যক্তিগত তথ্য","নাম, যোগাযোগ, ছবি ও ক্যারিয়ার লক্ষ্য"],
+  ["শিক্ষা","শিক্ষাগত যোগ্যতা","এসএসসি থেকে সর্বোচ্চ ডিগ্রি"],
+  ["অভিজ্ঞতা","অভিজ্ঞতা ও দক্ষতা","অভিজ্ঞতা, সার্টিফিকেশন, দক্ষতা, ভাষা"],
+  ["বিবরণ","ব্যক্তিগত বিবরণ","পিতা-মাতা, NID, রেফারেন্স"],
+  ["টেমপ্লেট","টেমপ্লেট বাছুন","একাধিক ডিজাইন থেকে বাছুন"],
+  ["ডাউনলোড","প্রিভিউ ও PDF","সব তথ্য দেখে PDF নামান"]
+];
+var MAP=[0,0,1,2,2,2,2,3,3,3,3],cur=0,cards=[].slice.call($("form").children);
+function bd(n){return n.toLocaleString("bn-BD")}
+
+function step(n){
+  cur=Math.max(0,Math.min(5,n));
+  cards.forEach(function(c,i){c.hidden=MAP[i]!==cur});
+  $("v1").hidden=cur>3;
+  $("v2").hidden=cur!==4;
+  $("v3").hidden=cur!==5;
+  $("stp").innerHTML=ST.map(function(x,i){
+    return'<button class="sd'+(i<cur?" done":i===cur?" on":"")+'" data-i="'+i+'"><i>'+(i<cur?"✓":bd(i+1))+"</i><span>"+x[0]+"</span></button>";
+  }).join("");
+  $("sh").innerHTML='<div class="sh"><small>ধাপ '+bd(cur+1)+" / "+bd(6)+"</small><h2>"+ST[cur][1]+"</h2><p>"+ST[cur][2]+"</p></div>";
+  $("bk").style.visibility=cur?"visible":"hidden";
+  $("nx").style.display=cur===5?"none":"";
+  if(cur===4)gal();
+  if(cur===5){prev();chk()}
+  placeNav();
+  window.scrollTo(0,0);
+}
+
+$("stp").onclick=function(e){var t=e.target.closest(".sd");if(t)step(+t.dataset.i)};
+$("bk").onclick=function(){step(cur-1)};
+$("nx").onclick=function(){if(cur===0&&!validateInfo())return;step(cur+1)};
+
+function placeNav(){
+  document.querySelectorAll(".navrow").forEach(function(n){n.remove()});
+  var host;
+  if(cur<=3){
+    var vis=cards.filter(function(c){return !c.hidden});
+    host=vis[vis.length-1];
+  }else host=cur===4?$("v2"):$("v3");
+  if(!host)return;
+  var r=document.createElement("div");r.className="navrow";
+  var bk2=document.createElement("button");
+  bk2.type="button";bk2.className="nvb ghost";bk2.textContent="← আগের ধাপ";
+  bk2.style.visibility=cur?"visible":"hidden";
+  bk2.onclick=function(){step(cur-1)};
+  r.appendChild(bk2);
+  if(cur<5){
+    var nx2=document.createElement("button");
+    nx2.type="button";nx2.className="nvb nxt";nx2.textContent="পরের ধাপ →";
+    nx2.onclick=function(){if(cur===0&&!validateInfo())return;step(cur+1)};
+    r.appendChild(nx2);
+  }
+  host.appendChild(r);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+pro();
+prev();
+step(0);
+
+})();
+</script>
 </body>
-</html>
+    </html>
